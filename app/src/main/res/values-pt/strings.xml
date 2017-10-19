@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YAMDA</string>
+    <string name="search_value">pesquisa</string>
+    <string name="develoers">programadores:</string>
+    <string name="advisors">orientadores:</string>
+    <string name="about">Sobre</string>
+    <string name="iconCredit">Icon made by Freepik from www.flaticon.com</string>
+    <string name="action_settings">settings</string>
+    <string name="search_hint">movie, actor, producer...</string>
+</resources>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="pdm_1718i.yamda.ui.activities.MainActivity">
+
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_movie_thumbnail" />
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_movie_thumbnail" />
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_movie_thumbnail" />
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_movie_thumbnail" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+
+                android:cropToPadding="false"
+                android:onClick="onPopularMore"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_add_circle_outline_black" />
+
+
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_movie_thumbnail" />
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_movie_thumbnail" />
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_movie_thumbnail" />
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_movie_thumbnail" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+
+                android:cropToPadding="false"
+                android:onClick="onInTheatersMore"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_add_circle_outline_black" />
+
+
+
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_movie_thumbnail" />
+
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_movie_thumbnail" />
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_movie_thumbnail" />
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_movie_thumbnail" />
+
+            <android.support.v7.widget.AppCompatImageButton
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+
+                android:cropToPadding="false"
+                android:onClick="onUpcomingMore"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_add_circle_outline_black" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="173dp"
+        android:layout_marginEnd="914dp">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="70dp"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_movie_thumbnail" />
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="70dp"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_movie_thumbnail" />
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="70dp"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_movie_thumbnail" />
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="70dp"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_movie_thumbnail" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:layout_width="70dp"
+            android:layout_height="100dp"
+            android:background="@android:color/transparent"
+            android:cropToPadding="false"
+            android:onClick="onPopularMore"
+            android:src="@drawable/ic_add_circle_outline_black" />
+
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+
+</RelativeLayout>
