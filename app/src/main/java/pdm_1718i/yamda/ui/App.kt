@@ -1,9 +1,9 @@
 package pdm_1718i.yamda.ui
 
 import android.app.Application
-import com.android.volley.toolbox.Volley
 import android.text.TextUtils
 import com.android.volley.Request
+import com.android.volley.toolbox.Volley
 import pdm_1718i.yamda.data.MoviesController
 
 
