@@ -7,6 +7,7 @@ import android.app.SearchManager
 import android.content.Intent
 import android.widget.Toast
 import pdm_1718i.yamda.ui.App
+import pdm_1718i.yamda.ui.adapters.SimplesMovieAdapter
 
 
 class SearchResultActivity: ListActivity() {
@@ -14,6 +15,7 @@ class SearchResultActivity: ListActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
+
         handleIntent(intent)
     }
 
@@ -35,7 +37,7 @@ class SearchResultActivity: ListActivity() {
 
         App.moviesController.movieSearch(query,1, {
 
-            Toast.makeText(this, it.first().title, Toast.LENGTH_SHORT).show()
+            listView.adapter = SimplesMovieAdapter(this, it)
 
         })
 
