@@ -5,8 +5,15 @@ import android.os.Bundle
 import pdm_1718i.yamda.R
 import android.app.SearchManager
 import android.content.Intent
+import android.net.Uri
+import android.view.View
 import android.widget.Toast
+import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
+import pdm_1718i.yamda.ui.adapters.SimplesMovieAdapter
+import android.widget.AdapterView
+
+
 
 
 class SearchResultActivity: ListActivity() {
@@ -14,6 +21,7 @@ class SearchResultActivity: ListActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
+
         handleIntent(intent)
     }
 
@@ -34,9 +42,12 @@ class SearchResultActivity: ListActivity() {
     private fun doMySearch(query :String){
 
         App.moviesController.movieSearch(query,1, {
-
-            Toast.makeText(this, it.first().title, Toast.LENGTH_SHORT).show()
-
+            listView.adapter = SimplesMovieAdapter(this, it)
+            listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+                val movieId = (listView.adapter.getItem(position) as Movie).id
+                val intent: Intent = Intent(applicationContext, MovieDetailActivity::class.java).putExtra("movieId",movieId  )
+                startActivity(intent)
+            }
         })
 
     }

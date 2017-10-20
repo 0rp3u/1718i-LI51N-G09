@@ -12,6 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.ui.App
 import org.json.JSONObject
+import java.lang.reflect.Method
 import java.util.HashMap
 
 class TMDBService : ServiceInterface {

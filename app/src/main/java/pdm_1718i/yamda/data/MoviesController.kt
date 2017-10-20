@@ -4,8 +4,10 @@ import android.net.Uri
 import pdm_1718i.yamda.data.server.TMDBService
 import org.json.JSONObject
 import android.net.Uri.Builder
+import android.widget.Toast
 import pdm_1718i.yamda.data.server.DataMapper
 import pdm_1718i.yamda.model.Movie
+import pdm_1718i.yamda.ui.App
 
 /**
  * Created by orpheu on 10/13/17.
@@ -30,7 +32,10 @@ class MoviesController {
                     Uri.Builder()
                             .appendEncodedPath("search/movie")
                             .appendQueryParameter("query", query),
-                    { completionHandler(DataMapper().mapToMovieList(it))}
+                    {
+                        if(it!=null)completionHandler(DataMapper().mapToMovieList(it))
+                        else  Toast.makeText(App.instance, "::ERROR::", Toast.LENGTH_SHORT).show()
+                    }
             )
         }
 }
