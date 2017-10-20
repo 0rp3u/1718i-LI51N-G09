@@ -9,6 +9,7 @@ import android.widget.*
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.holders.SimpleMovieHolder
+import java.util.ArrayList
 
 /**
  * Created by orpheu on 10/19/17.
@@ -40,12 +41,11 @@ class SimplesMovieAdapter(private val context : Activity, private val searchedMo
         movieViewHolder.score.text= movie.vote_average.toString()
         movieViewHolder.image.setImageResource(R.drawable.ic_movie_thumbnail)
 
+
         return itemView
     }
 
-
-
-
-
-
+    override fun getItem(position: Int): Movie {
+        return searchedMovies[position]
+    }
 }
