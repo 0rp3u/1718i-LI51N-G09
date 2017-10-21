@@ -4,7 +4,7 @@ import android.app.Application
 import android.text.TextUtils
 import com.android.volley.Request
 import com.android.volley.toolbox.Volley
-import pdm_1718i.yamda.data.MoviesController
+import pdm_1718i.yamda.data.MoviesProvider
 
 
 class App : Application() {
@@ -13,7 +13,7 @@ class App : Application() {
         lateinit var instance: App
             private set
         private val requestQueue by lazy { Volley.newRequestQueue(instance)}
-        val moviesController by lazy { MoviesController()}
+        val moviesProvider by lazy { MoviesProvider()}
         private val TAG = App::class.java.simpleName
     }
 

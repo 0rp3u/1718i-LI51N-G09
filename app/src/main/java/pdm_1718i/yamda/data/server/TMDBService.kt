@@ -5,17 +5,21 @@ package pdm_1718i.yamda.data.server
  */
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyLog
 import com.android.volley.toolbox.JsonObjectRequest
+import com.google.gson.Gson
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.ui.App
 import org.json.JSONObject
-import java.lang.reflect.Method
+import pdm_1718i.yamda.data.MoviesDataSource
+import pdm_1718i.yamda.model.Movie
 import java.util.HashMap
 
-class TMDBService : ServiceInterface {
+class TMDBService : ServiceInterface, MoviesDataSource {
+    val gson: Gson = Gson()
     val TAG = TMDBService::class.java.simpleName
     val basePath = App.instance.getString(R.string.TMDB_URL)
     val API_KEY = App.instance.getString(R.string.API_KEY)
@@ -66,5 +70,18 @@ class TMDBService : ServiceInterface {
                 }){}
 
         App.instance.addToRequestQueue(jsonObjReq, TAG)
+    }
+
+
+    override fun movieSearch(query: String, page : Int, completionHandler: (movies: List<Movie>) -> Unit) {
+
+        get(
+                Uri.Builder()
+                        .appendEncodedPath("search/movie")
+                        .appendQueryParameter("query", query),
+                {
+                    completionHandler(if (it  != null) DataMapper().mapToMovieList((it)) else listOf())
+                }
+        )
     }
 }
