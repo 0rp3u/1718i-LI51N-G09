@@ -41,7 +41,7 @@ class SearchResultActivity: ListActivity() {
 
     private fun doMySearch(query :String){
 
-        App.moviesController.movieSearch(query,1, {
+        App.moviesProvider.searchMovies(query,1, {
             listView.adapter = SimplesMovieAdapter(this, it)
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 val movieId = (listView.adapter.getItem(position) as Movie).id
