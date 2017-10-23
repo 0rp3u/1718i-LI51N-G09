@@ -5,11 +5,11 @@ package pdm_1718i.yamda.data.server
  */
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyLog
 import com.android.volley.toolbox.JsonObjectRequest
+import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
 import com.google.gson.Gson
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.ui.App
@@ -67,20 +67,31 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 Response.ErrorListener { error ->
                     VolleyLog.e(TAG, "/get request fail! Error: ${error.message}")
                     completionHandler(null)
-                }){}
+                }) {}
 
         App.instance.addToRequestQueue(jsonObjReq, TAG)
     }
 
 
-    override fun movieSearch(query: String, page : Int, completionHandler: (movies: List<Movie>) -> Unit) {
+    override fun movieSearch(query: String, page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
 
         get(
                 Uri.Builder()
                         .appendEncodedPath("search/movie")
                         .appendQueryParameter("query", query),
                 {
-                    completionHandler(if (it  != null) DataMapper().mapToMovieList((it)) else listOf())
+                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it?.toString() ?: "", MovieSearchResult::class.java)))
+                }
+        )
+    }
+
+    override fun movie(id: Int, completionHandler: (movies: List<Movie>) -> Unit) {
+
+        get(
+                Uri.Builder()
+                        .appendEncodedPath("/movie/$id"),
+                {
+                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it?.toString() ?: "", MovieSearchResult::class.java)))
                 }
         )
     }

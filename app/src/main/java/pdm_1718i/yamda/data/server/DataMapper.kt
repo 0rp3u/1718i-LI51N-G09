@@ -1,5 +1,6 @@
 package pdm_1718i.yamda.data.server
 
+import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
 import org.json.JSONArray
 import org.json.JSONObject
 import pdm_1718i.yamda.extensions.asSequence
@@ -13,30 +14,11 @@ fun mapToMovie(jsonMovie : JSONObject) : Movie {
 }
 */
 
-    fun mapToMovieList(jsonMovies: JSONObject?): List<Movie> {
+    fun mapToMovieList(result: MovieSearchResult?): List<Movie> {
 
+       if(result == null ) return listOf()
 
-        val jsonTeachers = jsonMovies?.get("results") as JSONArray
-
-        return jsonTeachers
-                .asSequence()
-                .map {
-                    Movie(
-                            it["poster_path"] as String,
-                            it["adult"] as Boolean,
-                            it["overview"] as String,
-                            it["release_date"] as String,
-                            HashSet(),
-                            it["id"] as Int,
-                            it["original_title"] as String,
-                            it["original_language"] as String,
-                            it["title"] as String,
-                            "",
-                            it["popularity"] as Double,
-                            it["vote_count"] as Int,
-                            it["vote_average"] as Number
-                    )
-                }
-                .toList()
+       return result.results.map { Movie(it.poster_path?: "",it.release_date, it.id, it.title,it.backdrop_path?:"" ,it.vote_average ) }
     }
+
 }

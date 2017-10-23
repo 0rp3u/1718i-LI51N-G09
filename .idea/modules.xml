@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/1718i-LI51N-G09.iml" filepath="$PROJECT_DIR$/1718i-LI51N-G09.iml" />
       <module fileurl="file://$PROJECT_DIR$/YAMDA.iml" filepath="$PROJECT_DIR$/YAMDA.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pdm1718i.iml" filepath="$PROJECT_DIR$/pdm1718i.iml" />
     </modules>
   </component>
 </project>
