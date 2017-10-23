@@ -21,20 +21,26 @@
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail" />
+                android:background="@drawable/ic_movie_thumbnail"
+                android:id = "@+id/popular_image_1"/>
 
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail" />
+                android:background="@drawable/ic_movie_thumbnail"
+                android:id = "@+id/popular_image_2"/>
+
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail" />
+                android:background="@drawable/ic_movie_thumbnail"
+                android:id = "@+id/popular_image_3"/>
+
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail" />
+                android:background="@drawable/ic_movie_thumbnail"
+                android:id = "@+id/popular_image_4"/>
 
             <android.support.v7.widget.AppCompatImageButton
                 android:layout_width="70dp"
@@ -57,20 +63,26 @@
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail" />
+                android:background="@drawable/ic_movie_thumbnail"
+                android:id = "@+id/theaters_image_1"/>
 
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail" />
+                android:background="@drawable/ic_movie_thumbnail"
+                android:id = "@+id/theaters_image_2"/>
+
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail" />
+                android:background="@drawable/ic_movie_thumbnail"
+                android:id = "@+id/theaters_image_3"/>
+
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail" />
+                android:background="@drawable/ic_movie_thumbnail"
+                android:id = "@+id/theaters_image_4"/>
 
             <android.support.v7.widget.AppCompatImageButton
                 android:layout_width="70dp"
@@ -95,20 +107,26 @@
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail" />
+                android:background="@drawable/ic_movie_thumbnail"
+                android:id = "@+id/upcoming_image_1"/>
 
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail" />
+                android:background="@drawable/ic_movie_thumbnail"
+                android:id = "@+id/upcoming_image_2"/>
+
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail" />
+                android:background="@drawable/ic_movie_thumbnail"
+                android:id = "@+id/upcoming_image_3"/>
+
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail" />
+                android:background="@drawable/ic_movie_thumbnail"
+                android:id = "@+id/upcoming_image_4"/>
 
             <android.support.v7.widget.AppCompatImageButton
                 android:layout_width="70dp"
@@ -121,47 +139,6 @@
 
         </android.support.v7.widget.LinearLayoutCompat>
 
-
     </android.support.v7.widget.LinearLayoutCompat>
-
-    <android.support.v7.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="173dp"
-        android:layout_marginEnd="914dp">
-
-        <com.android.volley.toolbox.NetworkImageView
-            android:layout_width="70dp"
-            android:layout_height="100dp"
-            android:background="@drawable/ic_movie_thumbnail" />
-
-        <com.android.volley.toolbox.NetworkImageView
-            android:layout_width="70dp"
-            android:layout_height="100dp"
-            android:background="@drawable/ic_movie_thumbnail" />
-
-        <com.android.volley.toolbox.NetworkImageView
-            android:layout_width="70dp"
-            android:layout_height="100dp"
-            android:background="@drawable/ic_movie_thumbnail" />
-
-        <com.android.volley.toolbox.NetworkImageView
-            android:layout_width="70dp"
-            android:layout_height="100dp"
-            android:background="@drawable/ic_movie_thumbnail" />
-
-        <android.support.v7.widget.AppCompatImageButton
-            android:layout_width="70dp"
-            android:layout_height="100dp"
-            android:background="@android:color/transparent"
-            android:cropToPadding="false"
-            android:onClick="onPopularMore"
-            android:src="@drawable/ic_add_circle_outline_black" />
-
-
-    </android.support.v7.widget.LinearLayoutCompat>
-
 
 </RelativeLayout>
