@@ -12,3 +12,13 @@ data class Movie(
         val backdrop_path : String,
         val vote_average: Number
 )
+
+data class DetailedMovie(
+        val poster_path : String,
+        val release_date : String,
+        val id: Int,
+        val title : String,
+        val backdrop_path : String,
+        val vote_average: Number,
+        val budget : Int
+)

@@ -11,5 +11,5 @@ import org.json.JSONObject
 
 interface ServiceInterface {
     fun post(uriBuilder: Uri.Builder, body: JSONObject, completionHandler: (response: JSONObject?) -> Unit)
-    fun get(uriBuilder: Uri.Builder, completionHandler: (response: JSONObject?) -> Unit)
+    fun get(uriBuilder: Uri.Builder, completionHandler: (response: JSONObject) -> Unit)
 }

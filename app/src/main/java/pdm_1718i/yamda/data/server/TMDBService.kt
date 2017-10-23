@@ -5,16 +5,19 @@ package pdm_1718i.yamda.data.server
  */
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyLog
 import com.android.volley.toolbox.JsonObjectRequest
+import com.example.pdm_1718i.yamda.data.server.MovieDetailResult
 import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
 import com.google.gson.Gson
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.ui.App
 import org.json.JSONObject
 import pdm_1718i.yamda.data.MoviesDataSource
+import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie
 import java.util.HashMap
 
@@ -52,7 +55,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
         App.instance.addToRequestQueue(jsonObjReq, TAG)
     }
 
-    override fun get(uriBuilder: Uri.Builder, completionHandler: (response: JSONObject?) -> Unit) {
+    override fun get(uriBuilder: Uri.Builder, completionHandler: (response: JSONObject) -> Unit) {
         val jsonObjReq = object : JsonObjectRequest(Method.POST,
                 uriBuilder
                         .scheme("https")
@@ -62,11 +65,13 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 , null,
                 Response.Listener<JSONObject> { response ->
                     Log.d(TAG, "/get request OK! Response: $response")
-                    completionHandler(response)
+                    if(response.has("status_code"))Toast.makeText(App.instance, "Something Went KABOOM", Toast.LENGTH_SHORT).show()
+                    else completionHandler(response)
                 },
                 Response.ErrorListener { error ->
                     VolleyLog.e(TAG, "/get request fail! Error: ${error.message}")
-                    completionHandler(null)
+                    //completionHandler(null)
+                    Toast.makeText(App.instance, "Something Went KABOOM", Toast.LENGTH_SHORT).show()
                 }) {}
 
         App.instance.addToRequestQueue(jsonObjReq, TAG)
@@ -85,13 +90,13 @@ class TMDBService : ServiceInterface, MoviesDataSource {
         )
     }
 
-    override fun movie(id: Int, completionHandler: (movies: List<Movie>) -> Unit) {
+    override fun movieDetail(id: Int, completionHandler: (movies:DetailedMovie) -> Unit) {
 
         get(
                 Uri.Builder()
-                        .appendEncodedPath("/movie/$id"),
+                    .appendEncodedPath("/movie/$id"),
                 {
-                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it?.toString() ?: "", MovieSearchResult::class.java)))
+                    completionHandler(DataMapper().mapToMovieDetail(gson.fromJson(it?.toString() ?: "", MovieDetailResult::class.java)))
                 }
         )
     }

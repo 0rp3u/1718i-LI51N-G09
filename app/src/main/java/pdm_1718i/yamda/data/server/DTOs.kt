@@ -23,3 +23,31 @@ data class Movie(
 )
 
 data class MovieSearchResult(val page: Int, val results: List<Movie>)
+
+data class MovieDetailResult(
+        val adult: Boolean,
+        val backdrop_path : String?,
+        val budget :Int,
+        //genres :Array<Genre>,
+        val name :String,
+        val homepage : String?,
+        val id : Int,
+        val imdb_id : String?,
+        val original_language :String,
+        val original_title :String,
+        val overview : String?,
+        val popularity : Number,
+        val poster_path :String?,
+        //val production_companies array[object]
+        //val production_countries : array[object]
+        val release_date: String,
+        val revenue : Int,
+        val runtime : Int?,
+        //val spoken_languages array[object]
+        val status : String,
+        val tagline : String?,
+        val title :String,
+        val video : Boolean,
+        val vote_average :Number,
+        val vote_count : Int
+)

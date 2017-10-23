@@ -1,10 +1,13 @@
 package pdm_1718i.yamda.data.server
 
+import com.example.pdm_1718i.yamda.data.server.MovieDetailResult
 import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
 import org.json.JSONArray
 import org.json.JSONObject
 import pdm_1718i.yamda.extensions.asSequence
+import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie
+import java.util.concurrent.ExecutionException
 
 class DataMapper {
 /*
@@ -19,6 +22,12 @@ fun mapToMovie(jsonMovie : JSONObject) : Movie {
        if(result == null ) return listOf()
 
        return result.results.map { Movie(it.poster_path?: "",it.release_date, it.id, it.title,it.backdrop_path?:"" ,it.vote_average ) }
+    }
+
+    fun mapToMovieDetail(result: MovieDetailResult): DetailedMovie {
+
+
+        return  DetailedMovie(result.poster_path?: "",result.release_date, result.id, result.title,result.backdrop_path?:"" ,result.vote_average, result.budget )
     }
 
 }

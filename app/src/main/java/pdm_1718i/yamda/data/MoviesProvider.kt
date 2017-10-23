@@ -1,19 +1,23 @@
 package pdm_1718i.yamda.data
 
 import pdm_1718i.yamda.data.server.TMDBService
+import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie
 
 
 
-class MoviesProvider(private val sources: List<MoviesDataSource> = MoviesProvider.SOURCES) {
+class MoviesProvider {
 
     companion object {
-        val SOURCES by lazy { listOf( TMDBService()) }
+        val SOURCE by lazy { TMDBService()}
     }
 
     fun searchMovies(query: String, page : Int, completionHandler: (movies: List<Movie>) -> Unit) {
-
-        sources.first().movieSearch(query, page, completionHandler)
+        SOURCE.movieSearch(query, page, completionHandler)
     }
 
+
+    fun movieDetail(id: Int, completionHandler: (movie : DetailedMovie) -> Unit){
+        SOURCE.movieDetail(id, completionHandler)
+    }
 }
