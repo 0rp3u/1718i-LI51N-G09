@@ -10,6 +10,8 @@ class MovieDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
-        Toast.makeText(this, "got id: ${intent.getIntExtra("movieId", -1)}", Toast.LENGTH_SHORT).show()
+       val movieId = intent.getIntExtra("movieId", -1)
+
+
     }
 }
