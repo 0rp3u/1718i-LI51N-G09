@@ -3,6 +3,7 @@
     <string name="search_value">Search</string>
     <string name="API_KEY" translatable="false">e6b5c7874febd4c400f94838548bafac</string>
     <string name="TMDB_URL" translatable="false">api.themoviedb.org/3</string>
+    <string name="TMDB_IMAGE_URL" translatable="false">image.tmdb.org/t/p</string>
 
     <string name="develoers">develoers:</string>
     <string name="dev1" translatable="false">David Duarte</string>

@@ -1,15 +1,16 @@
 package pdm_1718i.yamda.ui.adapters
 
 import android.app.Activity
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.model.Movie
+import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.holders.SimpleMovieHolder
-import java.util.ArrayList
 
 /**
  * Created by orpheu on 10/19/17.
@@ -39,9 +40,11 @@ class SimplesMovieAdapter(private val context : Activity, private val searchedMo
 
         movieViewHolder.title.text = movie.title
         movieViewHolder.score.text= movie.vote_average.toString()
-        movieViewHolder.image.setImageResource(R.drawable.ic_movie_thumbnail)
-
-
+        if(movie.poster_path.isNotEmpty()){
+            App.moviesProvider.getImage(movie.poster_path, {
+                movieViewHolder.image.setImageBitmap(it)
+            })
+        }
         return itemView
     }
 
