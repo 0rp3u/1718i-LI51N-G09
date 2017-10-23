@@ -18,25 +18,25 @@
             android:layout_height="wrap_content"
             >
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/ic_movie_thumbnail"
                 android:id = "@+id/popular_image_1"/>
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/ic_movie_thumbnail"
                 android:id = "@+id/popular_image_2"/>
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/ic_movie_thumbnail"
                 android:id = "@+id/popular_image_3"/>
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/ic_movie_thumbnail"
@@ -60,25 +60,25 @@
             android:layout_height="wrap_content"
             >
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/ic_movie_thumbnail"
                 android:id = "@+id/theaters_image_1"/>
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/ic_movie_thumbnail"
                 android:id = "@+id/theaters_image_2"/>
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/ic_movie_thumbnail"
                 android:id = "@+id/theaters_image_3"/>
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/ic_movie_thumbnail"
@@ -104,25 +104,25 @@
             android:layout_height="wrap_content"
             >
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/ic_movie_thumbnail"
                 android:id = "@+id/upcoming_image_1"/>
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/ic_movie_thumbnail"
                 android:id = "@+id/upcoming_image_2"/>
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/ic_movie_thumbnail"
                 android:id = "@+id/upcoming_image_3"/>
 
-            <com.android.volley.toolbox.NetworkImageView
+            <ImageView
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@drawable/ic_movie_thumbnail"
