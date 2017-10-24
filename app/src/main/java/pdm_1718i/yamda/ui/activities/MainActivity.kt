@@ -12,24 +12,52 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import pdm_1718i.yamda.R
-import pdm_1718i.yamda.data.server.TMDBService
+import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 
 class MainActivity : AppCompatActivity() {
+    val DEFAULT_PAGINATION: Int = 1
+    val DEFAULT_ITEM_NUMBER: Int = 4
+    val POPULAR_ITEM_LIST: IntArray =
+            intArrayOf(R.id.popular_image_1, R.id.popular_image_2, R.id.popular_image_3, R.id.popular_image_4)
+    val UPCOMING_ITEM_LIST: IntArray =
+            intArrayOf(R.id.upcoming_image_1, R.id.upcoming_image_2, R.id.upcoming_image_3, R.id.upcoming_image_4)
+    val PLAYING_ITEM_LIST: IntArray =
+            intArrayOf(R.id.theaters_image_1, R.id.theaters_image_2, R.id.theaters_image_3, R.id.theaters_image_4)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        App.moviesProvider.getPopularMovies(1, {
+        //getImageAndSet(it, DEFAULT_ITEM_NUMBER, POPULAR_ITEM_LIST)
+        App.moviesProvider.getPopularMovies(DEFAULT_PAGINATION, {
+            it.take(DEFAULT_ITEM_NUMBER).forEachIndexed { index, movie ->
+                App.moviesProvider.getImage(movie.poster_path,{
+                    val image_view = findViewById(POPULAR_ITEM_LIST[index]) as ImageView
+                    image_view.setImageBitmap(it)
+                })
+            }
 
-            var poster_path_1 = it[0].poster_path as String
-
-            App.moviesProvider.getImage(poster_path_1,{
-                val image_view_1 = findViewById(R.id.popular_image_1) as ImageView
-                image_view_1.setImageBitmap(it)
-            })
         })
+
+        App.moviesProvider.upcomingMovies(DEFAULT_PAGINATION,{
+            it.take(DEFAULT_ITEM_NUMBER).forEachIndexed { index, movie ->
+                App.moviesProvider.getImage(movie.poster_path,{
+                    val image_view = findViewById(UPCOMING_ITEM_LIST[index]) as ImageView
+                    image_view.setImageBitmap(it)
+                })
+            }
+        })
+
+        App.moviesProvider.nowPlayingMovies(DEFAULT_PAGINATION,{
+            it.take(DEFAULT_ITEM_NUMBER).forEachIndexed { index, movie ->
+                App.moviesProvider.getImage(movie.poster_path,{
+                    val image_view = findViewById(PLAYING_ITEM_LIST[index]) as ImageView
+                    image_view.setImageBitmap(it)
+                })
+            }
+        })
+
     }
 
 
@@ -88,6 +116,15 @@ class MainActivity : AppCompatActivity() {
         val intent: Intent = Intent(applicationContext, UpcomingActivity::class.java)
         startActivity(intent)
 
+    }
+
+    fun getImageAndSet(it: List<Movie>, take: Int, image_views: IntArray){
+        it.take(take).forEachIndexed { index, movie ->
+            App.moviesProvider.getImage(movie.poster_path,{
+                val image_view = findViewById(image_views[index]) as ImageView
+                image_view.setImageBitmap(it)
+            })
+        }
     }
 
 
