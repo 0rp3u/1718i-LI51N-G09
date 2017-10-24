@@ -18,6 +18,7 @@ import pdm_1718i.yamda.ui.App
 class MainActivity : AppCompatActivity() {
     val DEFAULT_PAGINATION: Int = 1
     val DEFAULT_ITEM_NUMBER: Int = 4
+
     val POPULAR_ITEM_LIST: IntArray =
             intArrayOf(R.id.popular_image_1, R.id.popular_image_2, R.id.popular_image_3, R.id.popular_image_4)
     val UPCOMING_ITEM_LIST: IntArray =
@@ -29,35 +30,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //getImageAndSet(it, DEFAULT_ITEM_NUMBER, POPULAR_ITEM_LIST)
         App.moviesProvider.getPopularMovies(DEFAULT_PAGINATION, {
-            it.take(DEFAULT_ITEM_NUMBER).forEachIndexed { index, movie ->
-                App.moviesProvider.getImage(movie.poster_path,{
-                    val image_view = findViewById(POPULAR_ITEM_LIST[index]) as ImageView
-                    image_view.setImageBitmap(it)
-                })
-            }
-
+            getImageAndSet(it, DEFAULT_ITEM_NUMBER, POPULAR_ITEM_LIST)
         })
 
         App.moviesProvider.upcomingMovies(DEFAULT_PAGINATION,{
-            it.take(DEFAULT_ITEM_NUMBER).forEachIndexed { index, movie ->
-                App.moviesProvider.getImage(movie.poster_path,{
-                    val image_view = findViewById(UPCOMING_ITEM_LIST[index]) as ImageView
-                    image_view.setImageBitmap(it)
-                })
-            }
+            getImageAndSet(it, DEFAULT_ITEM_NUMBER, UPCOMING_ITEM_LIST)
         })
 
         App.moviesProvider.nowPlayingMovies(DEFAULT_PAGINATION,{
-            it.take(DEFAULT_ITEM_NUMBER).forEachIndexed { index, movie ->
-                App.moviesProvider.getImage(movie.poster_path,{
-                    val image_view = findViewById(PLAYING_ITEM_LIST[index]) as ImageView
-                    image_view.setImageBitmap(it)
-                })
-            }
+            getImageAndSet(it, DEFAULT_ITEM_NUMBER, PLAYING_ITEM_LIST)
         })
-
     }
 
 
@@ -67,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         val menuItem = menu.findItem(R.id.search_menu)
         val searchView = menuItem.actionView as SearchView
         searchView.setIconifiedByDefault(true)
-
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         // Assumes current activity is the searchable activity
@@ -115,10 +97,9 @@ class MainActivity : AppCompatActivity() {
     fun onUpcomingMore(view : View){
         val intent: Intent = Intent(applicationContext, UpcomingActivity::class.java)
         startActivity(intent)
-
     }
 
-    fun getImageAndSet(it: List<Movie>, take: Int, image_views: IntArray){
+   private fun getImageAndSet(it: List<Movie>, take: Int, image_views: IntArray){
         it.take(take).forEachIndexed { index, movie ->
             App.moviesProvider.getImage(movie.poster_path,{
                 val image_view = findViewById(image_views[index]) as ImageView
