@@ -59,7 +59,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     }
 
     override fun get(uriBuilder: Uri.Builder, completionHandler: (response: JSONObject) -> Unit) {
-        val jsonObjReq = object : JsonObjectRequest(
+        val jsonObjReq = object : JsonObjectRequest(Method.GET,
                 Method.GET,
                 uriBuilder
                     .scheme("https")
@@ -76,11 +76,36 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                     VolleyLog.e(TAG, "/get request fail! Error: ${error?.message}")
                     //completionHandler(null)
                     Toast.makeText(App.instance, "Something Went KABOOM", Toast.LENGTH_SHORT).show()
-                }) {}
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val headers = HashMap<String, String>()
+                    headers.put("Content-Type", "application/json; charset=utf-8")
+                    return headers
+                }
+        }
 
         App.instance.addToRequestQueue(jsonObjReq, TAG)
     }
 
+
+    override fun popularSearch(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
+        get(
+                Uri.Builder()
+                        .appendEncodedPath("movies/get-popular-movies"),
+                {
+                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it?.toString() ?: "", MovieSearchResult::class.java)))
+                }
+        )
+    }
+
+    override fun upcomingSearch(query: String, page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
+
+    }
+
+    override fun playingSearch (query: String, page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
+
+    }
 
     override fun movieSearch(query: String, page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
 
