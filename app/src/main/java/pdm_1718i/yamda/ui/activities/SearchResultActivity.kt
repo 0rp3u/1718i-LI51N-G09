@@ -1,20 +1,14 @@
 package pdm_1718i.yamda.ui.activities
 
 import android.app.ListActivity
-import android.os.Bundle
-import pdm_1718i.yamda.R
 import android.app.SearchManager
 import android.content.Intent
-import android.net.Uri
-import android.view.View
-import android.widget.Toast
+import android.os.Bundle
+import android.widget.AdapterView
+import pdm_1718i.yamda.R
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.adapters.SimplesMovieAdapter
-import android.widget.AdapterView
-
-
-
 
 class SearchResultActivity: ListActivity() {
 
