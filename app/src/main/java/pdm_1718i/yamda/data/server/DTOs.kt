@@ -3,6 +3,7 @@ package com.example.pdm_1718i.yamda.data.server
 /**
  * Created by orpheu on 10/19/17.
  */
+
 data class Movie(
         val poster_path :String?,
         val adult : Boolean,
@@ -28,7 +29,7 @@ data class MovieDetailResult(
         val adult: Boolean,
         val backdrop_path : String?,
         val budget :Int,
-        //genres :Array<Genre>,
+        val genres :List<Genre>,
         val name :String,
         val homepage : String?,
         val id : Int,
@@ -50,4 +51,9 @@ data class MovieDetailResult(
         val video : Boolean,
         val vote_average :Number,
         val vote_count : Int
+)
+
+data class Genre(
+        val id : Int,
+        val name: String
 )
