@@ -9,30 +9,38 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id = "@+id/movie_poster"/>
+        android:id = "@+id/movie_poster"
+        android:layout_below="@+id/movie_title"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id= "@+id/movie_title"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/original_title"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/movie_desc"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/movie_genres"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:text="RELEASE_DATE"
+        android:layout_below="@+id/movie_title"
+        android:layout_toRightOf="@+id/movie_poster"
         android:id="@+id/release_date"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RATING"
+        android:layout_below="@+id/release_date"
+        android:layout_toRightOf="@+id/movie_poster"
+        android:id="@+id/rating"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GENRES"
+        android:layout_below="@+id/rating"
+        android:layout_toRightOf="@+id/movie_poster"
+        android:id="@+id/genres"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="overview"
+        android:layout_below="@+id/movie_poster"
+        android:id="@+id/overview"/>
+
 </RelativeLayout>
