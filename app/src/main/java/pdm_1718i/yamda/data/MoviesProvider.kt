@@ -22,7 +22,7 @@ class MoviesProvider {
     }
 
     fun getPopularMovies (query:String, page:Int, completionHandler:(movies:List<Movie>) -> Unit) {
-        SOURCE.popularSearch(query, page, completionHandler)
+        SOURCE.popularSearch(page, completionHandler)
     }
 
     fun searchMovies(query: String, page : Int, completionHandler: (movies: List<Movie>) -> Unit) {

@@ -59,7 +59,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     }
 
     override fun get(uriBuilder: Uri.Builder, completionHandler: (response: JSONObject) -> Unit) {
-        val jsonObjReq = object : JsonObjectRequest(Method.GET,
+        val jsonObjReq = object : JsonObjectRequest(
                 Method.GET,
                 uriBuilder
                     .scheme("https")

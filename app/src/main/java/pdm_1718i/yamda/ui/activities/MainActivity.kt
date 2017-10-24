@@ -4,14 +4,13 @@ import android.app.SearchManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-import com.android.volley.toolbox.NetworkImageView
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.server.TMDBService
 import pdm_1718i.yamda.ui.App
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
             var poster_path_1 = it[0].poster_path as String
 
-            App.moviesProvider.getImage(,poster_path_1,{
+            App.moviesProvider.getImage(poster_path_1,{
                 val image_view_1 = findViewById(R.id.popular_image_1) as ImageView
                 image_view_1.setImageBitmap(it)
             })
