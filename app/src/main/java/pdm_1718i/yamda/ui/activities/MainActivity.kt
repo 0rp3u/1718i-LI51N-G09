@@ -17,13 +17,11 @@ import pdm_1718i.yamda.ui.App
 
 class MainActivity : AppCompatActivity() {
 
-    val tmdbService by lazy{ TMDBService()}
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tmdbService.popularSearch(1, {
+        App.moviesProvider.getPopularMovies(1, {
 
             var poster_path_1 = it[0].poster_path as String
 

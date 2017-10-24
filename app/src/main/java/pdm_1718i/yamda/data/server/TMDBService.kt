@@ -89,21 +89,21 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     }
 
 
-    override fun popularSearch(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
+    override fun popularMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
         get(
                 Uri.Builder()
-                        .appendEncodedPath("movies/get-popular-movies"),
+                        .appendEncodedPath("movie/popular"),
                 {
-                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it?.toString() ?: "", MovieSearchResult::class.java)))
+                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it?.toString(), MovieSearchResult::class.java)))
                 }
         )
     }
 
-    override fun upcomingSearch(query: String, page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
+    override fun upcomingMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
 
     }
 
-    override fun playingSearch (query: String, page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
+    override fun playingMovies (page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
 
     }
 

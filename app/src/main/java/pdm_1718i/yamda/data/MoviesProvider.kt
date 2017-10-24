@@ -13,16 +13,16 @@ class MoviesProvider {
         val SOURCE by lazy { TMDBService()}
     }
 
-    fun nowPlayingMovies (query:String, page:Int, completionHandler:(movies:List<Movie>) -> Unit){
-        SOURCE.playingSearch(query, page, completionHandler)
+    fun nowPlayingMovies (page:Int, completionHandler:(movies:List<Movie>) -> Unit){
+        SOURCE.playingMovies(page, completionHandler)
     }
 
-    fun upcomingMovies (query:String, page:Int, completionHandler:(movies:List<Movie>) -> Unit){
-        SOURCE.upcomingSearch(query, page, completionHandler)
+    fun upcomingMovies (page:Int, completionHandler:(movies:List<Movie>) -> Unit){
+        SOURCE.upcomingMovies(page, completionHandler)
     }
 
-    fun getPopularMovies (query:String, page:Int, completionHandler:(movies:List<Movie>) -> Unit) {
-        SOURCE.popularSearch(page, completionHandler)
+    fun getPopularMovies (page:Int, completionHandler:(movies:List<Movie>) -> Unit) {
+        SOURCE.popularMovies(page, completionHandler)
     }
 
     fun searchMovies(query: String, page : Int, completionHandler: (movies: List<Movie>) -> Unit) {
