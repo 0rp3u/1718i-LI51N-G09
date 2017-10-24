@@ -11,6 +11,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+
+        <!-- Now Playing Movies -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,10 +43,9 @@
                 android:background="@drawable/ic_movie_thumbnail"
                 android:id = "@+id/popular_image_4"/>
 
-            <android.support.v7.widget.AppCompatImageButton
+            <ImageButton
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-
                 android:cropToPadding="false"
                 android:onClick="onPopularMore"
                 android:background="@android:color/transparent"
@@ -54,9 +55,13 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.LinearLayoutCompat
+
+
+        <!-- Popular Movies -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             >
 
             <ImageView
@@ -83,24 +88,23 @@
                 android:background="@drawable/ic_movie_thumbnail"
                 android:id = "@+id/theaters_image_4"/>
 
-            <android.support.v7.widget.AppCompatImageButton
+            <ImageButton
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-
                 android:cropToPadding="false"
                 android:onClick="onInTheatersMore"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_add_circle_outline_black" />
 
+        </LinearLayout>
 
 
 
-        </android.support.v7.widget.LinearLayoutCompat>
-
-
-        <android.support.v7.widget.LinearLayoutCompat
+        <!-- Upcoming Movies -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             >
 
             <ImageView
@@ -127,16 +131,15 @@
                 android:background="@drawable/ic_movie_thumbnail"
                 android:id = "@+id/upcoming_image_4"/>
 
-            <android.support.v7.widget.AppCompatImageButton
+            <ImageButton
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-
                 android:cropToPadding="false"
                 android:onClick="onUpcomingMore"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_add_circle_outline_black" />
 
-        </android.support.v7.widget.LinearLayoutCompat>
+        </LinearLayout>
 
     </LinearLayout>
 
