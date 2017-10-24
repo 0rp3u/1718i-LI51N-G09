@@ -100,11 +100,23 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     }
 
     override fun upcomingMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
-
+        get(
+                Uri.Builder()
+                        .appendEncodedPath("movie/upcoming"),
+                {
+                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it?.toString(), MovieSearchResult::class.java)))
+                }
+        )
     }
 
     override fun playingMovies (page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
-
+        get(
+                Uri.Builder()
+                        .appendEncodedPath("movie/now_playing"),
+                {
+                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it?.toString(), MovieSearchResult::class.java)))
+                }
+        )
     }
 
     override fun movieSearch(query: String, page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
