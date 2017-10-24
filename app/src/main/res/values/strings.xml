@@ -5,16 +5,21 @@
     <string name="TMDB_URL" translatable="false">api.themoviedb.org/3</string>
     <string name="TMDB_IMAGE_URL" translatable="false">image.tmdb.org/t/p</string>
 
-    <string name="develoers">develoers:</string>
-    <string name="dev1" translatable="false">David Duarte</string>
-    <string name="dev2" translatable="false">João Duarte</string>
-    <string name="dev3" translatable="false">Edgar Alves</string>
-    <string name="advisors">advisors:</string>
-    <string name="adv1" translatable="false">João Trindade</string>
-    <string name="adv2" translatable="false">Luís Falcão</string>
-    <string name="adv3" translatable="false">Paulo Pereira</string>
+    <string name="develoers">Developers:</string>
+    <string name="dev1" translatable="false">\u2022 David Duarte</string>
+    <string name="dev2" translatable="false">\u2022 João Duarte</string>
+    <string name="dev3" translatable="false">\u2022 Edgar Alves</string>
+    <string name="advisors">Advisors:</string>
+    <string name="adv1" translatable="false">\u2022 João Trindade</string>
+    <string name="adv2" translatable="false">\u2022 Luís Falcão</string>
+    <string name="adv3" translatable="false">\u2022 Paulo Pereira</string>
     <string name="about">About</string>
-    <string name="iconCredit">Icon made by Freepik from www.flaticon.com</string>
-    <string name="action_settings">settings</string>
+    <string name="iconCredit">\u2022 Icon made by Freepik from www.flaticon.com</string>
+    <string name="action_settings">Settings</string>
     <string name="search_hint">movie, actor, producer...</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="popular">Popular</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="references">References:</string>
+    <string name="source2">\u2022 Data provided by The Movie DB WebAPI</string>
 </resources>

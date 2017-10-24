@@ -83,7 +83,7 @@
             android:id="@+id/sourceInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="data sources:" />
+            android:text="@string/references" />
 
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="movie info provied by The Movie DB" />
+                android:text="@string/source2" />
 
         </android.support.v7.widget.LinearLayoutCompat>
 

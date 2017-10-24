@@ -3,16 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pdm_1718i.yamda.ui.activities.MainActivity"
-    android:orientation="vertical">
+    tools:context="pdm_1718i.yamda.ui.activities.MainActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        style="@style/DefaultLayoutMargin">
 
         <!-- Now Playing Movies -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/now_playing"
+            style="@style/textViewTitle"
+            />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,17 +57,19 @@
                 android:background="@android:color/transparent"
                 android:src="@mipmap/ic_view_list" />
 
-
-
         </LinearLayout>
 
 
-
         <!-- Popular Movies -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/popular"
+            style="@style/textViewTitle"
+            />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             >
 
             <ImageView
@@ -99,12 +107,16 @@
         </LinearLayout>
 
 
-
         <!-- Upcoming Movies -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/upcoming"
+            style="@style/textViewTitle"
+            />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             >
 
             <ImageView
@@ -142,5 +154,4 @@
         </LinearLayout>
 
     </LinearLayout>
-
 </ScrollView>

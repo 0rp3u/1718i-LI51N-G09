@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">YAMDA</string>
-    <string name="search_value">pesquisa</string>
-    <string name="develoers">programadores:</string>
-    <string name="advisors">orientadores:</string>
+    <string name="search_value">Pesquisa</string>
+    <string name="develoers">Programadores:</string>
+    <string name="advisors">Orientadores:</string>
     <string name="about">Sobre</string>
     <string name="iconCredit">Icon made by Freepik from www.flaticon.com</string>
-    <string name="action_settings">settings</string>
+    <string name="action_settings">Configurações</string>
     <string name="search_hint">movie, actor, producer...</string>
+    <string name="upcoming">Próximos</string>
+    <string name="popular">Populares</string>
+    <string name="now_playing">Em Exibição</string>
+    <string name="adv2" translatable="false"></string>
+    <string name="references">Referências:</string>
 </resources>
