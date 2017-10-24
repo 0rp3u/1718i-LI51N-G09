@@ -49,7 +49,7 @@
                 android:cropToPadding="false"
                 android:onClick="onPopularMore"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_add_circle_outline_black" />
+                android:src="@mipmap/ic_view_list" />
 
         </LinearLayout>
 
@@ -91,7 +91,7 @@
                 android:cropToPadding="false"
                 android:onClick="onInTheatersMore"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_add_circle_outline_black" />
+                android:src="@mipmap/ic_view_list" />
 
         </LinearLayout>
 
@@ -133,7 +133,7 @@
                 android:cropToPadding="false"
                 android:onClick="onUpcomingMore"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_add_circle_outline_black" />
+                android:src="@mipmap/ic_view_list" />
 
         </LinearLayout>
 
