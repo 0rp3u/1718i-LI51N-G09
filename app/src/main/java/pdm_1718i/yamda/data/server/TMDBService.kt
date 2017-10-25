@@ -6,6 +6,7 @@ package pdm_1718i.yamda.data.server
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
@@ -143,7 +144,6 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     }
 
      override fun movieImage(image_id: String, completionHandler: (image: Bitmap) -> Unit, image_size: String){
-        //https://image.tmdb.org/t/p/w185/kqjL17yufvn9OVLyXYpvtyrFfak.jpg
         val uri = Uri.Builder()
                 .appendEncodedPath(image_size)
                 .appendEncodedPath(image_id)
@@ -161,7 +161,8 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 },
                 0,
                 0,
-                null,
+                ImageView.ScaleType.CENTER,
+                Bitmap.Config.RGB_565,
                 Response.ErrorListener{
                     Toast.makeText(App.instance, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
                 }
