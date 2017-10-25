@@ -84,12 +84,10 @@ class MainActivity : AppCompatActivity() {
 
     fun onPopularMore(view : View){
         startActivity(Intent(applicationContext, PopularMoviesActivity::class.java))
-
     }
 
     fun onInTheatersMore(view : View){
         startActivity(Intent(applicationContext, InTheatersActivity::class.java))
-
     }
 
     fun onUpcomingMore(view : View){
@@ -101,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             App.moviesProvider.getImage(movie.poster_path,{
                 with(findViewById(image_views[index]) as ImageView){
                      setOnClickListener({
-                        startActivity(Intent(applicationContext, MovieDetailActivity::class.java).putExtra("movieId",movie.id ))
+                        startActivity(Intent(applicationContext, MovieDetailActivity::class.java).putExtra("movieId", movie.id))
                     })
                     setImageBitmap(it)
                 }
