@@ -36,6 +36,7 @@ class MovieDetailActivity : AppCompatActivity() {
             overviewTextView.text = overview
 
             if (poster_path != null && poster_path.isNotEmpty()) {
+
                 App.moviesProvider.image(poster_path, iv, Options.poster_sizes["BIG"]!!)
             }
         }

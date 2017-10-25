@@ -24,6 +24,8 @@ class InTheatersActivity : ListActivity() {
         }
     }
 
+
+
     private fun createGUI(movies : List< Movie>){
             listView.adapter = SimplesMovieAdapter(this, movies)
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -31,4 +33,6 @@ class InTheatersActivity : ListActivity() {
                 startActivity(Intent(applicationContext, MovieDetailActivity::class.java).putExtra("movieId", movieId))
             }
     }
+
+
 }

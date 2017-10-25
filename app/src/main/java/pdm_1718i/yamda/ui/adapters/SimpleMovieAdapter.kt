@@ -46,8 +46,10 @@ class SimplesMovieAdapter(private val context : Activity, private val searchedMo
         if(movie.poster_path.isNotEmpty()){
             App.moviesProvider.image(movie.poster_path,  movieViewHolder.image, Options.poster_sizes["SMALL"]!!)
         }
+
         return itemView
     }
+
 
     override fun getItem(position: Int): Movie {
         return searchedMovies[position]

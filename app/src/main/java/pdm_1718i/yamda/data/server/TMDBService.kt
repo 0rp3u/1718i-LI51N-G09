@@ -10,7 +10,8 @@ import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyLog
-import com.android.volley.toolbox.ImageLoader
+import com.android.volley.toolbox.ImageLoader.getImageListener
+import pdm_1718i.yamda.extensions.getImageListener
 import com.android.volley.toolbox.JsonObjectRequest
 import com.example.pdm_1718i.yamda.data.server.MovieDetailResult
 import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
@@ -150,10 +151,11 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 .encodedAuthority(IMAGE_PATH)
                 .toString()
 
-        if(App.imageLoader.isCached(uri,imageView.width, imageView.height)) Log.v("cache", "$uri was cached!")
+        if(App.imageLoader.isCached(uri,imageView.width, imageView.height)) Log.i("cache", "$uri was cached!")
 
-        App.imageLoader.get(uri, ImageLoader.getImageListener(
-                imageView, R.drawable.ic_loading, R.drawable.ic_movie_thumbnail))
+        imageView.tag = uri
+        App.imageLoader
+                .get(uri, getImageListener(imageView, R.drawable.ic_loading, R.drawable.ic_movie_thumbnail, uri))
 
     }
 }
