@@ -84,21 +84,21 @@ class MainActivity : AppCompatActivity() {
 
 
     fun onPopularMore(view: View){
-        with(Intent(applicationContext, InTheatersActivity::class.java)){
+        with(Intent(applicationContext, MovieListActivity::class.java)){
             putExtra("requestType", "Popular")
             startActivity(this)
         }
     }
 
     fun onInTheatersMore(view: View){
-        with(Intent(applicationContext, InTheatersActivity::class.java)){
-            putExtra("requestType", "NowPlaying")
+        with(Intent(applicationContext, MovieListActivity::class.java)){
+            putExtra("requestType", "Now Playing")
             startActivity(this)
         }
     }
 
     fun onUpcomingMore(view: View){
-        with(Intent(applicationContext, InTheatersActivity::class.java)){
+        with(Intent(applicationContext, MovieListActivity::class.java)){
             putExtra("requestType", "Upcoming")
             startActivity(this)
         }

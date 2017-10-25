@@ -18,7 +18,7 @@ data class Movie(
         val popularity : Number,
         val vote_count : Number,
         val video : Boolean,
-        val vote_average : Number,
+        val vote_average : Double,
         val total_results : Int,
         val total_pages : Int
 )

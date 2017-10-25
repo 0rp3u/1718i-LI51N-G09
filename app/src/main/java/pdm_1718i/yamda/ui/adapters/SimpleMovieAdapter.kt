@@ -32,16 +32,17 @@ class SimplesMovieAdapter(private val context : Activity, private val searchedMo
         if (convertView == null) {
             val image = itemView.findViewById<ImageView>(R.id.image)
             val title = itemView.findViewById<TextView>(R.id.title)
+            val date = itemView.findViewById<TextView>(R.id.release_date)
             val score = itemView.findViewById<TextView>(R.id.score)
-            movieViewHolder = SimpleMovieHolder(image,title, score)
+            movieViewHolder = SimpleMovieHolder(image,title, date, score)
             itemView.tag = movieViewHolder
         }else {
             movieViewHolder = itemView.tag as SimpleMovieHolder
         }
 
         movieViewHolder.title.text = movie.title
+        movieViewHolder.date.text = movie.release_date
         movieViewHolder.score.text= movie.vote_average.toString()
-
 
         if(movie.poster_path.isNotEmpty()){
             App.moviesProvider.image(movie.poster_path,  movieViewHolder.image, Options.poster_sizes["SMALL"]!!)
