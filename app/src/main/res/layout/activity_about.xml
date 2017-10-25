@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pdm_1718i.yamda.ui.activities.AboutActivity">
+    tools:context="pdm_1718i.yamda.ui.activities.AboutActivity"
+    style= "@style/DefaultLayoutMargin">
 
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
