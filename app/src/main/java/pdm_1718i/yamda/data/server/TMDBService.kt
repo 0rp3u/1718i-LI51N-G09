@@ -143,11 +143,9 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     }
 
      override fun movieImage(image_id: String, completionHandler: (image: Bitmap) -> Unit, image_size: String){
-        //https://image.tmdb.org/t/p/w185/kqjL17yufvn9OVLyXYpvtyrFfak.jpg
         val uri = Uri.Builder()
                 .appendEncodedPath(image_size)
                 .appendEncodedPath(image_id)
-                //.appendEncodedPath(image_id)
                 .scheme("https")
                 .encodedAuthority(IMAGE_PATH)
                 .toString()
@@ -163,7 +161,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 0,
                 null,
                 Response.ErrorListener{
-                    Toast.makeText(App.instance, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(App.instance, "Error: Failed to fetch image from the web.", Toast.LENGTH_SHORT).show()
                 }
         )
          App.instance.addToRequestQueue(ir)
