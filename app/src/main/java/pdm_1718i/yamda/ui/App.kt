@@ -1,11 +1,10 @@
 package pdm_1718i.yamda.ui
 
 import android.app.Application
-import android.text.TextUtils
 import com.android.volley.Request
+import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
 import pdm_1718i.yamda.data.MoviesProvider
-import com.android.volley.toolbox.ImageLoader
 import pdm_1718i.yamda.data.server.BitmapLruCache
 
 
@@ -14,9 +13,9 @@ class App : Application() {
     companion object {
         lateinit var instance: App
             private set
-        private val requestQueue by lazy { Volley.newRequestQueue(instance)}
-        val imageLoader by lazy { ImageLoader(requestQueue,  BitmapLruCache())}
-        val moviesProvider by lazy { MoviesProvider()}
+        private val requestQueue by lazy { Volley.newRequestQueue(instance) }
+        val imageLoader by lazy { ImageLoader(requestQueue, BitmapLruCache()) }
+        val moviesProvider by lazy { MoviesProvider() }
         private val TAG = App::class.java.simpleName
     }
 
@@ -25,18 +24,13 @@ class App : Application() {
         instance = this
     }
 
-    fun <T> addToRequestQueue(request: Request<T>, tag: String) {
-        request.tag = if (TextUtils.isEmpty(tag)) TAG else tag
-        requestQueue.add(request)
-    }
-
-    fun <T> addToRequestQueue(request: Request<T>) {
-        request.tag = TAG
+    fun <T> addToRequestQueue(request: Request<T>, tag: String = TAG) {
+        request.tag = tag
         requestQueue.add(request)
     }
 
     fun cancelPendingRequests(tag: Any) {
-            requestQueue.cancelAll(tag)
+        requestQueue.cancelAll(tag)
     }
 
 }

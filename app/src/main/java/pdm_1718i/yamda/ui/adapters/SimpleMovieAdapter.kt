@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import pdm_1718i.yamda.R
+import pdm_1718i.yamda.data.server.Options
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.holders.SimpleMovieHolder
@@ -43,7 +44,7 @@ class SimplesMovieAdapter(private val context : Activity, private val searchedMo
 
 
         if(movie.poster_path.isNotEmpty()){
-            App.moviesProvider.getImage(movie.poster_path,  movieViewHolder.image)
+            App.moviesProvider.image(movie.poster_path,  movieViewHolder.image, Options.poster_sizes["SMALL"]!!)
         }
         return itemView
     }

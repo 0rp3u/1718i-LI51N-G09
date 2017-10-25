@@ -3,6 +3,7 @@
     <string name="search_value">Search</string>
     <string name="API_KEY" translatable="false">e6b5c7874febd4c400f94838548bafac</string>
     <string name="TMDB_URL" translatable="false">api.themoviedb.org/3</string>
+    <string name="TMDB_HOMEPAGE_URL" translatable="false">http://themoviedb.org</string>
     <string name="TMDB_IMAGE_URL" translatable="false">image.tmdb.org/t/p</string>
 
     <string name="develoers">Developers:</string>
@@ -22,4 +23,5 @@
     <string name="upcoming">Upcoming</string>
     <string name="references">References:</string>
     <string name="source2">\u2022 Data provided by The Movie DB WebAPI</string>
+    <string name="toolbar_search">search</string>
 </resources>

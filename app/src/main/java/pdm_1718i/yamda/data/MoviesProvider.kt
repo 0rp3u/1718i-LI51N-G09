@@ -1,6 +1,5 @@
 package pdm_1718i.yamda.data
 
-import android.graphics.Bitmap
 import android.widget.ImageView
 import pdm_1718i.yamda.data.server.TMDBService
 import pdm_1718i.yamda.model.DetailedMovie
@@ -22,7 +21,7 @@ class MoviesProvider {
         SOURCE.upcomingMovies(page, completionHandler)
     }
 
-    fun getPopularMovies (page:Int, completionHandler:(movies:List<Movie>) -> Unit) {
+    fun popularMovies (page:Int, completionHandler:(movies:List<Movie>) -> Unit) {
         SOURCE.popularMovies(page, completionHandler)
     }
 
@@ -34,7 +33,7 @@ class MoviesProvider {
         SOURCE.movieDetail(id, completionHandler)
     }
 
-    fun getImage(image_id: String, imageView: ImageView, image_size: String = "w185"){
-        SOURCE.movieImage(image_id.substring(1), imageView , image_size)
+    fun image(image_id: String, imageView: ImageView, imageOption: String){
+        SOURCE.movieImage(image_id.substring(1), imageView , imageOption)
     }
 }

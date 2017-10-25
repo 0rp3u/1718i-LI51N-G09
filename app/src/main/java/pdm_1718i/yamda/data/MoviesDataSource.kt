@@ -1,6 +1,5 @@
 package pdm_1718i.yamda.data
 
-import android.graphics.Bitmap
 import android.widget.ImageView
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie

@@ -3,7 +3,6 @@ package pdm_1718i.yamda.data.server
 /**
  * Created by orpheu on 10/13/17.
  */
-import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
@@ -12,7 +11,6 @@ import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyLog
 import com.android.volley.toolbox.ImageLoader
-import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.example.pdm_1718i.yamda.data.server.MovieDetailResult
 import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
@@ -148,7 +146,6 @@ class TMDBService : ServiceInterface, MoviesDataSource {
         val uri = Uri.Builder()
                 .appendEncodedPath(image_size)
                 .appendEncodedPath(image_id)
-                //.appendEncodedPath(image_id)
                 .scheme("https")
                 .encodedAuthority(IMAGE_PATH)
                 .toString()
@@ -159,33 +156,4 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 imageView, R.drawable.ic_loading, R.drawable.ic_movie_thumbnail))
 
     }
-
-
-        /*
-         override fun movieImage(image_id: String, completionHandler: (image: Bitmap) -> Unit, image_size: String){
-            val uri = Uri.Builder()
-                    .appendEncodedPath(image_size)
-                    .appendEncodedPath(image_id)
-                    //.appendEncodedPath(image_id)
-                    .scheme("https")
-                    .encodedAuthority(IMAGE_PATH)
-                    .toString()
-
-            val ir = ImageRequest(
-                    uri,
-                    Response.Listener<Bitmap> {
-                        if(it != null){
-                            completionHandler(it)
-                        }
-                    },
-                    0,
-                    0,
-                    ImageView.ScaleType.CENTER,
-                    Bitmap.Config.RGB_565,
-                    Response.ErrorListener{
-                        Toast.makeText(App.instance, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
-                    }
-            )
-             App.instance.addToRequestQueue(ir)
-        }*/
 }

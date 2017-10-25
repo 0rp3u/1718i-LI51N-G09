@@ -7,7 +7,7 @@
         android:id="@+id/search_menu"
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="search"
+        android:title="@string/toolbar_search"
         app:showAsAction="always" />
 
     <item android:id="@+id/action_settings"
