@@ -21,8 +21,8 @@ import pdm_1718i.yamda.ui.holders.SimpleMovieHolder
 class SimplesMovieAdapter(private val context : Activity, private val searchedMovies: List<Movie>
                           ) : ArrayAdapter<Movie>(context,R.layout.item_search_result, searchedMovies){
 
-    val itemLayoutId = R.layout.item_search_result
-    val inflater = LayoutInflater.from(context)
+    private val itemLayoutId = R.layout.item_search_result
+    private val inflater = LayoutInflater.from(context)
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val itemView = convertView ?: inflater.inflate(itemLayoutId, parent, false)
@@ -40,10 +40,10 @@ class SimplesMovieAdapter(private val context : Activity, private val searchedMo
 
         movieViewHolder.title.text = movie.title
         movieViewHolder.score.text= movie.vote_average.toString()
+
+
         if(movie.poster_path.isNotEmpty()){
-            App.moviesProvider.getImage(movie.poster_path, {
-                movieViewHolder.image.setImageBitmap(it)
-            })
+            App.moviesProvider.getImage(movie.poster_path,  movieViewHolder.image)
         }
         return itemView
     }

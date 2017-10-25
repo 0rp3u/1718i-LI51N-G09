@@ -29,23 +29,20 @@ class MovieDetailActivity : AppCompatActivity() {
         val genreTextView = findViewById(R.id.genres) as TextView
         val overviewTextView = findViewById(R.id.overview) as TextView
         val iv = findViewById(R.id.movie_poster) as ImageView
-        val thisAct = this
         with(movieDetail){
 
-            thisAct.title = "$title($release_date)"
+            this@MovieDetailActivity.title = "$title($release_date)"
 
             ratingTextView.text = vote_average.toString()
 
-            val genres = genres.joinToString(separator = ",") {
+            val genres = genres.joinToString(separator = ", ") {
                 it.name
             }
             genreTextView.text = genres
             overviewTextView.text = overview
 
             if (poster_path != null && poster_path.isNotEmpty()) {
-                App.moviesProvider.getImage(poster_path, {
-                    iv.setImageBitmap(it)
-                })
+                App.moviesProvider.getImage(poster_path, iv)
             }
 
 

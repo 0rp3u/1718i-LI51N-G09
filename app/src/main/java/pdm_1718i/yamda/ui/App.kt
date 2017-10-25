@@ -5,6 +5,8 @@ import android.text.TextUtils
 import com.android.volley.Request
 import com.android.volley.toolbox.Volley
 import pdm_1718i.yamda.data.MoviesProvider
+import com.android.volley.toolbox.ImageLoader
+import pdm_1718i.yamda.data.server.BitmapLruCache
 
 
 class App : Application() {
@@ -13,6 +15,7 @@ class App : Application() {
         lateinit var instance: App
             private set
         private val requestQueue by lazy { Volley.newRequestQueue(instance)}
+        val imageLoader by lazy { ImageLoader(requestQueue,  BitmapLruCache())}
         val moviesProvider by lazy { MoviesProvider()}
         private val TAG = App::class.java.simpleName
     }

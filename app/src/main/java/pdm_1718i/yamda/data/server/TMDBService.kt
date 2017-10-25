@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyLog
+import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.example.pdm_1718i.yamda.data.server.MovieDetailResult
@@ -143,7 +144,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
         )
     }
 
-     override fun movieImage(image_id: String, completionHandler: (image: Bitmap) -> Unit, image_size: String){
+    override fun movieImage(image_id: String, imageView : ImageView, image_size: String) {
         val uri = Uri.Builder()
                 .appendEncodedPath(image_size)
                 .appendEncodedPath(image_id)
@@ -152,21 +153,39 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 .encodedAuthority(IMAGE_PATH)
                 .toString()
 
-        val ir = ImageRequest(
-                uri,
-                Response.Listener<Bitmap> {
-                    if(it != null){
-                        completionHandler(it)
-                    }
-                },
-                0,
-                0,
-                ImageView.ScaleType.CENTER,
-                Bitmap.Config.RGB_565,
-                Response.ErrorListener{
-                    Toast.makeText(App.instance, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
-                }
-        )
-         App.instance.addToRequestQueue(ir)
+        if(App.imageLoader.isCached(uri,imageView.width, imageView.height)) Log.v("cache", "$uri was cached!")
+
+        App.imageLoader.get(uri, ImageLoader.getImageListener(
+                imageView, R.drawable.ic_loading, R.drawable.ic_movie_thumbnail))
+
     }
+
+
+        /*
+         override fun movieImage(image_id: String, completionHandler: (image: Bitmap) -> Unit, image_size: String){
+            val uri = Uri.Builder()
+                    .appendEncodedPath(image_size)
+                    .appendEncodedPath(image_id)
+                    //.appendEncodedPath(image_id)
+                    .scheme("https")
+                    .encodedAuthority(IMAGE_PATH)
+                    .toString()
+
+            val ir = ImageRequest(
+                    uri,
+                    Response.Listener<Bitmap> {
+                        if(it != null){
+                            completionHandler(it)
+                        }
+                    },
+                    0,
+                    0,
+                    ImageView.ScaleType.CENTER,
+                    Bitmap.Config.RGB_565,
+                    Response.ErrorListener{
+                        Toast.makeText(App.instance, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+            )
+             App.instance.addToRequestQueue(ir)
+        }*/
 }

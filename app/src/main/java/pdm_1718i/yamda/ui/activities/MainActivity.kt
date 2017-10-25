@@ -98,14 +98,12 @@ class MainActivity : AppCompatActivity() {
 
    private fun getImageAndSet(it: List<Movie>, take: Int, image_views: IntArray){
         it.take(take).forEachIndexed { index, movie ->
-            App.moviesProvider.getImage(movie.poster_path,{
-                with(findViewById(image_views[index]) as ImageView){
-                     setOnClickListener({
-                        startActivity(Intent(applicationContext, MovieDetailActivity::class.java).putExtra("movieId",movie.id ))
-                    })
-                    setImageBitmap(it)
-                }
-            })
+            with(findViewById(image_views[index]) as ImageView){
+                App.moviesProvider.getImage(movie.poster_path, this)
+                setOnClickListener({
+                    startActivity(Intent(applicationContext, MovieDetailActivity::class.java).putExtra("movieId",movie.id ))
+                })
+            }
         }
     }
 
