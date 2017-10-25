@@ -6,6 +6,7 @@ package pdm_1718i.yamda.data.server
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
@@ -159,7 +160,8 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 },
                 0,
                 0,
-                null,
+                ImageView.ScaleType.CENTER,
+                Bitmap.Config.RGB_565,
                 Response.ErrorListener{
                     Toast.makeText(App.instance, "Error: Failed to fetch image from the web.", Toast.LENGTH_SHORT).show()
                 }

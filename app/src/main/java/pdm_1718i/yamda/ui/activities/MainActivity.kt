@@ -83,27 +83,28 @@ class MainActivity : AppCompatActivity() {
 
 
     fun onPopularMore(view : View){
-        val intent: Intent = Intent(applicationContext, PopularMoviesActivity::class.java)
-        startActivity(intent)
+        startActivity(Intent(applicationContext, PopularMoviesActivity::class.java))
 
     }
 
     fun onInTheatersMore(view : View){
-        val intent: Intent = Intent(applicationContext, InTheatersActivity::class.java)
-        startActivity(intent)
+        startActivity(Intent(applicationContext, InTheatersActivity::class.java))
 
     }
 
     fun onUpcomingMore(view : View){
-        val intent: Intent = Intent(applicationContext, UpcomingActivity::class.java)
-        startActivity(intent)
+        startActivity(Intent(applicationContext, UpcomingActivity::class.java))
     }
 
    private fun getImageAndSet(it: List<Movie>, take: Int, image_views: IntArray){
         it.take(take).forEachIndexed { index, movie ->
             App.moviesProvider.getImage(movie.poster_path,{
-                val image_view = findViewById(image_views[index]) as ImageView
-                image_view.setImageBitmap(it)
+                with(findViewById(image_views[index]) as ImageView){
+                     setOnClickListener({
+                        startActivity(Intent(applicationContext, MovieDetailActivity::class.java).putExtra("movieId",movie.id ))
+                    })
+                    setImageBitmap(it)
+                }
             })
         }
     }
