@@ -33,19 +33,7 @@
             android:value=".ui.activities.MainActivity" />
     </activity>
 
-    <activity android:name=".ui.activities.PopularMoviesActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.activities.MainActivity" />
-    </activity>
-
-    <activity android:name=".ui.activities.InTheatersActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.activities.MainActivity" />
-    </activity>
-
-    <activity android:name=".ui.activities.UpcomingActivity">
+    <activity android:name=".ui.activities.MovieListActivity">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".ui.activities.MainActivity" />

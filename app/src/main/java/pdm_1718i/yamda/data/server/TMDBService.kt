@@ -66,6 +66,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                     .scheme("https")
                     .encodedAuthority(basePath)
                     .appendQueryParameter("api_key", API_KEY)
+                    .appendQueryParameter("language", Locale.getDefault().toString())
                     .toString(),
                 null,
                 Response.Listener<JSONObject> { response ->
@@ -119,6 +120,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 }
         )
     }
+
 
     override fun movieSearch(query: String, page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
 

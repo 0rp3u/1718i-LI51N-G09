@@ -51,7 +51,7 @@
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@android:color/transparent"
-                android:onClick="onPopularMore"
+                android:onClick="onInTheatersMore"
                 android:src="@mipmap/ic_view_list" />
 
         </LinearLayout>
@@ -96,7 +96,7 @@
                 android:layout_width="70dp"
                 android:layout_height="100dp"
                 android:background="@android:color/transparent"
-                android:onClick="onInTheatersMore"
+                android:onClick="onPopularMore"
                 android:src="@mipmap/ic_view_list" />
 
         </LinearLayout>

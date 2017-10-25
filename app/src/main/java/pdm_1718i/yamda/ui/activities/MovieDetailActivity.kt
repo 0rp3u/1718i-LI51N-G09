@@ -12,6 +12,7 @@ import pdm_1718i.yamda.ui.App
 
 class MovieDetailActivity : AppCompatActivity() {
 
+    val release_date by lazy { findViewById(R.id.release_date) as TextView }
     val ratingTextView by lazy {findViewById(R.id.rating) as TextView }
     val genreTextView by lazy {findViewById(R.id.genres) as TextView }
     val overviewTextView  by lazy { findViewById(R.id.overview) as TextView }
@@ -27,10 +28,9 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun updateUI(movieDetail: DetailedMovie) {
         with(movieDetail){
-            this@MovieDetailActivity.title = "$title($release_date)"
-
+            this@MovieDetailActivity.title = "$title (${release_date.substring(0, 4)})"
+            this@MovieDetailActivity.release_date.text = release_date
             ratingTextView.text = vote_average.toString()
-
             val genres = genres.joinToString(separator = ", ") {it.name}
             genreTextView.text = genres
             overviewTextView.text = overview
@@ -41,4 +41,6 @@ class MovieDetailActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }

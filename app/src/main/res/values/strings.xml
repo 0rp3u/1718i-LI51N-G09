@@ -17,7 +17,7 @@
     <string name="about">About</string>
     <string name="iconCredit">\u2022 Icon made by Freepik from www.flaticon.com</string>
     <string name="action_settings">Settings</string>
-    <string name="search_hint">movie, actor, producer...</string>
+    <string name="search_hint">Movie...</string>
     <string name="now_playing">Now Playing</string>
     <string name="popular">Popular</string>
     <string name="upcoming">Upcoming</string>
