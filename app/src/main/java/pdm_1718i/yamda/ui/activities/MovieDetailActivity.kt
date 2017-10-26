@@ -12,11 +12,11 @@ import pdm_1718i.yamda.ui.App
 
 class MovieDetailActivity : AppCompatActivity() {
 
-    val release_date by lazy { findViewById(R.id.release_date) as TextView }
-    val ratingTextView by lazy {findViewById(R.id.rating) as TextView }
-    val genreTextView by lazy {findViewById(R.id.genres) as TextView }
-    val overviewTextView  by lazy { findViewById(R.id.overview) as TextView }
-    val iv  by lazy { findViewById(R.id.movie_poster) as ImageView }
+    private val release_date by lazy { findViewById(R.id.release_date) as TextView }
+    private val ratingTextView by lazy {findViewById(R.id.rating) as TextView }
+    private val genreTextView by lazy {findViewById(R.id.genres) as TextView }
+    private val overviewTextView  by lazy { findViewById(R.id.overview) as TextView }
+    private val imageView by lazy { findViewById(R.id.movie_poster) as ImageView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +36,7 @@ class MovieDetailActivity : AppCompatActivity() {
             overviewTextView.text = overview
 
             if (poster_path != null && poster_path.isNotEmpty()) {
-                App.moviesProvider.image(poster_path, iv, Options.poster_sizes["BIG"]!!)
+                App.moviesProvider.image(poster_path, imageView, Options.poster_sizes["BIG"]!!)
             }
         }
     }
