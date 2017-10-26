@@ -27,7 +27,7 @@ fun mapToMovie(jsonMovie : JSONObject) : Movie {
                 result.release_date,
                 result.id,
                 result.title,
-                result.vote_average,
+                result.vote_average.toFloat(),
                 result.budget,
                 result.genres.map {
                     Genre(it.name)
