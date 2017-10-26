@@ -152,7 +152,9 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 .encodedAuthority(IMAGE_PATH)
                 .toString()
 
-        if(App.imageLoader.isCached(uri,imageView.width, imageView.height)) Log.v("cache", "$uri was cached!")
+        if(App.imageLoader.isCached(uri,imageView.width, imageView.height)){
+            Log.d("cache", "$uri was cached!")
+        }
 
         App.imageLoader.get(uri, ImageLoader.getImageListener(
                 imageView, R.drawable.ic_loading, R.drawable.ic_movie_thumbnail))
