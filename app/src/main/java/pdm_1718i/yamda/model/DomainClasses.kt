@@ -14,7 +14,7 @@ data class Movie(
         val title : String,
         val backdrop_path : String,
         val vote_average: Double
-) /*: Parcelable{
+) : Parcelable{
 
     constructor(parcel: Parcel) : this(
             parcel.readString(),
@@ -22,10 +22,15 @@ data class Movie(
             parcel.readInt(),
             parcel.readString(),
             parcel.readString(),
-           TODO("vote_average"))
+            parcel.readDouble())
 
-    override fun writeToParcel(p0: Parcel?, p1: Int) {
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString( this.poster_path )
+        dest.writeString( this.release_date )
+        dest.writeInt( this.id )
+        dest.writeString( this.title )
+        dest.writeString ( this.backdrop_path )
+        dest.writeDouble( this.vote_average )
     }
 
     override fun describeContents(): Int {
@@ -43,7 +48,7 @@ data class Movie(
     }
 
 }
-*/
+
 data class DetailedMovie(
         val poster_path : String?,
         val release_date : String,

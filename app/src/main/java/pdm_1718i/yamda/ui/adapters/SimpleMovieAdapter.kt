@@ -19,8 +19,8 @@ import pdm_1718i.yamda.ui.holders.SimpleMovieHolder
 
 
 
-class SimplesMovieAdapter(private val context : Activity, private val searchedMovies: List<Movie>
-                          ) : ArrayAdapter<Movie>(context,R.layout.item_search_result, searchedMovies){
+class SimplesMovieAdapter(private val context : Activity, private val searchedMovies: List<Movie>)
+    : ArrayAdapter<Movie>(context,R.layout.item_search_result, searchedMovies){
 
     private val itemLayoutId = R.layout.item_search_result
     private val inflater = LayoutInflater.from(context)
@@ -54,5 +54,9 @@ class SimplesMovieAdapter(private val context : Activity, private val searchedMo
 
     override fun getItem(position: Int): Movie {
         return searchedMovies[position]
+    }
+
+    fun getAllItems(): List<Movie>{
+        return searchedMovies
     }
 }

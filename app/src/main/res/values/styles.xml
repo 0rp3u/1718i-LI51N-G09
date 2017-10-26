@@ -13,8 +13,13 @@
         <item name="android:layout_marginTop">5dp</item>
     </style>
 
-    <style name="DefaultLayoutMargin">
+    <style name="DefaultMargin">
         <item name="android:layout_margin">5dp</item>
+    </style>
+
+    <style name="DefaultItemHeader">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

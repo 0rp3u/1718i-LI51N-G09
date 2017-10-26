@@ -144,7 +144,9 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 .encodedAuthority(IMAGE_PATH)
                 .toString()
 
-        if(App.imageLoader.isCached(uri,imageView.width, imageView.height)) Log.i("cache", "$uri was cached!")
+        if(App.imageLoader.isCached(uri,imageView.width, imageView.height)){
+            Log.d("cache", "$uri was cached!")
+        }
 
         imageView.tag = uri
         App.imageLoader
