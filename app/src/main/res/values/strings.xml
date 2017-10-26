@@ -24,4 +24,5 @@
     <string name="references">References:</string>
     <string name="source2">\u2022 Data provided by The Movie DB WebAPI</string>
     <string name="toolbar_search">search</string>
+    <string name="no_results">no results</string>
 </resources>

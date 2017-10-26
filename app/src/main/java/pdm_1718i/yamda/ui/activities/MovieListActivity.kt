@@ -3,8 +3,10 @@ package pdm_1718i.yamda.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.model.Movie
@@ -13,7 +15,8 @@ import pdm_1718i.yamda.ui.adapters.SimplesMovieAdapter
 
 class MovieListActivity : AppCompatActivity() {
 
-    val listView: ListView by lazy { findViewById(R.id.list) as ListView }
+    private val listView: ListView by lazy { findViewById(R.id.list) as ListView }
+    private val emptyView : TextView by lazy { findViewById(R.id.emptyElement) as TextView}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +34,16 @@ class MovieListActivity : AppCompatActivity() {
 
 
     private fun createGUI(movies : List< Movie>){
-        listView.adapter = SimplesMovieAdapter(this, movies)
-        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            val movieId = (listView.adapter.getItem(position) as Movie).id
-            startActivity(Intent(applicationContext, MovieDetailActivity::class.java).putExtra("movieId", movieId))
+        if(!movies.isEmpty()) {
+            listView.adapter = SimplesMovieAdapter(this, movies)
+            listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+                val movieId = (listView.adapter.getItem(position) as Movie).id
+                startActivity(Intent(applicationContext, MovieDetailActivity::class.java).putExtra("movieId", movieId))
+            }
+        }else{
+            emptyView.visibility = View.VISIBLE
+            listView.emptyView = emptyView
+
         }
     }
 

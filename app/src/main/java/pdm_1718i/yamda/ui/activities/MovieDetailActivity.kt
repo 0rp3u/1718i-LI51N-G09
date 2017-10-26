@@ -2,6 +2,7 @@ package pdm_1718i.yamda.ui.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast

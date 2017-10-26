@@ -96,7 +96,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 Uri.Builder()
                         .appendEncodedPath("movie/popular"),
                 {
-                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it?.toString(), MovieSearchResult::class.java)))
+                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
                 }
         )
     }
@@ -106,7 +106,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 Uri.Builder()
                         .appendEncodedPath("movie/upcoming"),
                 {
-                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it?.toString(), MovieSearchResult::class.java)))
+                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
                 }
         )
     }
@@ -116,7 +116,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 Uri.Builder()
                         .appendEncodedPath("movie/now_playing"),
                 {
-                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it?.toString(), MovieSearchResult::class.java)))
+                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
                 }
         )
     }
@@ -129,7 +129,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                         .appendEncodedPath("search/movie")
                         .appendQueryParameter("query", query),
                 {
-                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it?.toString() ?: "", MovieSearchResult::class.java)))
+                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
                 }
         )
     }
@@ -140,7 +140,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 Uri.Builder()
                     .appendEncodedPath("movie/$id"),
                 {
-                    completionHandler(DataMapper().mapToMovieDetail(gson.fromJson(it?.toString() ?: "", MovieDetailResult::class.java)))
+                    completionHandler(DataMapper().mapToMovieDetail(gson.fromJson(it.toString(), MovieDetailResult::class.java)))
                 }
         )
     }
