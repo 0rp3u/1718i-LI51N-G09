@@ -2,7 +2,6 @@ package pdm_1718i.yamda.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
@@ -13,7 +12,7 @@ import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.adapters.SimplesMovieAdapter
 
-class MovieListActivity : AppCompatActivity() {
+class MovieListActivity : BaseActivity() {
 
     private val listView: ListView by lazy { findViewById(R.id.list) as ListView }
     private val emptyView : TextView by lazy { findViewById(R.id.emptyElement) as TextView}

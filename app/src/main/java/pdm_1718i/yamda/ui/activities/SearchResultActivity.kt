@@ -1,22 +1,18 @@
 package pdm_1718i.yamda.ui.activities
 
-import android.app.ListActivity
 import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
-import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.adapters.SimplesMovieAdapter
 
-class SearchResultActivity: AppCompatActivity() {
+class SearchResultActivity: BaseActivity() {
 
     private val listView: ListView by lazy { findViewById(R.id.list) as ListView }
     private val emptyView: TextView by lazy { findViewById(R.id.emptyElement) as TextView }
@@ -24,7 +20,6 @@ class SearchResultActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
-
         handleIntent(intent)
     }
 
