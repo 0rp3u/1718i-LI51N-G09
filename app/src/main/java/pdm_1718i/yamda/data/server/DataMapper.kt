@@ -17,7 +17,6 @@ fun mapToMovie(jsonMovie : JSONObject) : Movie {
     fun mapToMovieList(result: MovieSearchResult?): List<Movie> {
 
        if(result == null ) return listOf()
-
        return result.results.map { Movie(it.poster_path?: "",it.release_date, it.id, it.title,it.backdrop_path?:"" , it.vote_average ) }
     }
 

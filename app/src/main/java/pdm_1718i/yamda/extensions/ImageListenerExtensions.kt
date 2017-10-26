@@ -8,7 +8,7 @@ import com.android.volley.toolbox.ImageLoader
  * Created by orpheu on 10/25/17.
  */
 fun getImageListener(view: ImageView,
-                                 defaultImageResId: Int, errorImageResId: Int, TAG : String): ImageLoader.ImageListener {
+                     defaultImageResId: Int, errorImageResId: Int, TAG: String): ImageLoader.ImageListener {
 
     return object : ImageLoader.ImageListener {
         override fun onErrorResponse(error: VolleyError) {

@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyLog
-import com.android.volley.toolbox.ImageLoader.getImageListener
 import pdm_1718i.yamda.extensions.getImageListener
 import com.android.volley.toolbox.JsonObjectRequest
 import com.example.pdm_1718i.yamda.data.server.MovieDetailResult
@@ -71,20 +70,12 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 null,
                 Response.Listener<JSONObject> { response ->
                     Log.d(TAG, "/get request OK! Response: $response")
-                    if(response.has("status_code"))Toast.makeText(App.instance, "Something Went VERY GOOD", Toast.LENGTH_SHORT).show()
-                    else completionHandler(response)
+                    completionHandler(response)
                 },
                 Response.ErrorListener { error ->
                     VolleyLog.e(TAG, "/get request fail! Error: ${error?.message}")
-                    //completionHandler(null)
                     Toast.makeText(App.instance, "Something Went KABOOM", Toast.LENGTH_SHORT).show()
                 }) {
-                @Throws(AuthFailureError::class)
-                override fun getHeaders(): Map<String, String> {
-                    val headers = HashMap<String, String>()
-                    headers.put("Content-Type", "application/json; charset=utf-8")
-                    return headers
-                }
         }
 
         App.instance.addToRequestQueue(jsonObjReq, TAG)
@@ -94,7 +85,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     override fun popularMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
         get(
                 Uri.Builder()
-                        .appendEncodedPath("movie/popular"),
+                    .appendEncodedPath("movie/popular"),
                 {
                     completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
                 }
@@ -104,7 +95,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     override fun upcomingMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
         get(
                 Uri.Builder()
-                        .appendEncodedPath("movie/upcoming"),
+                    .appendEncodedPath("movie/upcoming"),
                 {
                     completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
                 }
@@ -114,7 +105,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     override fun playingMovies (page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
         get(
                 Uri.Builder()
-                        .appendEncodedPath("movie/now_playing"),
+                    .appendEncodedPath("movie/now_playing"),
                 {
                     completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
                 }
@@ -126,8 +117,8 @@ class TMDBService : ServiceInterface, MoviesDataSource {
 
         get(
                 Uri.Builder()
-                        .appendEncodedPath("search/movie")
-                        .appendQueryParameter("query", query),
+                    .appendEncodedPath("search/movie")
+                    .appendQueryParameter("query", query),
                 {
                     completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
                 }
