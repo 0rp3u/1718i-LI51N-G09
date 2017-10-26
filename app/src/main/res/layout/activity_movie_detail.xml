@@ -1,59 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    tools:context="pdm_1718i.yamda.ui.activities.MovieDetailActivity"
-    style="@style/DefaultLayoutMargin"
-    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context="pdm_1718i.yamda.ui.activities.MovieDetailActivity"
+    style="@style/DefaultMargin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    >
+
+    <ImageView
+        android:id="@+id/movie_poster"
+        android:layout_width="180dp"
+        android:layout_height="250dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/movie_poster">
+
+        <TextView
+            style="@style/DefaultItemHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RELEASE DATE" />
+
+        <TextView
+            android:id="@+id/release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RELEASE_DATE" />
+
+        <!--Rating-->
+        <TextView
+            style="@style/DefaultItemHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RATING" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RATING" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/10" />
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/DefaultItemHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GENRES" />
+
+        <TextView
+            android:id="@+id/genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GENRES" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-
-        <ImageView
-            android:layout_width="180dp"
-            android:layout_height="250dp"
-            android:id = "@+id/movie_poster"
-            />
+        android:orientation="vertical"
+        android:layout_below="@+id/movie_poster">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RELEASE_DATE"
-            android:layout_toRightOf="@+id/movie_poster"
-            android:id="@+id/release_date"/>
+            android:text="Summary"
+            style="@style/DefaultItemHeader"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="RATING"
-            android:layout_below="@+id/release_date"
-            android:layout_toRightOf="@+id/movie_poster"
-            android:id="@+id/rating"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="/10"
-            android:layout_toRightOf="@+id/rating"
-            android:layout_alignBaseline="@+id/rating"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GENRES"
-            android:layout_below="@+id/rating"
-            android:layout_toRightOf="@+id/movie_poster"
-            android:id="@+id/genres"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="overview"
+        <ScrollView
             android:layout_below="@+id/movie_poster"
-            android:id="@+id/overview"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        </RelativeLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/overview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="overview" />
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</RelativeLayout>

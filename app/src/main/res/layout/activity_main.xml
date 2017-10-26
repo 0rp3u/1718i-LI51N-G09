@@ -6,7 +6,7 @@
     tools:context="pdm_1718i.yamda.ui.activities.MainActivity">
 
     <LinearLayout
-        style="@style/DefaultLayoutMargin"
+        style="@style/DefaultMargin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
