@@ -1,6 +1,5 @@
 package pdm_1718i.yamda.ui.activities
 
-import android.app.ListActivity
 import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
@@ -9,8 +8,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
-import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
@@ -20,12 +17,25 @@ class SearchResultActivity: AppCompatActivity() {
 
     private val listView: ListView by lazy { findViewById(R.id.list) as ListView }
     private val emptyView: TextView by lazy { findViewById(R.id.emptyElement) as TextView }
+    private val LIST_KEY = "LIST_MOVIE"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
 
         handleIntent(intent)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        with(listView.adapter as SimplesMovieAdapter){
+            outState.putParcelableArrayList(LIST_KEY, ArrayList(this.getAllItems()))
+            super.onSaveInstanceState(outState)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        val movie_arrayList = ArrayList<Movie>(savedInstanceState.getParcelableArrayList(LIST_KEY))
+        createGUI(movie_arrayList)
     }
 
     override fun onNewIntent(intent: Intent) {
