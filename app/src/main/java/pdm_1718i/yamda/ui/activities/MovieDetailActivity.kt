@@ -9,7 +9,7 @@ import pdm_1718i.yamda.data.server.Options
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.ui.App
 
-class MovieDetailActivity :BaseActivity() {
+class MovieDetailActivity : ChildActivity() {
 
     private val release_date by lazy { findViewById(R.id.release_date) as TextView }
     private val ratingTextView by lazy {findViewById(R.id.rating) as TextView }

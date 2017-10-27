@@ -29,7 +29,7 @@
                 style="@style/DefaultItemHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RELEASE DATE" />
+                android:text="@string/detail_release_date" />
 
             <TextView
                 android:id="@+id/release_date"
@@ -42,7 +42,7 @@
                 style="@style/DefaultItemHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RATING" />
+                android:text="@string/detail_rating" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
                 style="@style/DefaultItemHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="GENRES" />
+                android:text="@string/detail_genres" />
 
             <TextView
                 android:id="@+id/genres"
@@ -78,7 +78,7 @@
                 style="@style/DefaultItemHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Summary" />
+                android:text="@string/detail_summary" />
 
             <TextView
                 android:id="@+id/overview"

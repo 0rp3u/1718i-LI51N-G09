@@ -16,10 +16,23 @@ class SearchResultActivity: BaseActivity() {
 
     private val listView: ListView by lazy { findViewById(R.id.list) as ListView }
     private val emptyView: TextView by lazy { findViewById(R.id.emptyElement) as TextView }
+    private val LIST_KEY = "LIST_MOVIE"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
         handleIntent(intent)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        with(listView.adapter as SimplesMovieAdapter){
+            outState.putParcelableArrayList(LIST_KEY, ArrayList(this.getAllItems()))
+            super.onSaveInstanceState(outState)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        createGUI(savedInstanceState.getParcelableArrayList(LIST_KEY))
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -37,7 +50,7 @@ class SearchResultActivity: BaseActivity() {
 
 
     private fun createGUI(movies: List<Movie>) {
-        if (!movies.isEmpty()) {
+        if (movies.isNotEmpty()) {
             listView.adapter = SimplesMovieAdapter(this, movies)
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 val movieId = (listView.adapter.getItem(position) as Movie).id
