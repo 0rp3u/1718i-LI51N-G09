@@ -23,6 +23,7 @@ class MovieDetailActivity : ChildActivity() {
         val movieId = intent.getIntExtra("movieId", -1)
         if(movieId == -1)  Toast.makeText(App.instance, "Could not fetch Movie", Toast.LENGTH_SHORT).show()
         else App.moviesProvider.movieDetail(movieId, { updateUI(it) })
+
     }
 
     private fun updateUI(movieDetail: DetailedMovie) {
