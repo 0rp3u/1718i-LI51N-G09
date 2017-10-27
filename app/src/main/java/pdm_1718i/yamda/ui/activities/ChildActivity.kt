@@ -1,13 +1,15 @@
 package pdm_1718i.yamda.ui.activities
 
+import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
 /**
  * Created by Red on 25/10/2017.
  */
-class ChildActivity : AppCompatActivity() {
+open class ChildActivity : AppCompatActivity() {
 
-    init{
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

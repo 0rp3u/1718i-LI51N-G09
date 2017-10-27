@@ -23,6 +23,14 @@
     <string name="upcoming">Upcoming</string>
     <string name="references">References:</string>
     <string name="source2">\u2022 Data provided by The Movie DB WebAPI</string>
-    <string name="toolbar_search">search</string>
+    <string name="toolbar_search">Search</string>
     <string name="no_results">no results</string>
+    <string name="item_title">Title</string>
+    <string name="item_release_date">Release Date</string>
+    <string name="item_rating">Rating</string>
+    <string name="summary">Summary</string>
+    <string name="detail_genres">Genres</string>
+    <string name="detail_rating">Rating</string>
+    <string name="detail_release_date">Release Date</string>
+    <string name="detail_summary">Summary</string>
 </resources>

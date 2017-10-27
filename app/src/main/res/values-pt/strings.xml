@@ -13,4 +13,14 @@
     <string name="now_playing">Em Exibição</string>
     <string name="references">Referências:</string>
     <string name="no_results">no results</string>
+    <string name="item_rating">Classificação</string>
+    <string name="item_release_date">Data de Lançamento</string>
+    <string name="item_title">Nome do filme</string>
+    <string name="toolbar_search">Procurar</string>
+    <string name="source2">• Dados fornecidos pela The Movie DB WebAPI</string>
+    <string name="detail_genres">Géneros</string>
+    <string name="detail_rating">Classificação</string>
+    <string name="detail_release_date">Data de Lançamento</string>
+    <string name="summary">Resumo</string>
+    <string name="detail_summary">Resumo</string>
 </resources>

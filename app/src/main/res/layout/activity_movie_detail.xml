@@ -25,7 +25,7 @@
             style="@style/DefaultItemHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RELEASE DATE" />
+            android:text="@string/detail_release_date" />
 
         <TextView
             android:id="@+id/release_date"
@@ -38,7 +38,7 @@
             style="@style/DefaultItemHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RATING" />
+            android:text="@string/detail_rating" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
             style="@style/DefaultItemHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="GENRES" />
+            android:text="@string/detail_genres" />
 
         <TextView
             android:id="@+id/genres"
@@ -80,10 +80,11 @@
         android:layout_below="@+id/movie_poster">
 
         <TextView
+            android:id="@+id/textView"
+            style="@style/DefaultItemHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Summary"
-            style="@style/DefaultItemHeader"/>
+            android:text="@string/detail_summary" />
 
         <ScrollView
             android:layout_below="@+id/movie_poster"

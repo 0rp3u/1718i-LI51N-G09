@@ -1,8 +1,6 @@
 package pdm_1718i.yamda.ui.activities
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.text.TextUtils
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -11,7 +9,7 @@ import pdm_1718i.yamda.data.server.Options
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.ui.App
 
-class MovieDetailActivity : AppCompatActivity() {
+class MovieDetailActivity : ChildActivity() {
 
     private val release_date by lazy { findViewById(R.id.release_date) as TextView }
     private val ratingTextView by lazy {findViewById(R.id.rating) as TextView }

@@ -34,8 +34,7 @@ class SearchResultActivity: AppCompatActivity() {
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        val movie_arrayList = ArrayList<Movie>(savedInstanceState.getParcelableArrayList(LIST_KEY))
-        createGUI(movie_arrayList)
+        createGUI(savedInstanceState.getParcelableArrayList(LIST_KEY))
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -53,7 +52,7 @@ class SearchResultActivity: AppCompatActivity() {
 
 
     private fun createGUI(movies: List<Movie>) {
-        if (!movies.isEmpty()) {
+        if (movies.isNotEmpty()) {
             listView.adapter = SimplesMovieAdapter(this, movies)
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 val movieId = (listView.adapter.getItem(position) as Movie).id
