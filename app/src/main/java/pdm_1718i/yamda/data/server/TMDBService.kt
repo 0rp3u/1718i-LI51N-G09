@@ -24,7 +24,7 @@ import pdm_1718i.yamda.ui.App
 import java.util.*
 
 class TMDBService : ServiceInterface, MoviesDataSource {
-    val gson: Gson = Gson()
+    private val gson: Gson = Gson()
     val TAG = TMDBService::class.java.simpleName
     val basePath = App.instance.getString(R.string.TMDB_URL)
     val API_KEY = App.instance.getString(R.string.API_KEY)
@@ -83,13 +83,14 @@ class TMDBService : ServiceInterface, MoviesDataSource {
 
 
     override fun popularMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
-        get(
-                Uri.Builder()
-                    .appendEncodedPath("movie/popular"),
-                {
-                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
-                }
-        )
+            get(
+                    Uri.Builder()
+                            .appendEncodedPath("movie/popular"),
+                    {
+                        completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
+
+                    }
+            )
     }
 
     override fun upcomingMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
@@ -144,7 +145,8 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 .encodedAuthority(IMAGE_PATH)
                 .toString()
 
-        if(App.imageLoader.isCached(uri,imageView.width, imageView.height)){
+
+        if(App.imageLoader.isCached(uri,imageView.height, imageView.width)){
             Log.d("cache", "$uri was cached!")
         }
 
