@@ -2,22 +2,17 @@ package pdm_1718i.yamda.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ListView
-import android.widget.TextView
 import android.widget.Toast
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.adapters.SimplesMovieAdapter
 
-class MovieListActivity : BaseActivity() {
-
-    private val listView: ListView by lazy { findViewById(R.id.list) as ListView }
-    private val emptyView : TextView by lazy { findViewById(R.id.emptyElement) as TextView}
+class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement_id = R.id.emptyElement) {
     private var domain : List<Movie> = listOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
@@ -32,7 +27,7 @@ class MovieListActivity : BaseActivity() {
     }
 
     private fun createGUI(movies : List< Movie>){
-        if(!movies.isEmpty()) {
+        if(movies.isNotEmpty()) {
             if(domain.isEmpty()) domain = movies
             listView.adapter = SimplesMovieAdapter(this, movies)
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
@@ -42,7 +37,6 @@ class MovieListActivity : BaseActivity() {
         }else{
             emptyView.visibility = View.VISIBLE
             listView.emptyView = emptyView
-
         }
     }
 

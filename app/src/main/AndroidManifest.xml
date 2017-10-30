@@ -12,9 +12,6 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
 
-    <meta-data android:name="android.app.default_searchable"
-        android:value=".ui.activities.SearchResultActivity" />
-
     <activity android:name=".ui.activities.MainActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -42,12 +39,8 @@
     <activity
         android:name=".ui.activities.MovieDetailActivity" />
 
-    <activity android:name=".ui.activities.SearchResultActivity" android:launchMode="singleTop" >
-        <intent-filter>
-            <action android:name="android.intent.action.SEARCH" />
-        </intent-filter>
-        <meta-data android:name="android.app.searchable"
-            android:resource="@xml/searchable" />
+    <activity android:name=".ui.activities.SearchResultActivity" >
+
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".ui.activities.MainActivity" />
