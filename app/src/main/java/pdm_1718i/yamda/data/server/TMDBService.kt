@@ -20,6 +20,7 @@ import pdm_1718i.yamda.extensions.getImageListener
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
+import pdm_1718i.yamda.ui.App.Companion.isNetworkAvailable
 import java.util.*
 
 class TMDBService : ServiceInterface, MoviesDataSource {
@@ -74,7 +75,10 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 },
                 Response.ErrorListener { error ->
                     Log.d(TAG, "/get request fail! Error: ${error?.message}")
-                    Toast.makeText(App.instance, "Something Went KABOOM", Toast.LENGTH_SHORT).show()
+                    if(!isNetworkAvailable){
+                        Toast.makeText(App.instance, "No Internet Connection", Toast.LENGTH_SHORT).show()
+                    }
+                    else Toast.makeText(App.instance, "Something went wrong!", Toast.LENGTH_SHORT).show()
                 }) {
         }
 

@@ -21,8 +21,8 @@ open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        if(isNetworkAvailable){
-            Toast.makeText(App.instance, "No Internet Connection", Toast.LENGTH_SHORT)
+        if(!isNetworkAvailable){
+            Toast.makeText(App.instance, "No Internet Connection", Toast.LENGTH_SHORT).show()
         }
     }
 
