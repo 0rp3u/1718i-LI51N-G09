@@ -2,7 +2,6 @@ package pdm_1718i.yamda.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
@@ -32,19 +31,19 @@ class MovieListActivity : BaseActivity() {
             }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        if(!domain.isEmpty()) outState.putParcelableArray("domain", domain.toTypedArray())
-        Log.d("restore", "saved state to: ${domain.size} objects")
-
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        domain = (savedInstanceState.getParcelableArray("domain") as Array<Movie>).toList()
-        Log.d("restore", "restored state to: ${domain.size} objects")
-        createGUI(domain)
-    }
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        if(!domain.isEmpty()) outState.putParcelableArray("domain", domain.toTypedArray())
+//        Log.d("restore", "saved state to: ${domain.size} objects")
+//
+//    }
+//
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//        super.onRestoreInstanceState(savedInstanceState)
+//        domain = (savedInstanceState.getParcelableArray("domain") as Array<Movie>).toList()
+//        Log.d("restore", "restored state to: ${domain.size} objects")
+//        createGUI(domain)
+//    }
 
 
     private fun createGUI(movies : List< Movie>){

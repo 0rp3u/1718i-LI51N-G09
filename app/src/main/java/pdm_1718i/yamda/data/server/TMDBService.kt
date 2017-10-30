@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyLog
-import pdm_1718i.yamda.extensions.getImageListener
 import com.android.volley.toolbox.JsonObjectRequest
 import com.example.pdm_1718i.yamda.data.server.MovieDetailResult
 import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
@@ -18,6 +17,7 @@ import com.google.gson.Gson
 import org.json.JSONObject
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.MoviesDataSource
+import pdm_1718i.yamda.extensions.getImageListener
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App

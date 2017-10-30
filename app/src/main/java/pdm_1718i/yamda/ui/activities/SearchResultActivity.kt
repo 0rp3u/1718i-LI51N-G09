@@ -24,16 +24,17 @@ class SearchResultActivity: BaseActivity() {
         handleIntent(intent)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        with(listView.adapter as SimplesMovieAdapter){
-            outState.putParcelableArrayList(LIST_KEY, ArrayList(this.getAllItems()))
-            super.onSaveInstanceState(outState)
-        }
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        createGUI(savedInstanceState.getParcelableArrayList(LIST_KEY))
-    }
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        with(listView.adapter as SimplesMovieAdapter){
+//            outState.putParcelableArrayList(LIST_KEY, ArrayList(this.getAllItems()))
+//        }
+//    }
+//
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//        super.onRestoreInstanceState(savedInstanceState)
+//        createGUI(savedInstanceState.getParcelableArrayList(LIST_KEY))
+//    }
 
     override fun onNewIntent(intent: Intent) {
         setIntent(intent)
@@ -48,7 +49,6 @@ class SearchResultActivity: BaseActivity() {
         }
     }
 
-
     private fun createGUI(movies: List<Movie>) {
         if (movies.isNotEmpty()) {
             listView.adapter = SimplesMovieAdapter(this, movies)
@@ -61,6 +61,5 @@ class SearchResultActivity: BaseActivity() {
             emptyView.visibility = View.VISIBLE
             listView.emptyView = emptyView
         }
-
     }
 }
