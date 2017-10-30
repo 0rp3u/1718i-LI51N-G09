@@ -1,6 +1,8 @@
 package pdm_1718i.yamda.ui
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
 import com.android.volley.Request
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
@@ -17,6 +19,13 @@ class App : Application() {
         val imageLoader by lazy { ImageLoader(requestQueue, BitmapLruCache()) }
         val moviesProvider by lazy { MoviesProvider() }
         private val TAG = App::class.java.simpleName
+        val isNetworkAvailable: Boolean
+            get(){
+                val conMgr = instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                with(conMgr.activeNetworkInfo){
+                    return this != null && this.isConnected && this.isAvailable
+                }
+            }
     }
 
     override fun onCreate() {

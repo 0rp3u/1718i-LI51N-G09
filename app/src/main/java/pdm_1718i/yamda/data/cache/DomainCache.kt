@@ -9,7 +9,6 @@ import pdm_1718i.yamda.model.Movie
 class DomainCache(private val provider : MoviesDataSource): MoviesDataSource{
     private val cache : MutableMap<String, Any> = mutableMapOf()  //possible need to be thread safe??
 
-
     override fun popularMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit){
         val uri = "popularMovies/page/$page"
         if(cache.contains(uri))completionHandler(cache[uri] as List<Movie>)

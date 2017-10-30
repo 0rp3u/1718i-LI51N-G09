@@ -7,24 +7,47 @@ import android.support.v7.widget.SearchView
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import pdm_1718i.yamda.R
+import pdm_1718i.yamda.ui.App
+import pdm_1718i.yamda.ui.App.Companion.isNetworkAvailable
 
 
 open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
 
+    var searchQuery : String? = null
+    lateinit var searchView: SearchView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        if(isNetworkAvailable){
+            Toast.makeText(App.instance, "No Internet Connection", Toast.LENGTH_SHORT)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if(withMenu){
+            val query = try{searchView.query}catch (t: UninitializedPropertyAccessException){null}
+            if(!query.isNullOrEmpty()) {
+                outState.putString("query", query.toString())
+            }
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if(withMenu){
+            searchQuery = savedInstanceState.getString("query")
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-
         menuInflater.inflate(R.menu.action_menu, menu)
         val menuItem = menu.findItem(R.id.search_menu)
-        val searchView = menuItem.actionView as SearchView
+        searchView = menuItem.actionView as SearchView
         searchView.setIconifiedByDefault(true)
-
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!TextUtils.isEmpty(query)) {
@@ -35,11 +58,19 @@ open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
                 }
                 return true
             }
-
+            //SearchView should perform the default action of showing any suggestions if available
             override fun onQueryTextChange(newText: String?): Boolean = false
         })
 
-        return true
+        if (!TextUtils.isEmpty(searchQuery)) {
+            searchView.isIconified = false
+            menuItem.expandActionView()
+            searchView.setQuery(searchQuery, false)
+            searchView.requestFocus()
+        }
+
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {

@@ -10,6 +10,8 @@ import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 
 class MainActivity : BaseActivity() {
+    private val REQUEST_TYPE = "requestType"
+
     private val DEFAULT_PAGINATION: Int = 1
     private val DEFAULT_ITEM_NUMBER: Int = 4
 
@@ -40,21 +42,21 @@ class MainActivity : BaseActivity() {
 
     fun onPopularMore(view: View){
         with(Intent(applicationContext, MovieListActivity::class.java)){
-            putExtra("requestType", "Popular")
+            putExtra(REQUEST_TYPE, "Popular")
             startActivity(this)
         }
     }
 
     fun onInTheatersMore(view: View){
         with(Intent(applicationContext, MovieListActivity::class.java)){
-            putExtra("requestType", "Now Playing")
+            putExtra(REQUEST_TYPE, "Now Playing")
             startActivity(this)
         }
     }
 
     fun onUpcomingMore(view: View){
         with(Intent(applicationContext, MovieListActivity::class.java)){
-            putExtra("requestType", "Upcoming")
+            putExtra(REQUEST_TYPE, "Upcoming")
             startActivity(this)
         }
     }

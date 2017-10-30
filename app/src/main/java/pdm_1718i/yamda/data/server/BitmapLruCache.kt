@@ -4,15 +4,14 @@ package pdm_1718i.yamda.data.server
  * Created by orpheu on 10/25/17.
  */
 
-import com.android.volley.toolbox.ImageLoader.ImageCache
-
 import android.graphics.Bitmap
 import android.support.v4.util.LruCache
+import com.android.volley.toolbox.ImageLoader.ImageCache
 
 class BitmapLruCache  : LruCache<String, Bitmap>(defaultLruCacheSize), ImageCache {
 
     override fun sizeOf(key: String?, value: Bitmap): Int {
-        return value.rowBytes * value.height / 1024
+        return value.rowBytes * value.height / K
     }
 
     override fun getBitmap(url: String): Bitmap? {
@@ -24,11 +23,10 @@ class BitmapLruCache  : LruCache<String, Bitmap>(defaultLruCacheSize), ImageCach
     }
 
     companion object {
-
+        private val K = 1024
         val defaultLruCacheSize: Int
             get() {
-                val maxMemory = (Runtime.getRuntime().maxMemory() / 1024).toInt()
-
+                val maxMemory = (Runtime.getRuntime().maxMemory() / K).toInt()
                 return maxMemory / 8
             }
     }

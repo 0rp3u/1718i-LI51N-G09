@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
-import com.android.volley.VolleyLog
 import com.android.volley.toolbox.JsonObjectRequest
 import com.example.pdm_1718i.yamda.data.server.MovieDetailResult
 import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
@@ -44,7 +43,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                     completionHandler(response)
                 },
                 Response.ErrorListener { error ->
-                    VolleyLog.e(TAG, "/post request fail! Error: ${error.message}")
+                    Log.d(TAG, "/post request fail! Error: ${error.message}")
                     completionHandler(null)
                 }) {
             @Throws(AuthFailureError::class)
@@ -59,6 +58,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     }
 
     override fun get(uriBuilder: Uri.Builder, completionHandler: (response: JSONObject) -> Unit) {
+
         val jsonObjReq = object : JsonObjectRequest(
                 Method.GET,
                 uriBuilder
@@ -73,7 +73,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                     completionHandler(response)
                 },
                 Response.ErrorListener { error ->
-                    VolleyLog.e(TAG, "/get request fail! Error: ${error?.message}")
+                    Log.d(TAG, "/get request fail! Error: ${error?.message}")
                     Toast.makeText(App.instance, "Something Went KABOOM", Toast.LENGTH_SHORT).show()
                 }) {
         }
