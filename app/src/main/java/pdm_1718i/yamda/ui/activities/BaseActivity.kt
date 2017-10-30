@@ -7,10 +7,7 @@ import android.support.v7.widget.SearchView
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import pdm_1718i.yamda.R
-import pdm_1718i.yamda.ui.App
-import pdm_1718i.yamda.ui.App.Companion.isNetworkAvailable
 
 
 open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
@@ -21,9 +18,6 @@ open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        if(isNetworkAvailable){
-            Toast.makeText(App.instance, "No Internet Connection", Toast.LENGTH_SHORT)
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import pdm_1718i.yamda.R
+import pdm_1718i.yamda.extensions.runIf
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.adapters.SimplesMovieAdapter
@@ -14,7 +15,9 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
-        handleIntent(intent)
+        runIf({App.isNetworkAvailable}){
+            handleIntent(intent)
+        }
     }
 
     override fun onNewIntent(intent: Intent) {
