@@ -5,6 +5,6 @@ package pdm_1718i.yamda.extensions
  */
 
 
-fun String.Companion.removePref(path: String?, count: Int): String {
-    return path?.substring(count)?:""
+fun String?.removePref(count: Int): String {
+    return this?.substring(count)?:""
 }

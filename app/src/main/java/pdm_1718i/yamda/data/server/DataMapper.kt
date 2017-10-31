@@ -12,13 +12,13 @@ class DataMapper {
 
     fun mapToMovieList(result: MovieSearchResult?): List<Movie> {
        if(result == null ) return listOf()
-       return result.results.map { Movie(String.removePref(it.poster_path, 1), getCalendar(it.release_date), it.id, it.title, String.removePref(it.backdrop_path, 1) , it.vote_average ) }
+       return result.results.map { Movie(it.poster_path.removePref(1), getCalendar(it.release_date), it.id, it.title, it.backdrop_path.removePref(1) , it.vote_average ) }
     }
 
     fun mapToMovieDetail(result: MovieDetailResult): DetailedMovie {
         return  DetailedMovie(
-                String.removePref(result.poster_path, 1),
-                String.removePref(result.backdrop_path, 1),
+                result.poster_path.removePref(1),
+                result.backdrop_path.removePref(1),
                 getCalendar(result.release_date),
                 result.id,
                 result.title,
@@ -29,3 +29,5 @@ class DataMapper {
         )
     }
 }
+
+
