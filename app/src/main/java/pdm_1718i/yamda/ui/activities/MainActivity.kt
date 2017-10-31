@@ -6,15 +6,19 @@ import android.view.View
 import android.widget.ImageView
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.server.Options
+import pdm_1718i.yamda.data.server.TMDBService.Companion.DEFAULT_PAGINATION
+import pdm_1718i.yamda.extensions.NO_INTERNET_CONNECTION
+import pdm_1718i.yamda.extensions.caseTrue
+import pdm_1718i.yamda.extensions.runIf
+import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
+import pdm_1718i.yamda.ui.App.Companion.isNetworkAvailable
 
 class MainActivity : BaseActivity() {
     private val REQUEST_TYPE = "requestType"
 
-    private val DEFAULT_PAGINATION: Int = 1
     private val DEFAULT_ITEM_NUMBER: Int = 4
-
     private val POPULAR_ITEM_LIST: IntArray =
             intArrayOf(R.id.popular_image_1, R.id.popular_image_2, R.id.popular_image_3, R.id.popular_image_4)
     private val UPCOMING_ITEM_LIST: IntArray =
@@ -25,19 +29,20 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        runIf(isNetworkAvailable){
+            App.moviesProvider.popularMovies(DEFAULT_PAGINATION, {
+                getImageAndSet(it, DEFAULT_ITEM_NUMBER, POPULAR_ITEM_LIST)
+            })
 
-        App.moviesProvider.popularMovies(DEFAULT_PAGINATION, {
-            getImageAndSet(it, DEFAULT_ITEM_NUMBER, POPULAR_ITEM_LIST)
-        })
+            App.moviesProvider.upcomingMovies(DEFAULT_PAGINATION,{
+                getImageAndSet(it, DEFAULT_ITEM_NUMBER, UPCOMING_ITEM_LIST)
+            })
 
-        App.moviesProvider.upcomingMovies(DEFAULT_PAGINATION,{
-            getImageAndSet(it, DEFAULT_ITEM_NUMBER, UPCOMING_ITEM_LIST)
-        })
+            App.moviesProvider.nowPlayingMovies(DEFAULT_PAGINATION,{
+                getImageAndSet(it, DEFAULT_ITEM_NUMBER, PLAYING_ITEM_LIST)
+            })
+        }.not().caseTrue{ toast(NO_INTERNET_CONNECTION) }
 
-        App.moviesProvider.nowPlayingMovies(DEFAULT_PAGINATION,{
-            getImageAndSet(it, DEFAULT_ITEM_NUMBER, PLAYING_ITEM_LIST)
-        })
     }
 
     fun onPopularMore(view: View){

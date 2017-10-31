@@ -6,6 +6,10 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import pdm_1718i.yamda.R
+import pdm_1718i.yamda.extensions.NO_INTERNET_CONNECTION
+import pdm_1718i.yamda.extensions.caseTrue
+import pdm_1718i.yamda.extensions.runIf
+import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.adapters.SimplesMovieAdapter
@@ -16,14 +20,16 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
-        val reqType  = intent.getStringExtra("requestType")
-        title = reqType
+        runIf(App.isNetworkAvailable){
+            val reqType  = intent.getStringExtra("requestType")
+            title = reqType
             when (reqType) {
                 "Now Playing" -> App.moviesProvider.nowPlayingMovies(1, { createGUI(it) })
                 "Popular" -> App.moviesProvider.popularMovies(1, { createGUI(it) })
                 "Upcoming" -> App.moviesProvider.upcomingMovies(1, { createGUI(it) })
                 else -> Toast.makeText(App.instance, "Something Went KABOOM", Toast.LENGTH_SHORT).show()
             }
+        }.not().caseTrue { toast(NO_INTERNET_CONNECTION) }
     }
 
     private fun createGUI(movies : List< Movie>){

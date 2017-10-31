@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import pdm_1718i.yamda.R
+import pdm_1718i.yamda.extensions.NO_INTERNET_CONNECTION
+import pdm_1718i.yamda.extensions.caseTrue
 import pdm_1718i.yamda.extensions.runIf
+import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.adapters.SimplesMovieAdapter
@@ -17,7 +20,7 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
         setContentView(R.layout.activity_movie_list)
         runIf({App.isNetworkAvailable}){
             handleIntent(intent)
-        }
+        }.not().caseTrue { toast(NO_INTERNET_CONNECTION) }
     }
 
     override fun onNewIntent(intent: Intent) {

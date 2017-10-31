@@ -23,11 +23,14 @@ import pdm_1718i.yamda.ui.App
 import java.util.*
 
 class TMDBService : ServiceInterface, MoviesDataSource {
-    private val gson: Gson = Gson()
-    val TAG = TMDBService::class.java.simpleName
-    val basePath = App.instance.getString(R.string.TMDB_URL)
-    val API_KEY = App.instance.getString(R.string.API_KEY)
-    val IMAGE_PATH = App.instance.getString(R.string.TMDB_IMAGE_URL)
+    companion object {
+        private val gson: Gson = Gson()
+        val TAG = TMDBService::class.java.simpleName
+        val basePath = App.instance.getString(R.string.TMDB_URL)
+        val API_KEY = App.instance.getString(R.string.API_KEY)
+        val IMAGE_PATH = App.instance.getString(R.string.TMDB_IMAGE_URL)
+        val DEFAULT_PAGINATION: Int = 1
+    }
 
     override fun post(uriBuilder: Uri.Builder, body: JSONObject, completionHandler: (response: JSONObject?) -> Unit) {
         val jsonObjReq = object : JsonObjectRequest(Method.POST,
