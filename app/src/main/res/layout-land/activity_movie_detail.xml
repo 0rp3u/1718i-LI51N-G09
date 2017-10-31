@@ -8,6 +8,7 @@
     style="@style/DefaultMargin"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
+    android:id="@+id/layout"
     >
 
     <ImageView

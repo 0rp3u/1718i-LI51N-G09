@@ -1,8 +1,5 @@
 package pdm_1718i.yamda.model
 
-import android.os.Parcel
-import android.os.Parcelable
-
 /**
  * Created by orpheu on 10/18/17.
  */
@@ -19,6 +16,7 @@ data class Movie(
 
 data class DetailedMovie(
         val poster_path: String?,
+        val backdrop_path: String?,
         val release_date: String,
         val id: Int,
         val title: String,

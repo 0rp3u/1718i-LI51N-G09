@@ -3,7 +3,6 @@ package pdm_1718i.yamda.ui.activities
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.server.Options
 import pdm_1718i.yamda.model.DetailedMovie
@@ -21,8 +20,7 @@ class MovieDetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
         val movieId = intent.getIntExtra("movieId", -1)
-        if(movieId == -1)  Toast.makeText(App.instance, "Could not fetch Movie", Toast.LENGTH_SHORT).show()
-        else App.moviesProvider.movieDetail(movieId, { updateUI(it) })
+        App.moviesProvider.movieDetail(movieId, { updateUI(it) })
     }
 
     private fun updateUI(movieDetail: DetailedMovie) {

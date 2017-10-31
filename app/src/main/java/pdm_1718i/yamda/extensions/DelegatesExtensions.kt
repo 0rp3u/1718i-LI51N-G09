@@ -5,28 +5,22 @@ package pdm_1718i.yamda.extensions
  */
 
 fun runIf(func: () -> Boolean, body: () -> Any): Boolean{
-    if(func()) {
+    return if(func()) {
         body()
-        return true
+        true
     }else{
-        return false
+        false
     }
 }
 
 fun runIf(pred: Boolean, body: () -> Any): Boolean{
-    if(pred) {
+    if(pred)
         body()
-        return true
-    }else{
-        return false
-    }
+    return pred
 }
 
 fun Boolean.caseTrue(body: () -> Any): Boolean{
-    if (this){
+    if (this)
         body()
-        return true
-    }else{
-        return false
-    }
+    return this
 }
