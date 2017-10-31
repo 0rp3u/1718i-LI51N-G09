@@ -27,7 +27,7 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
                 "Now Playing" -> App.moviesProvider.nowPlayingMovies(1, { createGUI(it) })
                 "Popular" -> App.moviesProvider.popularMovies(1, { createGUI(it) })
                 "Upcoming" -> App.moviesProvider.upcomingMovies(1, { createGUI(it) })
-                else -> Toast.makeText(App.instance, "Something Went KABOOM", Toast.LENGTH_SHORT).show()
+                else -> Toast.makeText(App.instance, "Option cannot be processed. Try again.", Toast.LENGTH_SHORT).show()
             }
         }.not().caseTrue { toast(NO_INTERNET_CONNECTION) }
     }

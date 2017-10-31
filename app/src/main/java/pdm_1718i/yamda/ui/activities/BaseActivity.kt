@@ -7,7 +7,10 @@ import android.support.v7.widget.SearchView
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import pdm_1718i.yamda.R
+import pdm_1718i.yamda.ui.App
+import pdm_1718i.yamda.ui.App.Companion.isNetworkAvailable
 
 
 open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
