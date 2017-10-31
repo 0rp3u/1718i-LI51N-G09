@@ -21,15 +21,16 @@
             android:layout_height="wrap_content"
             android:text="@string/now_playing" />
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_nowplaying"
-                android:layout_width="250dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_weight="2">
             </android.support.v7.widget.RecyclerView>
 
             <ImageButton
@@ -37,7 +38,8 @@
                 android:layout_height="100dp"
                 android:background="@android:color/transparent"
                 android:onClick="onInTheatersMore"
-                android:src="@mipmap/ic_view_list" />
+                android:src="@mipmap/ic_view_list"
+                android:layout_weight="1"/>
         </LinearLayout>
 
 
@@ -51,15 +53,16 @@
             android:text="@string/popular" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_popular"
-                android:layout_width="250dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_weight="2">
             </android.support.v7.widget.RecyclerView>
 
             <ImageButton
@@ -67,7 +70,8 @@
                 android:layout_height="100dp"
                 android:background="@android:color/transparent"
                 android:onClick="onPopularMore"
-                android:src="@mipmap/ic_view_list" />
+                android:src="@mipmap/ic_view_list"
+                android:layout_weight="1"/>
         </LinearLayout>
 
 
@@ -79,15 +83,16 @@
             android:text="@string/upcoming" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_upcoming"
-                android:layout_width="250dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_weight="2">
             </android.support.v7.widget.RecyclerView>
 
             <ImageButton
@@ -95,7 +100,8 @@
                 android:layout_height="100dp"
                 android:background="@android:color/transparent"
                 android:onClick="onUpcomingMore"
-                android:src="@mipmap/ic_view_list" />
+                android:src="@mipmap/ic_view_list"
+                android:layout_weight="1"/>
         </LinearLayout>
 
     </LinearLayout>
