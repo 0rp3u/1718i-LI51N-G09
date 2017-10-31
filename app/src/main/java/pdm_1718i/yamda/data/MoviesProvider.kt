@@ -35,6 +35,6 @@ class MoviesProvider {
     }
 
     fun image(image_id: String, imageView: ImageView, imageOption: String){
-        SOURCE.movieImage(image_id.substring(1), imageView , imageOption)
+        SOURCE.movieImage(image_id, imageView , imageOption)
     }
 }
