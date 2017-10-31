@@ -11,7 +11,7 @@ import pdm_1718i.yamda.extensions.runIf
 import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
-import pdm_1718i.yamda.ui.adapters.SimplesMovieAdapter
+import pdm_1718i.yamda.ui.adapters.SimpleMovieAdapter
 
 class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyElement_id = R.id.emptyElement) {
 
@@ -36,7 +36,7 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
 
     private fun createGUI(movies: List<Movie>) {
         if (movies.isNotEmpty()) {
-            listView.adapter = SimplesMovieAdapter(this, movies)
+            listView.adapter = SimpleMovieAdapter(this, movies)
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 val movieId = (listView.adapter.getItem(position) as Movie).id
                 with(Intent(applicationContext, MovieDetailActivity::class.java).putExtra("movieId", movieId)){

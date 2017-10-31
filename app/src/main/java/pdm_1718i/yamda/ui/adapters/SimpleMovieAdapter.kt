@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.server.Options
+import pdm_1718i.yamda.extensions.getDate
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.holders.SimpleMovieHolder
@@ -19,7 +20,7 @@ import pdm_1718i.yamda.ui.holders.SimpleMovieHolder
 
 
 
-class SimplesMovieAdapter(private val context : Activity, private val searchedMovies: List<Movie>)
+class SimpleMovieAdapter(private val context : Activity, private val searchedMovies: List<Movie>)
     : ArrayAdapter<Movie>(context,R.layout.item_search_result, searchedMovies){
 
     private val itemLayoutId = R.layout.item_search_result
@@ -41,11 +42,13 @@ class SimplesMovieAdapter(private val context : Activity, private val searchedMo
         }
 
         movieViewHolder.title.text = movie.title
-        movieViewHolder.date.text = movie.release_date
+        movieViewHolder.date.text = movie.release_date.getDate()
         movieViewHolder.score.text= movie.vote_average.toString()
 
         if(movie.poster_path.isNotEmpty()){
             App.moviesProvider.image(movie.poster_path,  movieViewHolder.image, Options.poster_sizes["SMALL"]!!)
+        }else{
+            movieViewHolder.image.setImageResource(R.drawable.ic_movie_thumbnail)
         }
 
         return itemView

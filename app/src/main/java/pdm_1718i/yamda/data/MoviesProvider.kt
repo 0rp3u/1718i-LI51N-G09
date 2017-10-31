@@ -1,5 +1,6 @@
 package pdm_1718i.yamda.data
 
+import android.graphics.Bitmap
 import android.widget.ImageView
 import pdm_1718i.yamda.data.cache.DomainCache
 import pdm_1718i.yamda.data.server.TMDBService
@@ -36,5 +37,9 @@ class MoviesProvider {
 
     fun image(image_id: String, imageView: ImageView, imageOption: String){
         SOURCE.movieImage(image_id, imageView , imageOption)
+    }
+
+    fun image(image_id: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit, imageOption: String){
+        SOURCE.movieImage(image_id, bitmapCompletionHandler , imageOption)
     }
 }

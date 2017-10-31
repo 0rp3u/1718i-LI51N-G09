@@ -1,5 +1,6 @@
 package pdm_1718i.yamda.data.cache
 
+import android.graphics.Bitmap
 import android.util.Log
 import android.widget.ImageView
 import pdm_1718i.yamda.data.MoviesDataSource
@@ -62,5 +63,8 @@ class DomainCache(private val provider : MoviesDataSource): MoviesDataSource{
         provider.movieImage(image_id, imageView, image_size)
     }
 
+    override fun movieImage(image_id: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit, image_size: String) {
+        provider.movieImage(image_id, bitmapCompletionHandler, image_size)
+    }
 
 }

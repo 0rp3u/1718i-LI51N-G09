@@ -6,8 +6,9 @@ package pdm_1718i.yamda.data.server;
 
 class Options {
     companion object{
-        val base_url = "http://image.tmdb.org/t/p/"
-        val secure_base_url = "https://image.tmdb.org/t/p/"
-        val poster_sizes: HashMap<String, String> = hashMapOf("SMALL" to "w185", "BIG" to "w500", "ORIGIN" to "original")
+        val SMALL = "SMALL"
+        val BIG = "BIG"
+        val ORIGIN = "original"
+        val poster_sizes: HashMap<String, String> = hashMapOf(SMALL to "w185", BIG to "w500", ORIGIN to "original")
     }
 }

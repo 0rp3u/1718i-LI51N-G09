@@ -1,5 +1,6 @@
 package pdm_1718i.yamda.extensions
 
+import android.graphics.Bitmap
 import android.widget.ImageView
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.ImageLoader
@@ -24,6 +25,17 @@ fun getImageListener(view: ImageView,
             } else if (defaultImageResId != 0) {
                 view.setImageResource(defaultImageResId)
             }
+        }
+    }
+}
+
+fun getImageListener(bitmapCompletionHandler: (bitmap: Bitmap)-> Unit): ImageLoader.ImageListener {
+    return object : ImageLoader.ImageListener {
+
+        override fun onErrorResponse(error: VolleyError) {}
+
+        override fun onResponse(response: ImageLoader.ImageContainer, isImmediate: Boolean) {
+            response.bitmap?.let{bitmapCompletionHandler(response.bitmap)}
         }
     }
 }

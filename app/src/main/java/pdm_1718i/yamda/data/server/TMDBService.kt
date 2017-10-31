@@ -3,6 +3,7 @@ package pdm_1718i.yamda.data.server
 /**
  * Created by orpheu on 10/13/17.
  */
+import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
@@ -39,8 +40,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                         .scheme("https")
                         .encodedAuthority(basePath)
                         .appendQueryParameter("api_key", API_KEY)
-                        .toString()
-                ,
+                        .toString(),
                 body,
                 Response.Listener<JSONObject> { response ->
                     Log.d(TAG, "/post request OK! Response: $response")
@@ -49,20 +49,20 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 Response.ErrorListener { error ->
                     Log.d(TAG, "/post request fail! Error: ${error.message}")
                     completionHandler(null)
-                }) {
+                })
+        {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
-                val headers = HashMap<String, String>()
-                headers.put("Content-Type", "application/json")
-                return headers
+                with(emptyMap<String, String>() as HashMap){
+                    put("Content-Type", "application/json")
+                    return this
+                }
             }
         }
-
         App.instance.addToRequestQueue(jsonObjReq, TAG)
     }
 
     override fun get(uriBuilder: Uri.Builder, completionHandler: (response: JSONObject) -> Unit) {
-
         val jsonObjReq = object : JsonObjectRequest(
                 Method.GET,
                 uriBuilder
@@ -84,10 +84,8 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                     else Toast.makeText(App.instance, "Something went wrong!", Toast.LENGTH_SHORT).show()
                 }) {
         }
-
         App.instance.addToRequestQueue(jsonObjReq, TAG)
     }
-
 
     override fun popularMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
             get(
@@ -95,7 +93,6 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                             .appendEncodedPath("movie/popular"),
                     {
                         completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
-
                     }
             )
     }
@@ -120,27 +117,20 @@ class TMDBService : ServiceInterface, MoviesDataSource {
         )
     }
 
-
     override fun movieSearch(query: String, page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
-
         get(
                 Uri.Builder()
                     .appendEncodedPath("search/movie")
                     .appendQueryParameter("query", query),
-                {
-                    completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
-                }
+                { completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java))) }
         )
     }
 
     override fun movieDetail(id: Int, completionHandler: (movies:DetailedMovie) -> Unit) {
-
         get(
                 Uri.Builder()
                     .appendEncodedPath("movie/$id"),
-                {
-                    completionHandler(DataMapper().mapToMovieDetail(gson.fromJson(it.toString(), MovieDetailResult::class.java)))
-                }
+                { completionHandler(DataMapper().mapToMovieDetail(gson.fromJson(it.toString(), MovieDetailResult::class.java))) }
         )
     }
 
@@ -151,15 +141,19 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 .scheme("https")
                 .encodedAuthority(IMAGE_PATH)
                 .toString()
-
-
-        if(App.imageLoader.isCached(uri,imageView.height, imageView.width)){
-            Log.d("cache", "$uri was cached!")
-        }
-
         imageView.tag = uri
         App.imageLoader
                 .get(uri, getImageListener(imageView, R.drawable.ic_loading, R.drawable.ic_movie_thumbnail, uri))
+    }
 
+    override fun movieImage(image_id: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit, image_size: String) {
+        val uri = Uri.Builder()
+                .appendEncodedPath(image_size)
+                .appendEncodedPath(image_id)
+                .scheme("https")
+                .encodedAuthority(IMAGE_PATH)
+                .toString()
+        App.imageLoader
+                .get(uri, getImageListener(bitmapCompletionHandler))
     }
 }
