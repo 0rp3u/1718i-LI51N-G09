@@ -6,151 +6,94 @@
     tools:context="pdm_1718i.yamda.ui.activities.MainActivity">
 
     <LinearLayout
+        style="@style/DefaultMargin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        style="@style/DefaultMargin">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:orientation="vertical">
 
         <!-- Now Playing Movies -->
         <TextView
+            style="@style/textViewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/now_playing"
-            style="@style/textViewTitle"
-            />
-
+            android:text="@string/now_playing" />
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail"
-                android:id = "@+id/popular_image_1"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail"
-                android:id = "@+id/popular_image_2"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail"
-                android:id = "@+id/popular_image_3"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail"
-                android:id = "@+id/popular_image_4"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_nowplaying"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center"
+                android:orientation="vertical">
+            </android.support.v7.widget.RecyclerView>
 
             <ImageButton
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:cropToPadding="false"
-                android:onClick="onPopularMore"
                 android:background="@android:color/transparent"
+                android:onClick="onInTheatersMore"
                 android:src="@mipmap/ic_view_list" />
-
         </LinearLayout>
+
+
 
 
         <!-- Popular Movies -->
         <TextView
+            style="@style/textViewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/popular"
-            style="@style/textViewTitle"
-            />
+            android:text="@string/popular" />
+
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail"
-                android:id = "@+id/theaters_image_1"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail"
-                android:id = "@+id/theaters_image_2"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail"
-                android:id = "@+id/theaters_image_3"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail"
-                android:id = "@+id/theaters_image_4"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_popular"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center"
+                android:orientation="vertical">
+            </android.support.v7.widget.RecyclerView>
 
             <ImageButton
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:cropToPadding="false"
-                android:onClick="onInTheatersMore"
                 android:background="@android:color/transparent"
+                android:onClick="onPopularMore"
                 android:src="@mipmap/ic_view_list" />
-
         </LinearLayout>
 
 
         <!-- Upcoming Movies -->
         <TextView
+            style="@style/textViewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/upcoming"
-            style="@style/textViewTitle"
-            />
+            android:text="@string/upcoming" />
+
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail"
-                android:id = "@+id/upcoming_image_1"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail"
-                android:id = "@+id/upcoming_image_2"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail"
-                android:id = "@+id/upcoming_image_3"/>
-
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="100dp"
-                android:background="@drawable/ic_movie_thumbnail"
-                android:id = "@+id/upcoming_image_4"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_upcoming"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center"
+                android:orientation="vertical">
+            </android.support.v7.widget.RecyclerView>
 
             <ImageButton
                 android:layout_width="70dp"
                 android:layout_height="100dp"
-                android:cropToPadding="false"
-                android:onClick="onUpcomingMore"
                 android:background="@android:color/transparent"
+                android:onClick="onUpcomingMore"
                 android:src="@mipmap/ic_view_list" />
-
         </LinearLayout>
 
     </LinearLayout>
