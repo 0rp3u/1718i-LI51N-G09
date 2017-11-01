@@ -12,15 +12,3 @@ fun runIf(pred: Boolean, body: () -> Any?): Boolean{
         body()
     return pred
 }
-
-fun Boolean.caseTrue(body: () -> Any): Boolean{
-    if (this)
-        body()
-    return this
-}
-
-fun Boolean.caseFalse(body: () -> Any): Boolean{
-    if(!this)
-        body()
-    return this
-}
