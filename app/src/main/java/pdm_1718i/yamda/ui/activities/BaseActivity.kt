@@ -8,9 +8,10 @@ import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import pdm_1718i.yamda.R
+import pdm_1718i.yamda.extensions.runIf
 
 
-open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
+open class BaseActivity(val withMenu: Boolean = true, val navigation: Boolean = true) : AppCompatActivity() {
 
     protected val QUERY_KEY = "query"
 
@@ -19,7 +20,7 @@ open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        runIf(navigation){supportActionBar?.setDisplayHomeAsUpEnabled(true)}
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

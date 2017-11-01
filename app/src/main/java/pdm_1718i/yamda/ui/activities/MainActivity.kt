@@ -21,7 +21,7 @@ import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.REQUEST_TYPE
 import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.UPCOMING
 import pdm_1718i.yamda.ui.adapters.MainActAdapter
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(navigation = false) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
