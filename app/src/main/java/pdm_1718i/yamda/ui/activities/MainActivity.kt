@@ -15,10 +15,13 @@ import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.App.Companion.isNetworkAvailable
+import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.PLAYING
+import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.POPULAR
+import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.REQUEST_TYPE
+import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.UPCOMING
 import pdm_1718i.yamda.ui.adapters.MainActAdapter
 
 class MainActivity : BaseActivity() {
-    private val REQUEST_TYPE = "requestType"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,21 +35,21 @@ class MainActivity : BaseActivity() {
 
     fun onPopularMore(view: View){
         with(Intent(applicationContext, MovieListActivity::class.java)){
-            putExtra(REQUEST_TYPE, "Popular")
+            putExtra(REQUEST_TYPE, POPULAR)
             startActivity(this)
         }
     }
 
     fun onInTheatersMore(view: View){
         with(Intent(applicationContext, MovieListActivity::class.java)){
-            putExtra(REQUEST_TYPE, "Now Playing")
+            putExtra(REQUEST_TYPE, PLAYING)
             startActivity(this)
         }
     }
 
     fun onUpcomingMore(view: View){
         with(Intent(applicationContext, MovieListActivity::class.java)){
-            putExtra(REQUEST_TYPE, "Upcoming")
+            putExtra(REQUEST_TYPE, UPCOMING)
             startActivity(this)
         }
     }

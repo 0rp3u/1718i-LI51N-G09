@@ -7,16 +7,15 @@ import android.support.v7.widget.SearchView
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import pdm_1718i.yamda.R
-import pdm_1718i.yamda.ui.App
-import pdm_1718i.yamda.ui.App.Companion.isNetworkAvailable
 
 
 open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
 
-    var searchQuery : String? = null
-    lateinit var searchView: SearchView
+    protected val QUERY_KEY = "query"
+
+    private var searchQuery : String? = null
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +27,7 @@ open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
         if(withMenu){
             val query = try{searchView.query}catch (t: UninitializedPropertyAccessException){null}
             if(!query.isNullOrEmpty()) {
-                outState.putString("query", query.toString())
+                outState.putString(QUERY_KEY, query.toString())
             }
         }
     }
@@ -36,7 +35,7 @@ open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         if(withMenu){
-            searchQuery = savedInstanceState.getString("query")
+            searchQuery = savedInstanceState.getString(QUERY_KEY)
         }
     }
 
@@ -49,7 +48,7 @@ open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (!TextUtils.isEmpty(query)) {
                     with(Intent(this@BaseActivity, SearchResultActivity::class.java)) {
-                        putExtra("query", query)
+                        putExtra(QUERY_KEY, query)
                         startActivity(this)
                     }
                 }
@@ -65,7 +64,6 @@ open class BaseActivity(val withMenu: Boolean = true) : AppCompatActivity() {
             searchView.setQuery(searchQuery, false)
             searchView.requestFocus()
         }
-
 
         return super.onCreateOptionsMenu(menu)
     }
