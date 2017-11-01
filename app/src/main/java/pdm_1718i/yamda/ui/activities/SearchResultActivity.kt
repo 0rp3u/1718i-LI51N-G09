@@ -17,6 +17,7 @@ import pdm_1718i.yamda.ui.adapters.SimpleMovieAdapter
 class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyElement_id = R.id.emptyElement) {
 
     private val MOVIE_KEY = "movieId"
+    private val RESULT_TITLE: String = App.instance.getString(R.string.results_for)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +34,7 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
 
     private fun handleIntent(intent: Intent) {
         val query = intent.getStringExtra(QUERY_KEY)
-        title = "Results for: $query"
+        title = "$RESULT_TITLE: $query"
         App.moviesProvider.searchMovies(query, DEFAULT_PAGINATION, { createGUI(it) })
     }
 

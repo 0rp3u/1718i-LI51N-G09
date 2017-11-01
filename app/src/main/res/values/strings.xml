@@ -5,6 +5,7 @@
     <string name="TMDB_URL" translatable="false">api.themoviedb.org/3</string>
     <string name="TMDB_HOMEPAGE_URL" translatable="false">http://themoviedb.org</string>
     <string name="TMDB_IMAGE_URL" translatable="false">image.tmdb.org/t/p</string>
+    <string name="results_for" translatable="true">Results for</string>
 
     <string name="develoers">Developers:</string>
     <string name="dev1" translatable="false">\u2022 David Duarte</string>
