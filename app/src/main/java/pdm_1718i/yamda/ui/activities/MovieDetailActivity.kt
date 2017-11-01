@@ -6,8 +6,8 @@ import android.widget.TextView
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.server.Options
 import pdm_1718i.yamda.data.server.Options.Companion.BIG
-import pdm_1718i.yamda.extensions.getDate
-import pdm_1718i.yamda.extensions.getYear
+import pdm_1718i.yamda.extensions.getDateFromCalendar
+import pdm_1718i.yamda.extensions.getYearFromCalendar
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.ui.App
 
@@ -28,8 +28,8 @@ class MovieDetailActivity : BaseActivity() {
 
     private fun updateUI(movieDetail: DetailedMovie) {
         with(movieDetail){
-            this@MovieDetailActivity.title = "$title (${release_date.getYear()})"
-            this@MovieDetailActivity.release_date.text = release_date.getDate()
+            this@MovieDetailActivity.title = "$title (${getYearFromCalendar(release_date)})"
+            this@MovieDetailActivity.release_date.text = getDateFromCalendar(release_date)
             ratingTextView.text = vote_average.toString()
             val genres = genres.joinToString(separator = ", ") {it.name}
             genreTextView.text = genres

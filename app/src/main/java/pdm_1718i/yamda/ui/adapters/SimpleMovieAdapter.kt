@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.server.Options
-import pdm_1718i.yamda.extensions.getDate
+import pdm_1718i.yamda.extensions.getDateFromCalendar
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.holders.SimpleMovieHolder
@@ -42,7 +42,7 @@ class SimpleMovieAdapter(private val context : Activity, private val searchedMov
         }
 
         movieViewHolder.title.text = movie.title
-        movieViewHolder.date.text = movie.release_date.getDate()
+        movieViewHolder.date.text = getDateFromCalendar(movie.release_date)
         movieViewHolder.score.text= movie.vote_average.toString()
 
         if(movie.poster_path.isNotEmpty()){
@@ -53,8 +53,7 @@ class SimpleMovieAdapter(private val context : Activity, private val searchedMov
 
         return itemView
     }
-
-
+    
     override fun getItem(position: Int): Movie {
         return searchedMovies[position]
     }
