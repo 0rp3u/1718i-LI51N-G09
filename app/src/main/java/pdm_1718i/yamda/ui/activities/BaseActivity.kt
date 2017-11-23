@@ -4,11 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
+import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.extensions.runIf
+import android.widget.TextView
+
+
 
 
 open class BaseActivity(val withMenu: Boolean = true, val navigation: Boolean = true) : AppCompatActivity() {
@@ -21,6 +25,7 @@ open class BaseActivity(val withMenu: Boolean = true, val navigation: Boolean = 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         runIf(navigation){supportActionBar?.setDisplayHomeAsUpEnabled(true)}
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

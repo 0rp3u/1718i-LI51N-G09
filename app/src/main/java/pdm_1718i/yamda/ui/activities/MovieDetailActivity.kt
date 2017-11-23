@@ -28,7 +28,8 @@ class MovieDetailActivity : BaseActivity() {
 
     private fun updateUI(movieDetail: DetailedMovie) {
         with(movieDetail){
-            this@MovieDetailActivity.title = "$title (${getYearFromCalendar(release_date)})"
+            this@MovieDetailActivity.title = "$title"
+            this@MovieDetailActivity.supportActionBar?.subtitle = "${getYearFromCalendar(release_date)}"
             this@MovieDetailActivity.release_date.text = getDateFromCalendar(release_date)
             ratingTextView.text = vote_average.toString()
             val genres = genres.joinToString(separator = ", ") {it.name}

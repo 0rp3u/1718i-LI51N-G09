@@ -12,7 +12,6 @@ interface MoviesDataSource {
     fun playingMovies (page: Int, completionHandler: (movies: List<Movie>) -> Unit)
     fun movieSearch(query: String, page : Int, completionHandler: (movies: List<Movie>) -> Unit)
     fun movieDetail(id: Int, completionHandler: (movies: DetailedMovie) -> Unit)
-
     fun movieImage(image_id: String, imageView: ImageView, image_size: String)
     fun movieImage(image_id: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit, image_size: String)
 }

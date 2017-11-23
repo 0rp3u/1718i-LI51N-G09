@@ -45,6 +45,8 @@ class MainActivity : BaseActivity(navigation = false) {
             putExtra(REQUEST_TYPE, PLAYING)
             startActivity(this)
         }
+
+
     }
 
     fun onUpcomingMore(view: View){
