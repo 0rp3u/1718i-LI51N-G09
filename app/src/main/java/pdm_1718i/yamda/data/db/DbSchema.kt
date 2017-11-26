@@ -17,7 +17,7 @@ object DbSchema {
         val OVERVIEW = MoviesContract.MOVIE.OVERVIEW
         val ORIGINAL_TITLE = MoviesContract.MOVIE.ORIGINAL_TITLE
 
-        val SRUCTURE = "$ADULT BOOLEAN , " +
+        val STRUCTURE = "$ADULT BOOLEAN , " +
         "$BACKDROP TEXT , " +
         "$POSTER TEXT , " +
         "$TITLE TEXT NOT NULL , " +
@@ -29,8 +29,8 @@ object DbSchema {
         val TBL_NAME = "upcoingMovies"
         val DDL_CREATE_TABLE =
                 "CREATE TABLE $TBL_NAME ( " +
-                        "$COL_ID INTEGER PRIMARY KEY , " +
-                        Movie.SRUCTURE +
+                        "$COL_ID INTEGER PRIMARY KEY, " +
+                        Movie.STRUCTURE +
                         ")"
 
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
@@ -40,19 +40,8 @@ object DbSchema {
         val TBL_NAME = "trendingMovies"
         val DDL_CREATE_TABLE =
                 "CREATE TABLE ${TBL_NAME} ( " +
-                        "$COL_ID INTEGER PRIMARY KEY , " +
-                        Movie.SRUCTURE +
-                        ")"
-
-        val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
-    }
-
-    object PopularMovies {
-        val TBL_NAME = "popularMovies"
-        val DDL_CREATE_TABLE =
-                "CREATE TABLE $TBL_NAME ( " +
-                        "$COL_ID INTEGER PRIMARY KEY , " +
-                        Movie.SRUCTURE +
+                        "$COL_ID INTEGER PRIMARY KEY, " +
+                        Movie.STRUCTURE +
                         ")"
 
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
