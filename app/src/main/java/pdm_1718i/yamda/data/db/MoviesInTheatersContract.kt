@@ -4,18 +4,20 @@ import android.content.ContentResolver
 import android.net.Uri
 import android.provider.BaseColumns
 
-object MoviesContract : ContractInterface{
+/**
+ * Created by Edgar on 26/11/2017.
+ */
+object MoviesInTheatersContract : ContractInterface {
 
     override val AUTHORITY: String = "pt.android.movies.provider.MovieProvider"
     override val MEDIA_BASE_SUBTYPE: String = "/vnd.movies."
+    override val CONTENT_URI: Uri = Uri.parse("content://" + AUTHORITY + "/")
 
     object Movies : BaseColumns {
-        val RESOURCE = "movies"
-
-        val CONTENT_URI: Uri = Uri.parse("content://" + AUTHORITY + "/")
+        val RESOURCE = "moviesintheaters"
 
         val CONTENT_URI2 = Uri.withAppendedPath(
-                MoviesContract.CONTENT_URI,
+                CONTENT_URI,
                 RESOURCE
         )
 
@@ -26,7 +28,7 @@ object MoviesContract : ContractInterface{
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
 
         val FIELDS = mapOf(
-        "_ID" to "_ID",
+                "_ID" to "_ID",
                 "ID" to "id",
                 "TITLE" to "title",
                 "RELEASE_DATE" to "release_date",
