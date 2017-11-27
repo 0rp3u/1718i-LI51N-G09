@@ -1,6 +1,7 @@
 package pdm_1718i.yamda.data.db
 
 import android.provider.BaseColumns
+import pdm_1718i.yamda.data.db.def.MoviesDetailsContract
 
 /**
  * Created by Edgar on 26/11/2017.
@@ -18,7 +19,6 @@ object DbSchemaMovieDetails {
         val OVERVIEW = MoviesDetailsContract.Movies.FIELDS.getValue("OVERVIEW")
         val ADULT = MoviesDetailsContract.Movies.FIELDS.getValue("ADULT")
         val RELEASE_DATE = MoviesDetailsContract.Movies.FIELDS.getValue("RELEASE_DATE")
-
 
         val STRUCTURE = "$RELEASE_DATE DATE , " +
                 "$BACKDROP TEXT , " +

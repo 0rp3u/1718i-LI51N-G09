@@ -3,6 +3,7 @@ package pdm_1718i.yamda.data.db
 import android.content.ContentResolver
 import android.net.Uri
 import android.provider.BaseColumns
+import pdm_1718i.yamda.data.db.def.ContractInterface
 
 /**
  * Created by Edgar on 26/11/2017.
