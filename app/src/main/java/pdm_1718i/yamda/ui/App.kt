@@ -7,9 +7,8 @@ import com.android.volley.Request
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
 import pdm_1718i.yamda.data.MoviesProvider
-import pdm_1718i.yamda.data.server.caches.BitmapLruCache
-import pdm_1718i.yamda.data.server.caches.DiskLruImageCache
-import pdm_1718i.yamda.data.server.caches.DiskLruImageCache2
+import pdm_1718i.yamda.data.cache.bitmap.BitmapLruCache
+import pdm_1718i.yamda.data.cache.bitmap.DiskLruImageCache2
 
 
 class App : Application() {

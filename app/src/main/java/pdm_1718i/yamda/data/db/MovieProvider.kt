@@ -99,6 +99,6 @@ class MovieProvider: ContentProvider(){
         }
     }
     private fun badUri(uri: Uri?) =
-            IllegalArgumentException("unknown uri: $uri");
+            IllegalArgumentException("unknown uri: $uri")
 
 }

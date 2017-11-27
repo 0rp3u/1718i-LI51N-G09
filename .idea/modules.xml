@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/YAMDA.iml" filepath="$PROJECT_DIR$/YAMDA.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pdm1718i.iml" filepath="$PROJECT_DIR$/pdm1718i.iml" />
       <module fileurl="file://C:\Users\Red\Desktop\Isel\1718i\PDM\YAMDA\pdm1718i.iml" filepath="C:\Users\Red\Desktop\Isel\1718i\PDM\YAMDA\pdm1718i.iml" />
     </modules>
   </component>

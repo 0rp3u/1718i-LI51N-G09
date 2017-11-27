@@ -2,7 +2,7 @@ package pdm_1718i.yamda.data
 
 import android.graphics.Bitmap
 import android.widget.ImageView
-import pdm_1718i.yamda.data.cache.DomainCache
+import pdm_1718i.yamda.data.cache.domain.DomainCache
 import pdm_1718i.yamda.data.server.TMDBService
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie
@@ -12,7 +12,7 @@ import pdm_1718i.yamda.model.Movie
 class MoviesProvider {
 
     companion object {
-        val SOURCE by lazy { DomainCache(TMDBService())}
+        val SOURCE by lazy { DomainCache(TMDBService()) }
     }
 
     fun nowPlayingMovies (page:Int, completionHandler:(movies:List<Movie>) -> Unit){

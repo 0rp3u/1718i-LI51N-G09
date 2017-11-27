@@ -1,4 +1,4 @@
-package pdm_1718i.yamda.data.server.caches
+package pdm_1718i.yamda.data.cache.bitmap
 
 import android.content.Context
 import android.graphics.Bitmap

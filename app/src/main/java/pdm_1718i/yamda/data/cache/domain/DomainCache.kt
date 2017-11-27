@@ -1,4 +1,4 @@
-package pdm_1718i.yamda.data.cache
+package pdm_1718i.yamda.data.cache.domain
 
 import android.graphics.Bitmap
 import android.util.Log
