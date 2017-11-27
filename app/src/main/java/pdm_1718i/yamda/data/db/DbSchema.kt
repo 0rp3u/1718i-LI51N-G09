@@ -3,7 +3,7 @@ package pdm_1718i.yamda.data.db
 import android.provider.BaseColumns
 
 object DbSchema {
-
+/*
     val DB_NAME = "movieInfo.db"
     val DB_VERSION = 1
 
@@ -56,5 +56,5 @@ object DbSchema {
                         ")"
 
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
-    }
+    }*/
 }

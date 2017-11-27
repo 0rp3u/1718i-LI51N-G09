@@ -7,7 +7,9 @@ import com.android.volley.Request
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
 import pdm_1718i.yamda.data.MoviesProvider
-import pdm_1718i.yamda.data.server.BitmapLruCache
+import pdm_1718i.yamda.data.server.caches.BitmapLruCache
+import pdm_1718i.yamda.data.server.caches.DiskLruImageCache
+import pdm_1718i.yamda.data.server.caches.DiskLruImageCache2
 
 
 class App : Application() {
@@ -16,7 +18,10 @@ class App : Application() {
         lateinit var instance: App
             private set
         private val requestQueue by lazy { Volley.newRequestQueue(instance) }
-        val imageLoader by lazy { ImageLoader(requestQueue, BitmapLruCache()) }
+        val imageLoader by lazy {
+            //val cache = BitmapLruCache(DiskLruImageCache(this.instance, "imageCache"))
+            val cache = BitmapLruCache(DiskLruImageCache2(requestQueue.cache))
+            ImageLoader(requestQueue, cache) }
         val moviesProvider by lazy { MoviesProvider() }
         private val TAG = App::class.java.simpleName
         val isNetworkAvailable: Boolean

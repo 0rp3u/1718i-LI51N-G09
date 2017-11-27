@@ -26,11 +26,11 @@ class MainActivity : BaseActivity(navigation = false) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        runIf(isNetworkAvailable) {
+        //runIf(isNetworkAvailable) {
             generateRecyclerView(R.id.recycler_view_nowplaying, App.moviesProvider::nowPlayingMovies)
             generateRecyclerView(R.id.recycler_view_upcoming,   App.moviesProvider::upcomingMovies)
             generateRecyclerView(R.id.recycler_view_popular,    App.moviesProvider::popularMovies)
-        }.caseFalse { toast(NO_INTERNET_CONNECTION) }
+        //}.caseFalse { toast(NO_INTERNET_CONNECTION) }
     }
 
     fun onPopularMore(view: View){
@@ -61,7 +61,7 @@ class MainActivity : BaseActivity(navigation = false) {
             providerHandler: (page:Int, completionHandler:(movies:List<Movie>) -> Unit)-> Unit
     ){
         with(findViewById(res) as RecyclerView){
-            this.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false)
+            this.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false) as RecyclerView.LayoutManager?
             providerHandler(DEFAULT_PAGINATION, {
                 val adapter = MainActAdapter(it)
                 this.adapter = adapter

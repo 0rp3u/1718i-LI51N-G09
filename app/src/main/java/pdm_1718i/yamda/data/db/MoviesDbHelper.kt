@@ -7,7 +7,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import pdm_1718i.yamda.ui.App
-
+/*
     class MoviesDbHelper(context: Context?) : SQLiteOpenHelper(context, DbSchema.DB_NAME, null, DbSchema.DB_VERSION){
 
         override fun onCreate(db: SQLiteDatabase?) {
@@ -20,4 +20,4 @@ import pdm_1718i.yamda.ui.App
 
             TODO("migrate old db to new one")
         }
-    }
+    }*/
