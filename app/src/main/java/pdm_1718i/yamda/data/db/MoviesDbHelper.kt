@@ -6,8 +6,9 @@ package pdm_1718i.yamda.data.db
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import pdm_1718i.yamda.data.db.def.DbSchema
 
-    class MoviesDbHelper(context: Context?) : SQLiteOpenHelper(context, DbSchema.DB_NAME, null, DbSchema.DB_VERSION){
+class MoviesDbHelper(context: Context?) : SQLiteOpenHelper(context, DbSchema.DB_NAME, null, DbSchema.DB_VERSION){
 
         override fun onCreate(db: SQLiteDatabase?) {
             db?.execSQL(DbSchemaMovieDetails.MovieDetails.DDL_CREATE_TABLE)

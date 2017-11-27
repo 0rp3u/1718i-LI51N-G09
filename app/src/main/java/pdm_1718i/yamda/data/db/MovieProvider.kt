@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
+import pdm_1718i.yamda.data.db.def.MoviesDetailsContract
 
 /**
  * Created by Edgar on 26/11/2017.
