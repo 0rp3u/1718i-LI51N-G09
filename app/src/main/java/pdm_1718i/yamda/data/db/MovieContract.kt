@@ -1,4 +1,4 @@
-package pdm_1718i.yamda.data.db.def
+package pdm_1718i.yamda.data.db
 
 import android.content.ContentResolver
 import android.net.Uri

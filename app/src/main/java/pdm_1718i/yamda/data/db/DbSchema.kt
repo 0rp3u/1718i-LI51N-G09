@@ -1,4 +1,5 @@
-package pdm_1718i.yamda.data.db.def
+package pdm_1718i.yamda.data.db
+
 
 import android.provider.BaseColumns
 
