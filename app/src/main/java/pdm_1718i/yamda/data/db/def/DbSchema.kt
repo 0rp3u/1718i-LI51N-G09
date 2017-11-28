@@ -28,6 +28,7 @@ object DbSchema {
                 "$VOTE_AVERAGE DOUBLE "
 
         val TBL_NAME = "MovieDetails"
+
         val DDL_CREATE_TABLE =
                 "CREATE TABLE $TBL_NAME ( " +
                         "$COL_ID INTEGER PRIMARY KEY, " +
