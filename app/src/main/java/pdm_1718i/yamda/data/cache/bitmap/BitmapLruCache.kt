@@ -1,9 +1,5 @@
 package pdm_1718i.yamda.data.cache.bitmap
 
-/**
- * Created by orpheu on 10/25/17.
- */
-
 import android.graphics.Bitmap
 import android.support.v4.util.LruCache
 import android.util.Log

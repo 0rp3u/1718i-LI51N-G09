@@ -9,9 +9,6 @@ import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.holders.RecyclerViewHolder
 
-/**
- * Created by Edgar on 30/10/2017.
- */
 
 class MainActAdapter(val movies : List<Movie>) : RecyclerView.Adapter<RecyclerViewHolder>(){
 

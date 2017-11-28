@@ -4,9 +4,6 @@ import android.text.TextUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * Created by Red on 31/10/2017.
- */
 
 val parser = SimpleDateFormat("yyyy-MM-dd")
 

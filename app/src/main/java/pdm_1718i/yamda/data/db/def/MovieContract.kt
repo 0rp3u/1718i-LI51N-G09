@@ -4,10 +4,6 @@ import android.content.ContentResolver
 import android.net.Uri
 import android.provider.BaseColumns
 
-/**
- * Created by Edgar on 26/11/2017.
- */
-
 object MovieContract : ContractInterface {
 
     override val AUTHORITY: String = "pt.android.movies.provider.MovieProvider"

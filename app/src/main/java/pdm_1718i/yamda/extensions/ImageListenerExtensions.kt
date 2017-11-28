@@ -5,9 +5,6 @@ import android.widget.ImageView
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.ImageLoader
 
-/**
- * Created by orpheu on 10/25/17.
- */
 fun getImageListener(view: ImageView,
                      defaultImageResId: Int, errorImageResId: Int, TAG: String): ImageLoader.ImageListener {
 

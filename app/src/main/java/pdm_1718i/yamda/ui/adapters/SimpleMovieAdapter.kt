@@ -14,12 +14,6 @@ import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.holders.SimpleMovieHolder
 
-/**
- * Created by orpheu on 10/19/17.
- */
-
-
-
 class SimpleMovieAdapter(private val context : Activity, private val searchedMovies: List<Movie>)
     : ArrayAdapter<Movie>(context,R.layout.item_search_result, searchedMovies){
 

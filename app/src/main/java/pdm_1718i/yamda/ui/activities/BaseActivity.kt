@@ -13,8 +13,6 @@ import pdm_1718i.yamda.extensions.runIf
 import android.widget.TextView
 
 
-
-
 open class BaseActivity(val withMenu: Boolean = true, val navigation: Boolean = true) : AppCompatActivity() {
 
     protected val QUERY_KEY = "query"

@@ -8,9 +8,6 @@ import pdm_1718i.yamda.R
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.activities.MovieDetailActivity
 
-/**
- * Created by Edgar on 31/10/2017.
- */
 class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     private lateinit var movie: Movie

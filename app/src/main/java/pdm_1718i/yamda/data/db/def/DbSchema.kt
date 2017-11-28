@@ -18,19 +18,19 @@ object DbSchema {
         val ADULT =             MovieContract.MovieDetails.FIELDS["ADULT"]
         val RELEASE_DATE =      MovieContract.MovieDetails.FIELDS["RELEASE_DATE"]
 
-        val STRUCTURE = "${RELEASE_DATE} DATE , " +
-                "${BACKDROP} TEXT , " +
-                "${POSTER} TEXT , " +
-                "${TITLE} TEXT NOT NULL , " +
-                "${ORIGINAL_TITLE} TEXT NOT NULL , " +
-                "${OVERVIEW} TEXT , " +
-                "${ADULT} BOOLEAN , " +
-                "${VOTE_AVERAGE} DOUBLE "
+        val STRUCTURE = "$RELEASE_DATE DATE , " +
+                "$BACKDROP TEXT , " +
+                "$POSTER TEXT , " +
+                "$TITLE TEXT NOT NULL , " +
+                "$ORIGINAL_TITLE TEXT NOT NULL , " +
+                "$OVERVIEW TEXT , " +
+                "$ADULT BOOLEAN , " +
+                "$VOTE_AVERAGE DOUBLE "
 
         val TBL_NAME = "MovieDetails"
         val DDL_CREATE_TABLE =
-                "CREATE TABLE ${TBL_NAME} ( " +
-                        "${COL_ID} INTEGER PRIMARY KEY, " +
+                "CREATE TABLE $TBL_NAME ( " +
+                        "$COL_ID INTEGER PRIMARY KEY, " +
                         STRUCTURE +
                         ")"
 
@@ -41,8 +41,8 @@ object DbSchema {
         val ID = MovieContract.UpcomingMovies.FIELDS["_ID"]
         val TBL_NAME = "UpcomingMovies"
         val DDL_CREATE_TABLE =
-                "CREATE TABLE ${TBL_NAME} ( " +
-                        "${COL_ID} INTEGER PRIMARY KEY, " +
+                "CREATE TABLE $TBL_NAME ( " +
+                        "$COL_ID INTEGER PRIMARY KEY, " +
                         MovieDetails.STRUCTURE +
                         ")"
 
@@ -51,5 +51,14 @@ object DbSchema {
 
     object NowPlayingMovies{
 
+        val ID = MovieContract.NowPlayingMovies.FIELDS["_ID"]
+        val TBL_NAME = "NowPlayingMovies"
+        val DDL_CREATE_TABLE =
+                "CREATE TABLE $TBL_NAME ( " +
+                        "$COL_ID INTEGER PRIMARY KEY, " +
+                        MovieDetails.STRUCTURE +
+                        ")"
+
+        val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
     }
 }

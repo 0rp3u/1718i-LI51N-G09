@@ -2,9 +2,7 @@ package pdm_1718i.yamda.model
 
 import java.util.*
 
-/**
- * Created by Red on 31/10/2017.
- */
+
 data class DetailedMovie(
         val poster_path: String?,
         val backdrop_path: String?,
