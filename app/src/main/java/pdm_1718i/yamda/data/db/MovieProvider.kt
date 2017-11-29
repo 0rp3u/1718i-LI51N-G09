@@ -101,7 +101,7 @@ class MovieProvider: ContentProvider(){
      * @throws IllegalArgumentException if the received [uri] does not refer to a valid data set
      */
     private fun resolveTableAndSelectionInfoFromUri(uri: Uri, selection: String?): Pair<String, String?> {
-        val itemSelection = "${DbSchema.COL_ID} = ${uri!!.lastPathSegment}"
+        val itemSelection = "${DbSchema.COL_ID} = ${uri.lastPathSegment}"
         return when (uriMatcher.match(uri)) {
             UPCOMING.ITEM -> Pair(DbSchema.UpcomingMovies.TBL_NAME, itemSelection)
             THEATERS.ITEM -> Pair(DbSchema.NowPlayingMovies.TBL_NAME, itemSelection)

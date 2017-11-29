@@ -20,6 +20,7 @@ class SimpleMovieAdapter(private val context : Activity, private val searchedMov
     private val itemLayoutId = R.layout.item_search_result
     private val inflater = LayoutInflater.from(context)
 
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val itemView = convertView ?: inflater.inflate(itemLayoutId, parent, false)
         val movie : Movie = getItem(position)

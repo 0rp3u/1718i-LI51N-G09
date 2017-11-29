@@ -22,8 +22,6 @@ class DiskLruImageCache2(private val mDiskCache : Cache) : ImageCache {
 
 
     override fun putBitmap(key: String, data: Bitmap) {
-
-        if(data != null) {
             val entry = Cache.Entry()
             val stream = ByteArrayOutputStream()
             data.compress(mCompressFormat, mCompressQuality, stream)
@@ -31,7 +29,6 @@ class DiskLruImageCache2(private val mDiskCache : Cache) : ImageCache {
             mDiskCache.put(key, entry)
             stream.close()
             Log.d("cache_test_DISK_", "$key was put on disk ")
-        }
     }
 
     override fun getBitmap(key: String): Bitmap? {

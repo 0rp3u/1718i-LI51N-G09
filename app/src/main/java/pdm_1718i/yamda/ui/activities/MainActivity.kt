@@ -52,7 +52,7 @@ class MainActivity : BaseActivity(navigation = false) {
             providerHandler: (page:Int, completionHandler:(movies:List<Movie>) -> Unit)-> Unit
     ){
         with(findViewById(res) as RecyclerView){
-            this.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false) as RecyclerView.LayoutManager?
+            this.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false)
             providerHandler(DEFAULT_PAGINATION, {
                 val adapter = MainActAdapter(it)
                 this.adapter = adapter
