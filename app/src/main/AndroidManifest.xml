@@ -13,6 +13,12 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
 
+    <provider
+        android:authorities="pt.android.movies.provider.MovieProvider"
+        android:name=".data.db.MovieProvider"
+        android:exported="false"/>
+
+
     <activity android:name=".ui.activities.MainActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
