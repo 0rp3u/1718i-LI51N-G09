@@ -51,6 +51,11 @@
 
     </activity>
 
+    <provider
+        android:authorities="pt.android.movies.provider"
+        android:name=".data.db.MovieProvider"
+        android:exported="false"/>
+
 </application>
 
 </manifest>
