@@ -23,7 +23,6 @@ open class BaseActivity(val withMenu: Boolean = true, val navigation: Boolean = 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         runIf(navigation){supportActionBar?.setDisplayHomeAsUpEnabled(true)}
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -8,13 +8,8 @@ import android.view.View
 import android.widget.LinearLayout
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.server.TMDBService.Companion.DEFAULT_PAGINATION
-import pdm_1718i.yamda.extensions.NO_INTERNET_CONNECTION
-import pdm_1718i.yamda.extensions.caseFalse
-import pdm_1718i.yamda.extensions.runIf
-import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
-import pdm_1718i.yamda.ui.App.Companion.isNetworkAvailable
 import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.PLAYING
 import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.POPULAR
 import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.REQUEST_TYPE
@@ -26,11 +21,9 @@ class MainActivity : BaseActivity(navigation = false) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //runIf(isNetworkAvailable) {
-            generateRecyclerView(R.id.recycler_view_nowplaying, App.moviesProvider::nowPlayingMovies)
-            generateRecyclerView(R.id.recycler_view_upcoming,   App.moviesProvider::upcomingMovies)
-            generateRecyclerView(R.id.recycler_view_popular,    App.moviesProvider::popularMovies)
-        //}.caseFalse { toast(NO_INTERNET_CONNECTION) }
+        generateRecyclerView(R.id.recycler_view_nowplaying, App.moviesProvider::nowPlayingMovies)
+        generateRecyclerView(R.id.recycler_view_upcoming,   App.moviesProvider::upcomingMovies)
+        generateRecyclerView(R.id.recycler_view_popular,    App.moviesProvider::popularMovies)
     }
 
     fun onPopularMore(view: View){
@@ -45,8 +38,6 @@ class MainActivity : BaseActivity(navigation = false) {
             putExtra(REQUEST_TYPE, PLAYING)
             startActivity(this)
         }
-
-
     }
 
     fun onUpcomingMore(view: View){

@@ -33,12 +33,10 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
-        //runIf(isNetworkAvailable){
-            with(intent.getStringExtra(REQUEST_TYPE)){
-                title = this
-                dispatcher[this]?.let { it(DEFAULT_PAGINATION, { createGUI(it) }) }
-            }
-        //}.caseFalse { toast(NO_INTERNET_CONNECTION) }
+        with(intent.getStringExtra(REQUEST_TYPE)){
+            title = this
+            dispatcher[this]?.let { it(DEFAULT_PAGINATION, { createGUI(it) }) }
+        }
     }
 
     private fun createGUI(movies : List< Movie>){

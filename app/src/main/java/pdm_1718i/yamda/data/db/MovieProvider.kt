@@ -56,11 +56,10 @@ class MovieProvider: ContentProvider(){
         /*****************************************************************************/
     }
 
-    private lateinit var dbHelper: MoviesDbHelper
+    private val dbHelper: MoviesDbHelper by lazy{MoviesDbHelper(context)}
 
 
     override fun onCreate(): Boolean {
-        dbHelper = MoviesDbHelper(context)
         return true
     }
 
@@ -113,7 +112,6 @@ class MovieProvider: ContentProvider(){
 
 
     override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>, sortOrder: String?): Cursor {
-
         val params = resolveTableAndSelectionInfoFromUri(uri, selection)
         val qbuilder = SQLiteQueryBuilder()
         qbuilder.tables = params.first
