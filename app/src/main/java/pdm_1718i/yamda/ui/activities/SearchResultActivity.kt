@@ -6,10 +6,6 @@ import android.view.View
 import android.widget.AdapterView
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.server.TMDBService.Companion.DEFAULT_PAGINATION
-import pdm_1718i.yamda.extensions.NO_INTERNET_CONNECTION
-import pdm_1718i.yamda.extensions.caseFalse
-import pdm_1718i.yamda.extensions.runIf
-import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.adapters.SimpleMovieAdapter
@@ -22,9 +18,7 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_list)
-        runIf({App.isNetworkAvailable}){
-            handleIntent(intent)
-        }.caseFalse { toast(NO_INTERNET_CONNECTION) }
+        handleIntent(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
