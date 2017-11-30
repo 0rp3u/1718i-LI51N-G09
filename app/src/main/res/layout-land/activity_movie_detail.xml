@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,77 +16,93 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/movie_poster">
 
-        <LinearLayout
+        <RelativeLayout
             style="@style/DefaultMargin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                style="@style/DefaultItemHeader"
+            <ImageView
+                android:id="@+id/follow_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/detail_release_date" />
-
-            <TextView
-                android:id="@+id/release_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RELEASE_DATE" />
-
-            <!--Rating-->
-            <TextView
-                style="@style/DefaultItemHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detail_rating" />
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_notifications_active_black_24dp"
+                android:layout_margin="5dp"
+                />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/rating"
+                    style="@style/DefaultItemHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="RATING" />
+                    android:text="@string/detail_release_date" />
 
                 <TextView
+                    android:id="@+id/release_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="/10" />
+                    android:text="RELEASE_DATE" />
+
+                <!--Rating-->
+                <TextView
+                    style="@style/DefaultItemHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detail_rating" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RATING" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/10" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/DefaultItemHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detail_genres" />
+
+                <TextView
+                    android:id="@+id/genres"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GENRES" />
+
+                <TextView
+                    style="@style/DefaultItemHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detail_summary" />
+
+                <TextView
+                    android:id="@+id/overview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="overview" />
 
             </LinearLayout>
 
-            <TextView
-                style="@style/DefaultItemHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detail_genres" />
-
-            <TextView
-                android:id="@+id/genres"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="GENRES" />
-
-            <TextView
-                style="@style/DefaultItemHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detail_summary" />
-
-            <TextView
-                android:id="@+id/overview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="overview" />
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </ScrollView>
-
-</LinearLayout>
+</RelativeLayout>
