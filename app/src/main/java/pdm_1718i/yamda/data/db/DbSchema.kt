@@ -18,6 +18,7 @@ object DbSchema {
         val OVERVIEW =          MovieContract.MovieDetails.FIELDS["OVERVIEW"]
         val ADULT =             MovieContract.MovieDetails.FIELDS["ADULT"]
         val RELEASE_DATE =      MovieContract.MovieDetails.FIELDS["RELEASE_DATE"]
+        val IS_FOLLOWING =      MovieContract.MovieDetails.FIELDS["IS_FOLLOWING"]
 
         val STRUCTURE = "$RELEASE_DATE DATE , " +
                 "$BACKDROP TEXT , " +
@@ -26,7 +27,8 @@ object DbSchema {
                 "$ORIGINAL_TITLE TEXT NOT NULL , " +
                 "$OVERVIEW TEXT , " +
                 "$ADULT BOOLEAN , " +
-                "$VOTE_AVERAGE DOUBLE "
+                "$VOTE_AVERAGE DOUBLE , " +
+                "$IS_FOLLOWING BOOLEAN "
 
         val TBL_NAME = "MovieDetails"
 
@@ -44,21 +46,18 @@ object DbSchema {
         val TBL_NAME = "UpcomingMovies"
         val DDL_CREATE_TABLE =
                 "CREATE TABLE $TBL_NAME ( " +
-                        "$COL_ID INTEGER PRIMARY KEY, " +
-                        MovieDetails.STRUCTURE +
+                        "$ID INTEGER PRIMARY KEY, " +
                         ")"
 
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
     }
 
     object NowPlayingMovies{
-
         val ID = MovieContract.NowPlayingMovies.FIELDS["_ID"]
         val TBL_NAME = "NowPlayingMovies"
         val DDL_CREATE_TABLE =
                 "CREATE TABLE $TBL_NAME ( " +
-                        "$COL_ID INTEGER PRIMARY KEY, " +
-                        MovieDetails.STRUCTURE +
+                        "$ID INTEGER PRIMARY KEY, " +
                         ")"
 
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME

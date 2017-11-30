@@ -33,7 +33,8 @@ object MovieContract : ContractInterface {
                 "POSTER_PATH" to "poster_path",
                 "BACKDROP_PATH" to "backdrop_path",
                 "OVERVIEW" to "overview",
-                "ADULT" to "adult"
+                "ADULT" to "adult",
+                "IS_FOLLOWING" to "isFollowing"
         )
 
         val PROJECT_ALL = FIELDS.values.toTypedArray()
