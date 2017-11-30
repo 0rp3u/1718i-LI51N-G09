@@ -6,16 +6,16 @@ import android.database.sqlite.SQLiteOpenHelper
 
 class MoviesDbHelper(context: Context?) : SQLiteOpenHelper(context, DbSchema.DB_NAME, null, DbSchema.DB_VERSION){
 
-        override fun onCreate(db: SQLiteDatabase?) {
-            createDb(db)
-        }
+    override fun onCreate(db: SQLiteDatabase?) {
+        createDb(db)
+    }
 
-        override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-            deleteDb(db)
-            createDb(db)
-            return
-            TODO("refactor method so it migrate old db to new one")
-        }
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        deleteDb(db)
+        createDb(db)
+        return
+        TODO("refactor method so it migrate old db to new one")
+    }
 
     private fun createDb(db: SQLiteDatabase?) {
         db?.execSQL(DbSchema.MovieDetails.DDL_CREATE_TABLE)
