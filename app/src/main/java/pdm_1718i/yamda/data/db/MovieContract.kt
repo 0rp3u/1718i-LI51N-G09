@@ -24,20 +24,29 @@ object MovieContract : ContractInterface {
         val CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
 
-        val FIELDS = mapOf(
-                "_ID" to "_ID",
-                "ORIGINAL_TITLE" to "original_title",
-                "TITLE" to "title",
-                "RELEASE_DATE" to "release_date",
-                "VOTE_AVERAGE" to "vote_average",
-                "POSTER_PATH" to "poster_path",
-                "BACKDROP_PATH" to "backdrop_path",
-                "OVERVIEW" to "overview",
-                "ADULT" to "adult",
-                "IS_FOLLOWING" to "isFollowing"
-        )
+        val _ID = "_ID"
+        val ORIGINAL_TITLE = "original_title"
+        val TITLE = "title"
+        val RELEASE_DATE = "release_date"
+        val VOTE_AVERAGE = "vote_average"
+        val POSTER_PATH = "poster_path"
+        val BACKDROP_PATH = "backdrop_path"
+        val OVERVIEW = "overview"
+        val ADULT = "adult"
+        val IS_FOLLOWING = "isFollowing"
 
-        val PROJECT_ALL = FIELDS.values.toTypedArray()
+        val PROJECT_ALL = arrayOf(
+            _ID,
+            ORIGINAL_TITLE,
+            TITLE,
+            RELEASE_DATE,
+            VOTE_AVERAGE,
+            POSTER_PATH,
+            BACKDROP_PATH,
+            OVERVIEW,
+            ADULT,
+            IS_FOLLOWING
+        )
         val DEFAULT_SORT_ORDER = String()
     }
 
@@ -55,11 +64,9 @@ object MovieContract : ContractInterface {
         val CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
 
-        val FIELDS = mapOf(
-                "_ID" to "_ID"
-        )
+        val _ID = "_ID"
 
-        val PROJECT_ALL = FIELDS.values.toTypedArray()
+        val PROJECT_ALL = arrayOf(_ID)
         val DEFAULT_SORT_ORDER = String()
     }
 
@@ -77,11 +84,9 @@ object MovieContract : ContractInterface {
         val CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
 
-        val FIELDS = mapOf(
-                "_ID" to "_ID"
-        )
+        val _ID = "_ID"
 
-        val PROJECT_ALL = FIELDS.values.toTypedArray()
+        val PROJECT_ALL = arrayOf(_ID)
         val DEFAULT_SORT_ORDER = String()
     }
 }
