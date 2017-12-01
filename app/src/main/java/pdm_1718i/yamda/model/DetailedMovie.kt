@@ -12,5 +12,6 @@ data class DetailedMovie(
         val vote_average: Float,
         val budget: Int,
         val genres: List<Genre>,
-        val overview: String?
+        val overview: String?,
+        val isFollowing: Boolean = false
 )

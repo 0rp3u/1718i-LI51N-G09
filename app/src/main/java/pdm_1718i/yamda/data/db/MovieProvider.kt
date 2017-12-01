@@ -56,10 +56,11 @@ class MovieProvider: ContentProvider(){
         /*****************************************************************************/
     }
 
-    private val dbHelper: MoviesDbHelper by lazy{MoviesDbHelper(context)}
+    private lateinit var dbHelper: MoviesDbHelper
 
 
     override fun onCreate(): Boolean {
+        dbHelper = MoviesDbHelper(context)
         return true
     }
 
