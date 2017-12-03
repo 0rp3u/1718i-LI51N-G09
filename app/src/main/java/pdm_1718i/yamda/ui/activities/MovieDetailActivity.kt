@@ -1,9 +1,12 @@
 package pdm_1718i.yamda.ui.activities
 
+import android.content.ContentValues
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import pdm_1718i.yamda.R
+import pdm_1718i.yamda.data.db.MovieContract
 import pdm_1718i.yamda.data.server.Options
 import pdm_1718i.yamda.data.server.Options.Companion.BIG
 import pdm_1718i.yamda.extensions.getDateFromCalendar
@@ -28,7 +31,7 @@ class MovieDetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
         val movieId = intent.getIntExtra("movieId", -1)
-        registerEvents()
+        registerEvents(movieId)
         App.moviesProvider.movieDetail(movieId, { updateUI(it) })
     }
 
@@ -58,8 +61,19 @@ class MovieDetailActivity : BaseActivity() {
         }
     }
 
-    private fun registerEvents(){
+    private fun registerEvents(movieID: Int){
         followIcon.setOnClickListener {
+            val MOVIE_ID = Integer.toString(movieID)
+            val cr = this.contentResolver
+            val uri = MovieContract.MovieDetails.CONTENT_URI
+            val movieUri = Uri.withAppendedPath(uri, MOVIE_ID)
+            val contentValues = ContentValues().apply {
+                put(MovieContract.MovieDetails.IS_FOLLOWING, !followIconState)
+            }
+            val where = "_ID = ?"
+            val selectionArgs: Array<String> = arrayOf(MOVIE_ID)
+            val nchanged = cr.update(movieUri, contentValues, where, selectionArgs)
+            val nchanged1 = cr.insert(movieUri, )
             with(it as ImageView){
                 if(followIconState){
                     setImageResource(NOTIFICATION_OFF)

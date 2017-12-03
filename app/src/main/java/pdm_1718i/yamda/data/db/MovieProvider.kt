@@ -135,8 +135,10 @@ class MovieProvider: ContentProvider(){
 
     }
 
-    override fun update(uri: Uri?, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?): Int {
-        throw UnsupportedOperationException("not implemented")
+    override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<out String>?): Int {
+        val table = resolveTableAndSelectionInfoFromUri(uri, selection).first
+        val db = dbHelper.writableDatabase
+        return db.update(table, values, selection, selectionArgs)
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
