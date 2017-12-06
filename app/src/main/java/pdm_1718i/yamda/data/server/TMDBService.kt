@@ -90,7 +90,8 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     override fun popularMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
             get(
                     Uri.Builder()
-                            .appendEncodedPath("movie/popular"),
+                            .appendEncodedPath("movie/popular")
+                            .appendQueryParameter("page", "$page"),
                     {
                         completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
                     }
@@ -100,7 +101,8 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     override fun upcomingMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
         get(
                 Uri.Builder()
-                    .appendEncodedPath("movie/upcoming"),
+                    .appendEncodedPath("movie/upcoming")
+                    .appendQueryParameter("page", "$page"),
                 {
                     completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
                 }
@@ -110,7 +112,8 @@ class TMDBService : ServiceInterface, MoviesDataSource {
     override fun playingMovies (page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
         get(
                 Uri.Builder()
-                    .appendEncodedPath("movie/now_playing"),
+                    .appendEncodedPath("movie/now_playing")
+                    .appendQueryParameter("page", "$page"),
                 {
                     completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java)))
                 }
@@ -121,7 +124,8 @@ class TMDBService : ServiceInterface, MoviesDataSource {
         get(
                 Uri.Builder()
                     .appendEncodedPath("search/movie")
-                    .appendQueryParameter("query", query),
+                    .appendQueryParameter("query", query)
+                    .appendQueryParameter("page", "$page"),
                 { completionHandler(DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java))) }
         )
     }
