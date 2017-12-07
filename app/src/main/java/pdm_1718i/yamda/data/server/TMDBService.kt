@@ -1,8 +1,5 @@
 package pdm_1718i.yamda.data.server
 
-/**
- * Created by orpheu on 10/13/17.
- */
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
@@ -14,6 +11,9 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.example.pdm_1718i.yamda.data.server.MovieDetailResult
 import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
 import com.google.gson.Gson
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.suspendCancellableCoroutine
 import org.json.JSONObject
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.MoviesDataSource
@@ -21,10 +21,10 @@ import pdm_1718i.yamda.extensions.getImageListener
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
-import pdm_1718i.yamda.ui.App.Companion.isNetworkAvailable
 import java.util.*
-
+/*
 class TMDBService : ServiceInterface, MoviesDataSource {
+
     companion object {
         private val gson: Gson = Gson()
         val TAG = TMDBService::class.java.simpleName
@@ -59,6 +59,7 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 }
             }
         }
+
         App.instance.addToRequestQueue(jsonObjReq, TAG)
     }
 
@@ -78,13 +79,12 @@ class TMDBService : ServiceInterface, MoviesDataSource {
                 },
                 Response.ErrorListener { error ->
                     Log.d(TAG, "/get request fail! Error: ${error?.message}")
-                    if(!isNetworkAvailable){
-                        Toast.makeText(App.instance, "No Internet Connection", Toast.LENGTH_SHORT).show()
-                    }
-                    else Toast.makeText(App.instance, "Something went wrong!", Toast.LENGTH_SHORT).show()
+
+                    Toast.makeText(App.instance, "Something went wrong!", Toast.LENGTH_SHORT).show()
                 }) {
         }
         App.instance.addToRequestQueue(jsonObjReq, TAG)
+
     }
 
     override fun popularMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit) {
@@ -156,4 +156,4 @@ class TMDBService : ServiceInterface, MoviesDataSource {
         App.imageLoader
                 .get(uri, getImageListener(bitmapCompletionHandler))
     }
-}
+}*/

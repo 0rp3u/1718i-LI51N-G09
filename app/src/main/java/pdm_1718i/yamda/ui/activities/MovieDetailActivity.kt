@@ -3,8 +3,12 @@ package pdm_1718i.yamda.ui.activities
 import android.content.ContentValues
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.db.MovieContract
 import pdm_1718i.yamda.data.server.Options
@@ -31,8 +35,8 @@ class MovieDetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
         val movieId = intent.getIntExtra("movieId", -1)
-        registerEvents(movieId)
-        App.moviesProvider.movieDetail(movieId, { updateUI(it) })
+        //registerEvents(movieId)
+        async(UI) {updateUI( bg{App.moviesProvider.movieDetail(movieId)}.await()) }
     }
 
     private fun updateUI(movieDetail: DetailedMovie) {
@@ -44,9 +48,8 @@ class MovieDetailActivity : BaseActivity() {
             val genres = genres.joinToString(separator = ", ") {it.name}
             genreTextView.text = genres
             overviewTextView.text = overview
-
             if (poster_path != null && poster_path.isNotEmpty()) {
-                App.moviesProvider.image(poster_path, moviePoster, Options.poster_sizes[BIG]!!)
+                 App.moviesProvider.image(poster_path, moviePoster, Options.poster_sizes[BIG]!!)
             }else{
                 moviePoster.setImageResource(R.drawable.ic_movie_thumbnail)
             }
@@ -73,7 +76,7 @@ class MovieDetailActivity : BaseActivity() {
             val where = "_ID = ?"
             val selectionArgs: Array<String> = arrayOf(MOVIE_ID)
             val nchanged = cr.update(movieUri, contentValues, where, selectionArgs)
-            val nchanged1 = cr.insert(movieUri, )
+            //val nchanged1 = cr.insert(movieUri, )
             with(it as ImageView){
                 if(followIconState){
                     setImageResource(NOTIFICATION_OFF)

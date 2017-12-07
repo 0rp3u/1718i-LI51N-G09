@@ -4,8 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.R
-import pdm_1718i.yamda.data.server.TMDBService.Companion.DEFAULT_PAGINATION
+import pdm_1718i.yamda.data.server.TMDBService2.Companion.DEFAULT_PAGINATION
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.adapters.SimpleMovieAdapter
@@ -29,7 +32,10 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
     private fun handleIntent(intent: Intent) {
         val query = intent.getStringExtra(QUERY_KEY)
         title = "$RESULT_TITLE: $query"
-        App.moviesProvider.searchMovies(query, DEFAULT_PAGINATION, { createGUI(it) })
+        async(UI) {
+            val movies = bg{App.moviesProvider.searchMovies(query, DEFAULT_PAGINATION)}
+            createGUI(movies.await())
+        }
     }
 
     private fun createGUI(movies: List<Movie>) {

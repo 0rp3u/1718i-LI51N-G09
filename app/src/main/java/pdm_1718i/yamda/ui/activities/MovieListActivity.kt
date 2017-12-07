@@ -4,8 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.R
-import pdm_1718i.yamda.data.server.TMDBService.Companion.DEFAULT_PAGINATION
+import pdm_1718i.yamda.data.server.TMDBService2.Companion.DEFAULT_PAGINATION
 import pdm_1718i.yamda.extensions.NO_INTERNET_CONNECTION
 import pdm_1718i.yamda.extensions.caseFalse
 import pdm_1718i.yamda.extensions.runIf
@@ -23,7 +26,7 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
         val POPULAR = "Popular"
         val PLAYING = "Now Playing"
         val UPCOMING = "Upcoming"
-        @JvmStatic val dispatcher = mapOf<String, (Int, (List<Movie>) -> Unit) -> Unit>(
+        @JvmStatic val dispatcher = mapOf<String, (Int) -> List<Movie>>(
                 POPULAR     to App.moviesProvider::popularMovies,
                 PLAYING     to App.moviesProvider::nowPlayingMovies,
                 UPCOMING    to App.moviesProvider::upcomingMovies
@@ -35,7 +38,9 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
         setContentView(R.layout.activity_movie_list)
         with(intent.getStringExtra(REQUEST_TYPE)){
             title = this
-            dispatcher[this]?.let { it(DEFAULT_PAGINATION, { createGUI(it) }) }
+            dispatcher[this]?.let {
+                async(UI) { createGUI(bg{it(DEFAULT_PAGINATION)}.await()) }
+            }
         }
     }
 
