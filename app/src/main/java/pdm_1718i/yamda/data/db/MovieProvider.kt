@@ -22,6 +22,11 @@ class MovieProvider: ContentProvider(){
         val ITEM = 6
     }
 
+    object POPULAR{
+        val LIST = 7
+        val ITEM = 8
+    }
+
     private val uriMatcher: UriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
     init {
@@ -43,6 +48,15 @@ class MovieProvider: ContentProvider(){
         uriMatcher.addURI(MovieContract.AUTHORITY,
                 "${MovieContract.UpcomingMovies.RESOURCE}/#",
                 UPCOMING.ITEM)
+
+        /*****************************************************************************/
+        uriMatcher.addURI(MovieContract.AUTHORITY,
+                MovieContract.MostPopularMovies.RESOURCE,
+                POPULAR.LIST)
+
+        uriMatcher.addURI(MovieContract.AUTHORITY,
+                "${MovieContract.MostPopularMovies.RESOURCE}/#",
+                POPULAR.ITEM)
 
         /*****************************************************************************/
         uriMatcher.addURI(MovieContract.AUTHORITY,
@@ -73,12 +87,16 @@ class MovieProvider: ContentProvider(){
             UPCOMING.LIST -> MovieContract.UpcomingMovies.CONTENT_TYPE
             UPCOMING.ITEM -> MovieContract.UpcomingMovies.CONTENT_ITEM_TYPE
 
+            POPULAR.LIST -> MovieContract.MostPopularMovies.CONTENT_TYPE
+            POPULAR.ITEM -> MovieContract.MostPopularMovies.CONTENT_ITEM_TYPE
+
             DETAILS.LIST -> MovieContract.MovieDetails.CONTENT_TYPE
             DETAILS.ITEM -> MovieContract.MovieDetails.CONTENT_ITEM_TYPE
 
             else-> throw badUri(uri)
         }
     }
+
     /**
      * Helper function used to obtain the table name based on the
      * given [uri]
@@ -86,9 +104,11 @@ class MovieProvider: ContentProvider(){
      * @return A [String] instance bearing the table name
      * @throws IllegalArgumentException if the received [uri] does not refer to an existing table
      */
+
     private fun resolveTableInfoFromUri(uri: Uri): String = when (uriMatcher.match(uri)) {
             UPCOMING.LIST -> DbSchema.UpcomingMovies.TBL_NAME
             THEATERS.LIST -> DbSchema.NowPlayingMovies.TBL_NAME
+            POPULAR.LIST  -> DbSchema.MostPopularMovies.TBL_NAME
             DETAILS.LIST  -> DbSchema.MovieDetails.TBL_NAME
         else -> null
     } ?: throw badUri(uri)
@@ -106,6 +126,7 @@ class MovieProvider: ContentProvider(){
         return when (uriMatcher.match(uri)) {
             UPCOMING.ITEM -> Pair(DbSchema.UpcomingMovies.TBL_NAME, itemSelection)
             THEATERS.ITEM -> Pair(DbSchema.NowPlayingMovies.TBL_NAME, itemSelection)
+            POPULAR.ITEM  -> Pair(DbSchema.MostPopularMovies.TBL_NAME, itemSelection)
             DETAILS.ITEM  -> Pair(DbSchema.MovieDetails.TBL_NAME, itemSelection)
             else -> resolveTableInfoFromUri(uri).let { Pair(it, selection) }
         }

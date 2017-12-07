@@ -2,61 +2,51 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pdm_1718i.yamda">
 
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-<application
-    android:name=".ui.App"
-    android:allowBackup="true"
-    android:icon="@drawable/ic_video_camera"
-    android:label="@string/app_name"
-    android:supportsRtl="true"
-    android:theme="@style/AppTheme">
+    <application
+        android:name=".ui.App"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_video_camera"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <provider
+            android:name=".data.db.MovieProvider"
+            android:authorities="pt.android.movies.provider.MovieProvider"
+            android:exported="false" />
 
-    <provider
-        android:authorities="pt.android.movies.provider.MovieProvider"
-        android:name=".data.db.MovieProvider"
-        android:exported="false"/>
+        <activity android:name=".ui.activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
-    <activity android:name=".ui.activities.MainActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-
-        <meta-data
-            android:name="android.app.default_searchable"
-            android:value=".ui.activities.SearchResultActivity" />
-    </activity>
-
-    <activity android:name=".ui.activities.AboutActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.activities.MainActivity" />
-    </activity>
-
-    <activity android:name=".ui.activities.MovieListActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.activities.MainActivity" />
-    </activity>
-
-    <activity
-        android:name=".ui.activities.MovieDetailActivity" />
-
-    <activity android:name=".ui.activities.SearchResultActivity" >
-
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.activities.MainActivity" />
-    </activity>
-
-    <activity android:name=".ui.activities.SettingsActivity">
-
-    </activity>
-
-</application>
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".ui.activities.SearchResultActivity" />
+        </activity>
+        <activity android:name=".ui.activities.AboutActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
+        <activity android:name=".ui.activities.MovieListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
+        <activity android:name=".ui.activities.MovieDetailActivity" />
+        <activity android:name=".ui.activities.SearchResultActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.activities.SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+    </application>
 
 </manifest>

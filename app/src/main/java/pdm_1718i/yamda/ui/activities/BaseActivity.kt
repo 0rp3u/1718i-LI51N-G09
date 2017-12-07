@@ -77,8 +77,10 @@ open class BaseActivity(val withMenu: Boolean = true, val navigation: Boolean = 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings ->
+            R.id.action_settings ->{
+                startActivity(Intent(applicationContext, SettingsActivity::class.java))
                 true
+            }
             R.id.action_about -> {
                 startActivity(Intent(applicationContext, AboutActivity::class.java))
                 true
