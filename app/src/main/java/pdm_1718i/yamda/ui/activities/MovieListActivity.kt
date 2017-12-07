@@ -16,9 +16,11 @@ import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.App.Companion.isNetworkAvailable
+import pdm_1718i.yamda.ui.adapters.EndlessAdapter
 import pdm_1718i.yamda.ui.adapters.SimpleMovieAdapter
+import pdm_1718i.yamda.ui.holders.EndlessListView
 
-class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement_id = R.id.emptyElement) {
+class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement_id = R.id.emptyElement), EndlessListView.EndlessListener {
 
     companion object {
         private val MOVIE_KEY = "movieId"
@@ -31,6 +33,8 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
                 PLAYING     to App.moviesProvider::nowPlayingMovies,
                 UPCOMING    to App.moviesProvider::upcomingMovies
         )
+
+        private var CURRENT_PAGE : Int = DEFAULT_PAGINATION
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,9 +48,25 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
         }
     }
 
+    override fun loadData() {
+        with(intent.getStringExtra(REQUEST_TYPE)){
+            dispatcher[this]?.let { it(++CURRENT_PAGE, { createGUI(it) }) }
+        }
+    }
+
     private fun createGUI(movies : List< Movie>){
         if(movies.isNotEmpty()) {
-            listView.adapter = SimpleMovieAdapter(this, movies)
+
+            if(listView.adapter==null)
+                listView.setAdapter(EndlessAdapter(this, movies))
+            else
+                listView.addNewData(movies)
+
+            if (listView.getListener()==null)
+                listView.setListener(this)
+
+            listView.setLoadingView(R.layout.loading_layout)
+
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 val movieId = (listView.adapter.getItem(position) as Movie).id
                 startActivity(Intent(applicationContext, MovieDetailActivity::class.java).putExtra(MOVIE_KEY, movieId))

@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
 
-    <ListView
+    <pdm_1718i.yamda.ui.holders.EndlessListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,9 +14,9 @@ import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.holders.SimpleMovieHolder
 
-class SimpleMovieAdapter(private val context : Activity, private val searchedMovies: List<Movie>)
-    : ArrayAdapter<Movie>(context,R.layout.item_search_result, searchedMovies) {
-
+class EndlessAdapter(private val context : Activity, private val searchedMovies: List<Movie>)
+    : ArrayAdapter<Movie>(context, R.layout.item_search_result, searchedMovies)
+{
     private val itemLayoutId = R.layout.item_search_result
     private val inflater = LayoutInflater.from(context)
 
@@ -48,7 +47,7 @@ class SimpleMovieAdapter(private val context : Activity, private val searchedMov
 
         return itemView
     }
-    
+
     override fun getItem(position: Int): Movie {
         return searchedMovies[position]
     }
@@ -56,4 +55,6 @@ class SimpleMovieAdapter(private val context : Activity, private val searchedMov
     fun getAllItems(): List<Movie>{
         return searchedMovies
     }
+
+
 }
