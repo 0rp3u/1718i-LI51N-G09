@@ -6,7 +6,7 @@ import android.widget.ImageView
 import pdm_1718i.yamda.data.MoviesDataSource
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie
-
+/*
 class DomainCache(private val provider : MoviesDataSource): MoviesDataSource{
     private val cache : MutableMap<String, Any> = mutableMapOf()  //possible need to be thread safe??
 
@@ -67,4 +67,4 @@ class DomainCache(private val provider : MoviesDataSource): MoviesDataSource{
         provider.movieImage(image_id, bitmapCompletionHandler, image_size)
     }
 
-}
+}*/

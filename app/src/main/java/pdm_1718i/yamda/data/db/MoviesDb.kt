@@ -6,7 +6,7 @@ import pdm_1718i.yamda.data.MoviesDataSource
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
-
+/*
 class MoviesDb (private val provider : MoviesDataSource): MoviesDataSource{
 
     override fun popularMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit){
@@ -58,4 +58,4 @@ class MoviesDb (private val provider : MoviesDataSource): MoviesDataSource{
     }
 
 
-}
+}*/
