@@ -46,7 +46,9 @@ object DbSchema {
         val TBL_NAME = "UpcomingMovies"
         val DDL_CREATE_TABLE =
                 "CREATE TABLE $TBL_NAME ( " +
-                        "$ID INTEGER PRIMARY KEY)"
+                        "$ID INTEGER PRIMARY KEY, " +
+                        "PAGE INTEGER" +
+                        ")"
 
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
     }
@@ -56,7 +58,20 @@ object DbSchema {
         val TBL_NAME = "NowPlayingMovies"
         val DDL_CREATE_TABLE =
                 "CREATE TABLE $TBL_NAME ( " +
-                        "$ID INTEGER PRIMARY KEY)"
+                        "$ID INTEGER PRIMARY KEY, " +
+                        "PAGE INTEGER" +
+                        ")"
+        val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
+    }
+
+    object MostPopularMovies{
+        val ID = MovieContract.MostPopularMovies._ID
+        val TBL_NAME = "MostPopularMovies"
+        val DDL_CREATE_TABLE =
+                "CREATE TABLE $TBL_NAME ( " +
+                        "$ID INTEGER PRIMARY KEY, " +
+                        "PAGE INTEGER" +
+                        ")"
 
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
     }

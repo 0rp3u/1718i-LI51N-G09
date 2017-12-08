@@ -21,11 +21,13 @@ class MoviesDbHelper(context: Context?) : SQLiteOpenHelper(context, DbSchema.DB_
         db?.execSQL(DbSchema.MovieDetails.DDL_CREATE_TABLE)
         db?.execSQL(DbSchema.NowPlayingMovies.DDL_CREATE_TABLE)
         db?.execSQL(DbSchema.UpcomingMovies.DDL_CREATE_TABLE)
+        db?.execSQL(DbSchema.MostPopularMovies.DDL_CREATE_TABLE)
     }
 
     private fun deleteDb(db: SQLiteDatabase?) {
         db?.execSQL(DbSchema.MovieDetails.DDL_DROP_TABLE)
         db?.execSQL(DbSchema.NowPlayingMovies.DDL_DROP_TABLE)
         db?.execSQL(DbSchema.UpcomingMovies.DDL_DROP_TABLE)
+        db?.execSQL(DbSchema.MostPopularMovies.DDL_DROP_TABLE)
     }
 }

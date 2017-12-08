@@ -89,4 +89,25 @@ object MovieContract : ContractInterface {
         val PROJECT_ALL = arrayOf(_ID)
         val DEFAULT_SORT_ORDER = String()
     }
+
+    object MostPopularMovies : BaseColumns{
+        val RESOURCE = "MostPopularMovies"
+
+        val CONTENT_URI = Uri.withAppendedPath(
+                BASE_CONTENT_URI,
+                RESOURCE
+        )
+
+        val CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
+
+        val CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
+
+        val _ID = "_ID"
+
+        val PROJECT_ALL = arrayOf(_ID)
+        val DEFAULT_SORT_ORDER = String()
+    }
+
 }

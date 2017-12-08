@@ -8,16 +8,10 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.R
-import pdm_1718i.yamda.data.server.TMDBService2.Companion.DEFAULT_PAGINATION
-import pdm_1718i.yamda.extensions.NO_INTERNET_CONNECTION
-import pdm_1718i.yamda.extensions.caseFalse
-import pdm_1718i.yamda.extensions.runIf
-import pdm_1718i.yamda.extensions.toast
+import pdm_1718i.yamda.data.server.TMDBService.Companion.DEFAULT_PAGINATION
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
-import pdm_1718i.yamda.ui.App.Companion.isNetworkAvailable
 import pdm_1718i.yamda.ui.adapters.EndlessAdapter
-import pdm_1718i.yamda.ui.adapters.SimpleMovieAdapter
 import pdm_1718i.yamda.ui.holders.EndlessListView
 
 class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement_id = R.id.emptyElement), EndlessListView.EndlessListener {
@@ -30,8 +24,8 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
         val UPCOMING = "Upcoming"
         @JvmStatic val dispatcher = mapOf<String, (Int) -> List<Movie>>(
                 POPULAR     to App.moviesProvider::popularMovies,
-                PLAYING     to App.moviesProvider::nowPlayingMovies,
-                UPCOMING    to App.moviesProvider::upcomingMovies
+                        PLAYING     to App.moviesProvider::nowPlayingMovies,
+                        UPCOMING    to App.moviesProvider::upcomingMovies
         )
 
         private var CURRENT_PAGE : Int = DEFAULT_PAGINATION
@@ -49,8 +43,10 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
     }
 
     override fun loadData() {
-        with(intent.getStringExtra(REQUEST_TYPE)){
-            dispatcher[this]?.let {  async(UI) { createGUI(bg{it(++CURRENT_PAGE)}.await())}}
+        with(intent.getStringExtra(REQUEST_TYPE)) {
+            dispatcher[this]?.let {
+                async(UI) { createGUI(bg { it(++CURRENT_PAGE) }.await()) }
+            }
         }
     }
 

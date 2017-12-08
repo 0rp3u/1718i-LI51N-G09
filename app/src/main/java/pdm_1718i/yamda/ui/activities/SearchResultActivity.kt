@@ -9,7 +9,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.R
-import pdm_1718i.yamda.data.server.TMDBService2.Companion.DEFAULT_PAGINATION
+import pdm_1718i.yamda.data.server.TMDBService.Companion.DEFAULT_PAGINATION
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.adapters.EndlessAdapter
@@ -29,7 +29,7 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
 
     override fun loadData() {
         val query = intent.getStringExtra(QUERY_KEY)
-        async(UI) { createGUI(bg{App.moviesProvider.searchMovies(query, ++CURRENT_PAGE)}.await())}
+        async (UI){  createGUI(bg{App.moviesProvider.searchMovies(query, ++CURRENT_PAGE)}.await())}
     }
 
     override fun onNewIntent(intent: Intent) {

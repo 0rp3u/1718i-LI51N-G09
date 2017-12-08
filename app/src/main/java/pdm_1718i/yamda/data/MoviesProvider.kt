@@ -2,7 +2,7 @@ package pdm_1718i.yamda.data
 
 import android.graphics.Bitmap
 import android.widget.ImageView
-import pdm_1718i.yamda.data.server.TMDBService2
+import pdm_1718i.yamda.data.server.TMDBService
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie
 
@@ -10,7 +10,7 @@ class MoviesProvider() {
 
     companion object {
 
-        val SOURCE by lazy { TMDBService2() }
+        val SOURCE by lazy { TMDBService() }
     }
 
     fun nowPlayingMovies (page:Int) :List<Movie>{
