@@ -46,8 +46,7 @@ object DbSchema {
         val TBL_NAME = "UpcomingMovies"
         val DDL_CREATE_TABLE =
                 "CREATE TABLE $TBL_NAME ( " +
-                        "$ID INTEGER PRIMARY KEY " +
-                        ")"
+                        "$ID INTEGER PRIMARY KEY)"
 
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
     }
@@ -57,8 +56,7 @@ object DbSchema {
         val TBL_NAME = "NowPlayingMovies"
         val DDL_CREATE_TABLE =
                 "CREATE TABLE $TBL_NAME ( " +
-                        "$ID INTEGER PRIMARY KEY " +
-                        ")"
+                        "$ID INTEGER PRIMARY KEY)"
 
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
     }

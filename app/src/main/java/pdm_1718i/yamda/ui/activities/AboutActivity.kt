@@ -16,6 +16,4 @@ class AboutActivity :BaseActivity(withMenu = false) {
     fun onLogoClick(view: View){
         startActivity(Intent (Intent.ACTION_VIEW, Uri.parse(getString(R.string.TMDB_HOMEPAGE_URL))))
     }
-
-
 }

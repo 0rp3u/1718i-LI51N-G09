@@ -112,13 +112,14 @@ class MovieProvider: ContentProvider(){
     }
 
 
-    override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>, sortOrder: String?): Cursor {
+    override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor {
         val params = resolveTableAndSelectionInfoFromUri(uri, selection)
         val qbuilder = SQLiteQueryBuilder()
         qbuilder.tables = params.first
-        qbuilder.appendWhere(params.second)
+        //if(params.second!=null )qbuilder.appendWhere(params.second)
         val db = dbHelper.readableDatabase
-        val cursor = qbuilder.query(db, projection, params.second, selectionArgs, null, null, sortOrder)
+        val cursor = qbuilder.query(db, projection, null, null, null, null, sortOrder)
+        //val cursor = qbuilder.query(db, projection, params.second, selectionArgs, null, null, sortOrder)
         cursor.setNotificationUri(context.contentResolver, uri)
         return cursor
     }

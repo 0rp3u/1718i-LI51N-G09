@@ -16,7 +16,12 @@
     <provider
         android:authorities="pt.android.movies.provider.MovieProvider"
         android:name=".data.db.MovieProvider"
-        android:exported="false"/>
+        android:exported="true"/>
+
+    <service
+        android:name=".data.services.DatabaseUpdater"
+        android:enabled="true"
+        android:exported="true" />
 
 
     <activity android:name=".ui.activities.MainActivity">

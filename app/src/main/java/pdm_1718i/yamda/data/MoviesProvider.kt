@@ -2,41 +2,40 @@ package pdm_1718i.yamda.data
 
 import android.graphics.Bitmap
 import android.widget.ImageView
-import pdm_1718i.yamda.data.cache.domain.DomainCache
-import pdm_1718i.yamda.data.server.TMDBService
+import pdm_1718i.yamda.data.server.TMDBService2
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie
 
-
-
-class MoviesProvider {
+class MoviesProvider() {
 
     companion object {
-        val SOURCE by lazy { DomainCache(TMDBService()) }
+
+        val SOURCE by lazy { TMDBService2() }
     }
 
-    fun nowPlayingMovies (page:Int, completionHandler:(movies:List<Movie>) -> Unit){
-        SOURCE.playingMovies(page, completionHandler)
+    fun nowPlayingMovies (page:Int) :List<Movie>{
+        return SOURCE.playingMovies(page)
     }
 
-    fun upcomingMovies (page:Int, completionHandler:(movies:List<Movie>) -> Unit){
-        SOURCE.upcomingMovies(page, completionHandler)
+    fun upcomingMovies (page:Int) :List<Movie>{
+        return SOURCE.upcomingMovies(page)
     }
 
-    fun popularMovies (page:Int, completionHandler:(movies:List<Movie>) -> Unit) {
-        SOURCE.popularMovies(page, completionHandler)
+    fun popularMovies (page:Int) :List<Movie> {
+        return SOURCE.popularMovies(page)
     }
 
-    fun searchMovies(query: String, page : Int, completionHandler: (movies: List<Movie>) -> Unit) {
-        SOURCE.movieSearch(query, page, completionHandler)
+    fun searchMovies(query: String, page : Int): List<Movie>{
+        return SOURCE.movieSearch(query, page)
     }
 
-    fun movieDetail(id: Int, completionHandler: (movie : DetailedMovie) -> Unit){
-        SOURCE.movieDetail(id, completionHandler)
+    fun movieDetail(id: Int): DetailedMovie{
+
+        return SOURCE.movieDetail(id)
     }
 
     fun image(image_id: String, imageView: ImageView, imageOption: String){
-        SOURCE.movieImage(image_id, imageView , imageOption)
+        return SOURCE.movieImage(image_id, imageView , imageOption)
     }
 
     fun image(image_id: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit, imageOption: String){

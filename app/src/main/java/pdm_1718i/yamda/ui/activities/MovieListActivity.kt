@@ -50,7 +50,7 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
 
     override fun loadData() {
         with(intent.getStringExtra(REQUEST_TYPE)){
-            dispatcher[this]?.let { it(++CURRENT_PAGE, { createGUI(it) }) }
+            dispatcher[this]?.let {  async(UI) { createGUI(bg{it(++CURRENT_PAGE)}.await())}}
         }
     }
 

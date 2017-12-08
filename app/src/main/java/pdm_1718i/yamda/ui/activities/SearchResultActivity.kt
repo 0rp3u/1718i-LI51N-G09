@@ -29,7 +29,7 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
 
     override fun loadData() {
         val query = intent.getStringExtra(QUERY_KEY)
-        App.moviesProvider.searchMovies(query, ++CURRENT_PAGE, { createGUI(it) })
+        async(UI) { createGUI(bg{App.moviesProvider.searchMovies(query, ++CURRENT_PAGE)}.await())}
     }
 
     override fun onNewIntent(intent: Intent) {

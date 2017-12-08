@@ -39,7 +39,6 @@ class DiskLruImageCache2(private val mDiskCache : Cache) : ImageCache {
 
                 if (entry == null) {
                     Log.d("cache_test_DISK_", "$key was not on disk (snapshot) ")
-
                     return null
                 }
                 bitmap = BitmapFactory.decodeByteArray(entry.data, 0, entry.data.size)
@@ -62,7 +61,6 @@ class DiskLruImageCache2(private val mDiskCache : Cache) : ImageCache {
     }
 
     fun clearCache() {
-
             try {
                 mDiskCache.clear()
                     Log.d("cache_test_DISK_", "disk cache CLEARED")

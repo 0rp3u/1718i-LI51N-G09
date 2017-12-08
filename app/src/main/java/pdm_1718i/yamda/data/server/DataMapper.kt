@@ -12,7 +12,16 @@ class DataMapper {
 
     fun mapToMovieList(result: MovieSearchResult?): List<Movie> {
        if(result == null ) return listOf()
-       return result.results.map { Movie(it.poster_path.removePref(1), getCalendar(it.release_date), it.id, it.title, it.backdrop_path.removePref(1) , it.vote_average ) }
+       return result.results.map {
+           Movie(
+                   it.poster_path.removePref(1),
+                   getCalendar(it.release_date),
+                   it.id,
+                   it.title,
+                   it.backdrop_path.removePref(1),
+                   it.vote_average
+           )
+       }
     }
 
     fun mapToMovieDetail(result: MovieDetailResult): DetailedMovie {

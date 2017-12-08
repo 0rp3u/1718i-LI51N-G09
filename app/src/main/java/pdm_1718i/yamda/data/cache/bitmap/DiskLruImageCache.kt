@@ -146,9 +146,13 @@ class DiskLruImageCache(context: Context, uniqueName: String, diskCacheSize: Int
         Log.d("cache_test_DISK_", "cache contained $key image: $contained")
 
 
+        mDiskCache
+
         return contained
 
     }
+
+
 
     private fun createKey(unsafeKey : String) : String{
 
