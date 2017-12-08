@@ -24,7 +24,7 @@ object MovieContract : ContractInterface {
         val CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
 
-        val _ID = "_ID"
+        val _ID = BaseColumns._ID
         val ORIGINAL_TITLE = "original_title"
         val TITLE = "title"
         val RELEASE_DATE = "release_date"
@@ -50,6 +50,71 @@ object MovieContract : ContractInterface {
         val DEFAULT_SORT_ORDER = String()
     }
 
+    object NowPlayingIds : BaseColumns{
+        val RESOURCE = "NowPlayingIds"
+
+        val CONTENT_URI = Uri.withAppendedPath(
+                BASE_CONTENT_URI,
+                RESOURCE
+        )
+
+        val CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
+
+        val CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
+
+        val DETAILS_ID = "DETAILS_ID"
+        val PAGE = "PAGE"
+
+        val PROJECT_ALL = arrayOf(DETAILS_ID, PAGE)
+        val DEFAULT_SORT_ORDER = String()
+    }
+
+    object UpcomingIds: BaseColumns{
+        val RESOURCE = "UpcomingIds"
+
+        val CONTENT_URI = Uri.withAppendedPath(
+                BASE_CONTENT_URI,
+                RESOURCE
+        )
+
+        val CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
+
+        val CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
+
+        val DETAILS_ID = "DETAILS_ID"
+        val PAGE = "PAGE"
+
+        val PROJECT_ALL = arrayOf(DETAILS_ID, PAGE)
+        val DEFAULT_SORT_ORDER = String()
+    }
+
+    object MostPopularIds : BaseColumns{
+        val RESOURCE = "MostPopularIds"
+
+        val CONTENT_URI = Uri.withAppendedPath(
+                BASE_CONTENT_URI,
+                RESOURCE
+        )
+
+        val CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
+
+        val CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
+
+
+        val DETAILS_ID = "DETAILS_ID"
+        val PAGE = "PAGE"
+
+        val PROJECT_ALL = arrayOf(DETAILS_ID, PAGE)
+        val DEFAULT_SORT_ORDER = String()
+    }
+
+
     object NowPlayingMovies : BaseColumns{
         val RESOURCE = "NowPlayingMovies"
 
@@ -64,9 +129,8 @@ object MovieContract : ContractInterface {
         val CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
 
-        val _ID = "_ID"
 
-        val PROJECT_ALL = arrayOf(_ID)
+        val PROJECT_ALL = arrayOf(NowPlayingIds.PAGE).plus(MovieDetails.PROJECT_ALL)
         val DEFAULT_SORT_ORDER = String()
     }
 
@@ -84,9 +148,7 @@ object MovieContract : ContractInterface {
         val CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
 
-        val _ID = "_ID"
-
-        val PROJECT_ALL = arrayOf(_ID)
+        val PROJECT_ALL = arrayOf(UpcomingIds.PAGE).plus(MovieDetails.PROJECT_ALL)
         val DEFAULT_SORT_ORDER = String()
     }
 
@@ -104,9 +166,7 @@ object MovieContract : ContractInterface {
         val CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
 
-        val _ID = "_ID"
-
-        val PROJECT_ALL = arrayOf(_ID)
+        val PROJECT_ALL = arrayOf(MostPopularIds.PAGE).plus(MovieDetails.PROJECT_ALL)
         val DEFAULT_SORT_ORDER = String()
     }
 

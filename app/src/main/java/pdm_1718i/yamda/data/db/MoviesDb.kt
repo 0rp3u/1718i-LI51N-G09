@@ -15,7 +15,7 @@ class MoviesDb (private val provider : MoviesDataSource): MoviesDataSource{
     }
 
     override fun upcomingMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit){
-        val movieCursor = App.instance.contentResolver.query(MovieContract.UpcomingMovies.CONTENT_URI, null, null, null, null)
+        val movieCursor = App.instance.contentResolver.query(MovieContract.UpcomingIds.CONTENT_URI, null, null, null, null)
 
         if (movieCursor.count > 0) {
 

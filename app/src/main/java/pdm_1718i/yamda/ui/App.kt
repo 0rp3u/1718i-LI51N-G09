@@ -1,7 +1,10 @@
 package pdm_1718i.yamda.ui
 
+import android.app.AlarmManager
 import android.app.Application
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import com.android.volley.Request
 import com.android.volley.toolbox.ImageLoader
@@ -11,6 +14,7 @@ import pdm_1718i.yamda.data.MoviesProvider
 import pdm_1718i.yamda.data.cache.bitmap.DiskLruImageCache2
 import pdm_1718i.yamda.data.server.ThrottlePolicy
 import pdm_1718i.yamda.data.server.ThrottledHttpStack
+import pdm_1718i.yamda.data.services.DatabaseUpdater
 import java.net.URL
 
 
@@ -49,7 +53,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        /*
+
 
 
             val action = Intent(this, DatabaseUpdater::class.java)
@@ -59,7 +63,7 @@ class App : Application() {
                     AlarmManager.INTERVAL_DAY,
                     PendingIntent.getService(this, 1, action, PendingIntent.FLAG_UPDATE_CURRENT)
             )
-        */
+
 
     }
 

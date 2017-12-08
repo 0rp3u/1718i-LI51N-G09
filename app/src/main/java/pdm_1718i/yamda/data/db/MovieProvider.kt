@@ -4,6 +4,7 @@ import android.content.*
 import android.database.Cursor
 import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
+import android.provider.BaseColumns
 
 class MovieProvider: ContentProvider(){
 
@@ -12,24 +13,67 @@ class MovieProvider: ContentProvider(){
         val ITEM = 2
     }
 
-    object UPCOMING{
+    object UPCOMING_IDS{
         val LIST = 3
         val ITEM = 4
     }
 
-    object THEATERS{
+    object THEATERS_IDS{
         val LIST = 5
         val ITEM = 6
     }
 
-    object POPULAR{
+    object POPULAR_IDS{
         val LIST = 7
         val ITEM = 8
+    }
+
+    object UPCOMING{
+        val LIST = 9
+        val ITEM = 10
+    }
+
+    object THEATERS{
+        val LIST = 11
+        val ITEM = 12
+    }
+
+    object POPULAR{
+        val LIST = 13
+        val ITEM = 14
     }
 
     private val uriMatcher: UriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
     init {
+
+        /*****************************************************************************/
+        uriMatcher.addURI(MovieContract.AUTHORITY,
+                MovieContract.NowPlayingIds.RESOURCE,
+                THEATERS_IDS.LIST)
+
+        uriMatcher.addURI(MovieContract.AUTHORITY,
+                "${MovieContract.NowPlayingIds.RESOURCE}/#",
+                THEATERS_IDS.ITEM)
+
+        /*****************************************************************************/
+        uriMatcher.addURI(MovieContract.AUTHORITY,
+                MovieContract.UpcomingIds.RESOURCE,
+                UPCOMING_IDS.LIST)
+
+        uriMatcher.addURI(MovieContract.AUTHORITY,
+                "${MovieContract.UpcomingIds.RESOURCE}/#",
+                UPCOMING_IDS.ITEM)
+
+        /*****************************************************************************/
+        uriMatcher.addURI(MovieContract.AUTHORITY,
+                MovieContract.MostPopularIds.RESOURCE,
+                POPULAR_IDS.LIST)
+
+        uriMatcher.addURI(MovieContract.AUTHORITY,
+                "${MovieContract.MostPopularIds.RESOURCE}/#",
+                POPULAR_IDS.ITEM)
+
 
         /*****************************************************************************/
         uriMatcher.addURI(MovieContract.AUTHORITY,
@@ -81,17 +125,26 @@ class MovieProvider: ContentProvider(){
     override fun getType(uri: Uri?): String {
         return when(uriMatcher.match(uri))
         {
-            THEATERS.LIST -> MovieContract.NowPlayingMovies.CONTENT_TYPE
-            THEATERS.ITEM ->  MovieContract.NowPlayingMovies.CONTENT_ITEM_TYPE
+            DETAILS.LIST  ->        MovieContract.MovieDetails.CONTENT_TYPE
+            DETAILS.ITEM  ->        MovieContract.MovieDetails.CONTENT_ITEM_TYPE
 
-            UPCOMING.LIST -> MovieContract.UpcomingMovies.CONTENT_TYPE
-            UPCOMING.ITEM -> MovieContract.UpcomingMovies.CONTENT_ITEM_TYPE
+            THEATERS.LIST ->        MovieContract.NowPlayingMovies.CONTENT_TYPE
+            THEATERS.ITEM ->        MovieContract.NowPlayingMovies.CONTENT_ITEM_TYPE
 
-            POPULAR.LIST -> MovieContract.MostPopularMovies.CONTENT_TYPE
-            POPULAR.ITEM -> MovieContract.MostPopularMovies.CONTENT_ITEM_TYPE
+            UPCOMING.LIST ->        MovieContract.UpcomingMovies.CONTENT_TYPE
+            UPCOMING.ITEM ->        MovieContract.UpcomingMovies.CONTENT_ITEM_TYPE
 
-            DETAILS.LIST -> MovieContract.MovieDetails.CONTENT_TYPE
-            DETAILS.ITEM -> MovieContract.MovieDetails.CONTENT_ITEM_TYPE
+            POPULAR.LIST  ->        MovieContract.MostPopularMovies.CONTENT_TYPE
+            POPULAR.ITEM  ->        MovieContract.MostPopularMovies.CONTENT_ITEM_TYPE
+
+            THEATERS_IDS.LIST ->    MovieContract.NowPlayingIds.CONTENT_TYPE
+            THEATERS_IDS.ITEM ->    MovieContract.NowPlayingIds.CONTENT_ITEM_TYPE
+
+            UPCOMING_IDS.LIST ->    MovieContract.UpcomingIds.CONTENT_TYPE
+            UPCOMING_IDS.ITEM ->    MovieContract.UpcomingIds.CONTENT_ITEM_TYPE
+
+            POPULAR_IDS.LIST  ->    MovieContract.MostPopularIds.CONTENT_TYPE
+            POPULAR_IDS.ITEM  ->    MovieContract.MostPopularIds.CONTENT_ITEM_TYPE
 
             else-> throw badUri(uri)
         }
@@ -106,10 +159,13 @@ class MovieProvider: ContentProvider(){
      */
 
     private fun resolveTableInfoFromUri(uri: Uri): String = when (uriMatcher.match(uri)) {
-            UPCOMING.LIST -> DbSchema.UpcomingMovies.TBL_NAME
-            THEATERS.LIST -> DbSchema.NowPlayingMovies.TBL_NAME
-            POPULAR.LIST  -> DbSchema.MostPopularMovies.TBL_NAME
-            DETAILS.LIST  -> DbSchema.MovieDetails.TBL_NAME
+        DETAILS.LIST  ->     DbSchema.MovieDetails.TBL_NAME
+        UPCOMING.LIST ->     DbSchema.UpcomingMovies.VIEW_NAME
+        THEATERS.LIST ->     DbSchema.NowPlayingMovies.VIEW_NAME
+        POPULAR.LIST  ->     DbSchema.MostPopularMovies.VIEW_NAME
+        UPCOMING_IDS.LIST -> DbSchema.UpcomingIds.TBL_NAME
+        THEATERS_IDS.LIST -> DbSchema.NowPlayingIds.TBL_NAME
+        POPULAR_IDS.LIST  -> DbSchema.MostPopularIds.TBL_NAME
         else -> null
     } ?: throw badUri(uri)
 
@@ -122,12 +178,15 @@ class MovieProvider: ContentProvider(){
      * @throws IllegalArgumentException if the received [uri] does not refer to a valid data set
      */
     private fun resolveTableAndSelectionInfoFromUri(uri: Uri, selection: String?): Pair<String, String?> {
-        val itemSelection = "${DbSchema.COL_ID} = ${uri.lastPathSegment}"
+        val itemSelection = "${BaseColumns._ID} = ${uri.lastPathSegment}"
         return when (uriMatcher.match(uri)) {
-            UPCOMING.ITEM -> Pair(DbSchema.UpcomingMovies.TBL_NAME, itemSelection)
-            THEATERS.ITEM -> Pair(DbSchema.NowPlayingMovies.TBL_NAME, itemSelection)
-            POPULAR.ITEM  -> Pair(DbSchema.MostPopularMovies.TBL_NAME, itemSelection)
-            DETAILS.ITEM  -> Pair(DbSchema.MovieDetails.TBL_NAME, itemSelection)
+            DETAILS.ITEM  ->     Pair(DbSchema.MovieDetails.TBL_NAME, itemSelection)
+            UPCOMING.ITEM ->     Pair(DbSchema.UpcomingMovies.VIEW_NAME, itemSelection)
+            THEATERS.ITEM ->     Pair(DbSchema.NowPlayingMovies.VIEW_NAME, itemSelection)
+            POPULAR.ITEM  ->     Pair(DbSchema.MostPopularMovies.VIEW_NAME, itemSelection)
+            UPCOMING_IDS.ITEM -> Pair(DbSchema.UpcomingIds.TBL_NAME, itemSelection)
+            THEATERS_IDS.ITEM -> Pair(DbSchema.NowPlayingIds.TBL_NAME, itemSelection)
+            POPULAR_IDS.ITEM  -> Pair(DbSchema.MostPopularIds.TBL_NAME, itemSelection)
             else -> resolveTableInfoFromUri(uri).let { Pair(it, selection) }
         }
     }
@@ -137,7 +196,6 @@ class MovieProvider: ContentProvider(){
         val params = resolveTableAndSelectionInfoFromUri(uri, selection)
         val qbuilder = SQLiteQueryBuilder()
         qbuilder.tables = params.first
-        //if(params.second!=null )qbuilder.appendWhere(params.second)
         val db = dbHelper.readableDatabase
         val cursor = qbuilder.query(db, projection, null, null, null, null, sortOrder)
         //val cursor = qbuilder.query(db, projection, params.second, selectionArgs, null, null, sortOrder)

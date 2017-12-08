@@ -45,13 +45,6 @@ class DatabaseUpdater : Service() {
         //fetch upcoming, mostPopular and nowplaying movie ids
         //if any of those are already on database dont fetch them
         //delete stale data from DB, update other data
-        /*Log.d("TEST", "finish")
-        async {
-            val fetchingJobs = (1..200).map {  bg{ App.moviesProvider.movieDetail(315029+it) }}
-
-            fetchingJobs.forEach { it.join() }
-            Log.d("TEST", "finish")
-        }*/
 
 
 
@@ -153,8 +146,9 @@ class DatabaseUpdater : Service() {
             staled: List<Int>,
             movieDetails: List<DetailedMovie?>)
     {
-        contentResolver.delete(MovieContract.UpcomingMovies.CONTENT_URI, null, null)
-        contentResolver.delete(MovieContract.NowPlayingMovies.CONTENT_URI, null, null)
+        contentResolver.delete(MovieContract.UpcomingIds.CONTENT_URI, null, null)
+        contentResolver.delete(MovieContract.NowPlayingIds.CONTENT_URI, null, null)
+        contentResolver.delete(MovieContract.MostPopularIds.CONTENT_URI, null, null)
         staled.forEach {
             contentResolver.delete(MovieContract.MovieDetails.CONTENT_URI,"$it", null)
         }
@@ -173,12 +167,42 @@ class DatabaseUpdater : Service() {
                 }
         }.toTypedArray()
 
-        val count = contentResolver.bulkInsert(MovieContract.MovieDetails.CONTENT_URI, moviesContentValue)
+        val upcomingContentValue: Array<ContentValues> =  upComing.mapNotNull {
+            ContentValues().apply {
+                put(MovieContract.UpcomingIds.DETAILS_ID, it)
+                put(MovieContract.UpcomingIds.PAGE, 1)
+            }
+        }.toTypedArray()
 
-        Log.d("databa_updater", "updated $count movies to the database")
+        val mostPopularContentValue: Array<ContentValues> =  mostPopular.mapNotNull {
+            ContentValues().apply {
+                put(MovieContract.MostPopularIds.DETAILS_ID, it)
+                put(MovieContract.MostPopularIds.PAGE, 1)
+            }
+        }.toTypedArray()
+
+        val nowPlayingContentValue: Array<ContentValues> =  nowPlaying.mapNotNull {
+            ContentValues().apply {
+                put(MovieContract.NowPlayingIds.DETAILS_ID, it)
+                put(MovieContract.NowPlayingIds.PAGE, 1)
+            }
+        }.toTypedArray()
+
+        val upcomingCount = contentResolver.bulkInsert(MovieContract.UpcomingIds.CONTENT_URI, upcomingContentValue)
+        Log.d("databa_updater", "updated $upcomingCount upcoming movies to the database")
+
+        val mostPopularCount = contentResolver.bulkInsert(MovieContract.MostPopularIds.CONTENT_URI, mostPopularContentValue)
+        Log.d("databa_updater", "updated $mostPopularCount upcoming movies to the database")
+
+        val nowPlayingCount = contentResolver.bulkInsert(MovieContract.NowPlayingIds.CONTENT_URI, nowPlayingContentValue)
+        Log.d("databa_updater", "updated $nowPlayingCount upcoming movies to the database")
+
+        val count = contentResolver.bulkInsert(MovieContract.MovieDetails.CONTENT_URI, moviesContentValue)
+        Log.d("databa_updater", "updated $count movie details to the database")
 
 
     }
+
     private fun handleError(error: VolleyError): Unit {
         // TODO
         Log.v("DEMO", "KABBUMMM")

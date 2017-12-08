@@ -1,15 +1,13 @@
 package pdm_1718i.yamda.data.db
 
-
-import android.provider.BaseColumns
-
 object DbSchema {
     val DB_NAME = "movieInfo.db"
-    val DB_VERSION = 1
+    val DB_VERSION = 2
 
-    val COL_ID = BaseColumns._ID
 
     object MovieDetails {
+
+        val COL_ID =            MovieContract.MovieDetails._ID
         val VOTE_AVERAGE =      MovieContract.MovieDetails.VOTE_AVERAGE
         val BACKDROP =          MovieContract.MovieDetails.BACKDROP_PATH
         val POSTER =            MovieContract.MovieDetails.POSTER_PATH
@@ -41,38 +39,86 @@ object DbSchema {
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
     }
 
-    object UpcomingMovies{
-        val ID = MovieContract.UpcomingMovies._ID
-        val TBL_NAME = "UpcomingMovies"
+    object UpcomingIds {
+        val TBL_NAME = "UpcomingIds"
+
+        val DETAILS_ID = MovieContract.UpcomingIds.DETAILS_ID
+        val PAGE = MovieContract.UpcomingIds.PAGE
+
         val DDL_CREATE_TABLE =
                 "CREATE TABLE $TBL_NAME ( " +
-                        "$ID INTEGER PRIMARY KEY, " +
-                        "PAGE INTEGER" +
+                        "$DETAILS_ID INTEGER PRIMARY KEY," +
+                        "$PAGE INTEGER" +
                         ")"
 
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
     }
 
-    object NowPlayingMovies{
-        val ID = MovieContract.NowPlayingMovies._ID
-        val TBL_NAME = "NowPlayingMovies"
+    object NowPlayingIds {
+        val TBL_NAME = "NowPlayingIds"
+
+        val DETAILS_ID = MovieContract.NowPlayingIds.DETAILS_ID
+        val PAGE = MovieContract.NowPlayingIds.PAGE
+
         val DDL_CREATE_TABLE =
                 "CREATE TABLE $TBL_NAME ( " +
-                        "$ID INTEGER PRIMARY KEY, " +
-                        "PAGE INTEGER" +
+                        "$DETAILS_ID INTEGER PRIMARY KEY," +
+                        "$PAGE INTEGER" +
                         ")"
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
+    }
+
+    object MostPopularIds {
+        val TBL_NAME = "MostPopularIds"
+
+        val DETAILS_ID = MovieContract.MostPopularIds.DETAILS_ID
+        val PAGE = MovieContract.MostPopularIds.PAGE
+
+        val DDL_CREATE_TABLE =
+                "CREATE TABLE $TBL_NAME ( " +
+                        "$DETAILS_ID INTEGER PRIMARY KEY," +
+                        "$PAGE INTEGER" +
+                        ")"
+
+        val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
+
     }
 
     object MostPopularMovies{
-        val ID = MovieContract.MostPopularMovies._ID
-        val TBL_NAME = "MostPopularMovies"
-        val DDL_CREATE_TABLE =
-                "CREATE TABLE $TBL_NAME ( " +
-                        "$ID INTEGER PRIMARY KEY, " +
-                        "PAGE INTEGER" +
-                        ")"
+        val VIEW_NAME = "MostPopularMovies"
 
-        val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
+        val DDL_CREATE_VIEW =
+                "CREATE VIEW $VIEW_NAME AS " +
+                    "SELECT * " +
+                    "FROM ${MostPopularIds.TBL_NAME}, ${MovieDetails.TBL_NAME} "+
+                    "WHERE ${MostPopularIds.TBL_NAME}.${MostPopularIds.DETAILS_ID} = ${MovieDetails.TBL_NAME}.${MovieDetails.COL_ID}"
+
+        val DDL_DROP_VIEW = "DROP VIEW IF EXISTS " + VIEW_NAME
     }
+
+    object NowPlayingMovies{
+        val VIEW_NAME = "NowPlayingMovies"
+
+        val DDL_CREATE_VIEW =
+                "CREATE VIEW $VIEW_NAME AS " +
+                        "SELECT * " +
+                        "FROM ${NowPlayingIds.TBL_NAME}, ${MovieDetails.TBL_NAME} "+
+                        "WHERE ${NowPlayingIds.TBL_NAME}.${NowPlayingIds.DETAILS_ID} = ${MovieDetails.TBL_NAME}.${MovieDetails.COL_ID}"
+
+
+        val DDL_DROP_VIEW = "DROP VIEW IF EXISTS " + VIEW_NAME
+    }
+
+    object UpcomingMovies{
+        val VIEW_NAME = "UpcomingMovies"
+
+        val DDL_CREATE_VIEW =
+                "CREATE VIEW $VIEW_NAME AS " +
+                        "SELECT * " +
+                        "FROM ${UpcomingIds.TBL_NAME}, ${MovieDetails.TBL_NAME} "+
+                        "WHERE ${UpcomingIds.TBL_NAME}.${UpcomingIds.DETAILS_ID} = ${MovieDetails.TBL_NAME}.${MovieDetails.COL_ID}"
+
+        val DDL_DROP_VIEW = "DROP VIEW IF EXISTS " + VIEW_NAME
+    }
+
 }

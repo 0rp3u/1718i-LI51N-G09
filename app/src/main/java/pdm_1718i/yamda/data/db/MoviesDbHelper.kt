@@ -19,15 +19,30 @@ class MoviesDbHelper(context: Context?) : SQLiteOpenHelper(context, DbSchema.DB_
 
     private fun createDb(db: SQLiteDatabase?) {
         db?.execSQL(DbSchema.MovieDetails.DDL_CREATE_TABLE)
-        db?.execSQL(DbSchema.NowPlayingMovies.DDL_CREATE_TABLE)
-        db?.execSQL(DbSchema.UpcomingMovies.DDL_CREATE_TABLE)
-        db?.execSQL(DbSchema.MostPopularMovies.DDL_CREATE_TABLE)
+        db?.execSQL(DbSchema.NowPlayingIds.DDL_CREATE_TABLE)
+        db?.execSQL(DbSchema.UpcomingIds.DDL_CREATE_TABLE)
+        db?.execSQL(DbSchema.MostPopularIds.DDL_CREATE_TABLE)
+        createViews(db)
     }
 
     private fun deleteDb(db: SQLiteDatabase?) {
         db?.execSQL(DbSchema.MovieDetails.DDL_DROP_TABLE)
-        db?.execSQL(DbSchema.NowPlayingMovies.DDL_DROP_TABLE)
-        db?.execSQL(DbSchema.UpcomingMovies.DDL_DROP_TABLE)
-        db?.execSQL(DbSchema.MostPopularMovies.DDL_DROP_TABLE)
+        db?.execSQL(DbSchema.NowPlayingIds.DDL_DROP_TABLE)
+        db?.execSQL(DbSchema.UpcomingIds.DDL_DROP_TABLE)
+        db?.execSQL(DbSchema.MostPopularIds.DDL_DROP_TABLE)
+        deleteViews(db)
     }
+
+    private fun createViews(db: SQLiteDatabase?){
+        db?.execSQL(DbSchema.NowPlayingMovies.DDL_CREATE_VIEW)
+        db?.execSQL(DbSchema.UpcomingMovies.DDL_CREATE_VIEW)
+        db?.execSQL(DbSchema.MostPopularMovies.DDL_CREATE_VIEW)
+    }
+
+    private fun deleteViews(db: SQLiteDatabase?){
+        db?.execSQL(DbSchema.NowPlayingMovies.DDL_DROP_VIEW)
+        db?.execSQL(DbSchema.UpcomingMovies.DDL_DROP_VIEW)
+        db?.execSQL(DbSchema.MostPopularMovies.DDL_DROP_VIEW)
+    }
+
 }
