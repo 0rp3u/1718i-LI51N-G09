@@ -43,24 +43,29 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
     }
 
     override fun loadData() {
-        with(intent.getStringExtra(REQUEST_TYPE)) {
-            dispatcher[this]?.let {
-                async(UI) { createGUI(bg { it(++CURRENT_PAGE) }.await()) }
+        if(CURRENT_PAGE > 0) {
+            with(intent.getStringExtra(REQUEST_TYPE)) {
+                dispatcher[this]?.let {
+                    async(UI) { updateGUI(bg { it(++CURRENT_PAGE) }.await()) }
+                }
             }
         }
     }
 
+    private fun updateGUI(movies : List< Movie>) {
+        if(movies.isNotEmpty()) {
+            listView.addNewData(movies)
+        }else{
+          CURRENT_PAGE = -1 //so user does not make calls for unavailable pages
+        }
+
+
+    }
+
     private fun createGUI(movies : List< Movie>){
         if(movies.isNotEmpty()) {
-
-            if(listView.adapter==null)
-                listView.setAdapter(EndlessAdapter(this, movies))
-            else
-                listView.addNewData(movies)
-
-            if (listView.getListener()==null)
-                listView.setListener(this)
-
+            listView.setAdapter(EndlessAdapter(this, movies))
+            listView.setListener(this)
             listView.setLoadingView(R.layout.loading_layout)
 
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->

@@ -35,14 +35,14 @@ class EndlessListView : ListView, AbsListView.OnScrollListener{
     }
 
     override fun onScroll(view: AbsListView, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
+        if (getAdapter()==null || getAdapter().count==0 ) return
 
-        if (getAdapter()==null) return
-        if(getAdapter().count==0) return
         val l : Int = visibleItemCount + firstVisibleItem
         if(l >= totalItemCount && !isLoading){
+            isLoading = true
             //Add new data
             this.addFooterView(footer)
-            isLoading = true
+
             listener?.loadData()
         }
     }

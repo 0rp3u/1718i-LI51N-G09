@@ -27,17 +27,13 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
         handleIntent(intent)
     }
 
-    override fun loadData() {
-        val query = intent.getStringExtra(QUERY_KEY)
-        async (UI){  createGUI(bg{App.moviesProvider.searchMovies(query, ++CURRENT_PAGE)}.await())}
-    }
-
     override fun onNewIntent(intent: Intent) {
         setIntent(intent)
         handleIntent(intent)
     }
 
     private fun handleIntent(intent: Intent) {
+        listView.setLoadingView(R.layout.loading_layout)
         val query = intent.getStringExtra(QUERY_KEY)
         title = "$RESULT_TITLE: $query"
         async(UI) {
@@ -46,18 +42,20 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
         }
     }
 
+
+    override fun loadData() {
+        if(CURRENT_PAGE > 0) {
+            val query = intent.getStringExtra(QUERY_KEY)
+            async (UI){  updateGUI(bg{App.moviesProvider.searchMovies(query, ++CURRENT_PAGE)}.await())}
+
+
+        }
+    }
+
     private fun createGUI(movies: List<Movie>) {
         if (movies.isNotEmpty()) {
-
-            if(listView.adapter==null)
-                listView.setAdapter(EndlessAdapter(this, movies))
-            else
-                listView.addNewData(movies)
-
-            if (listView.getListener()==null)
-                listView.setListener(this)
-
-            listView.setLoadingView(R.layout.loading_layout)
+            listView.setAdapter(EndlessAdapter(this, movies))
+            listView.setListener(this)
 
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 val movieId = (listView.adapter.getItem(position) as Movie).id
@@ -69,5 +67,15 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
             emptyView.visibility = View.VISIBLE
             listView.emptyView = emptyView
         }
+    }
+
+    private fun updateGUI(movies : List< Movie>) {
+        if(movies.isNotEmpty()) {
+            listView.addNewData(movies)
+        }else{
+           CURRENT_PAGE = -1 //so user does not make calls for unavailable pages
+        }
+
+
     }
 }
