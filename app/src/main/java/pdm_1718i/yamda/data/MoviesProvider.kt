@@ -6,7 +6,7 @@ import pdm_1718i.yamda.data.server.TMDBService
 import pdm_1718i.yamda.model.DetailedMovie
 import pdm_1718i.yamda.model.Movie
 
-class MoviesProvider() {
+class MoviesProvider {
 
     companion object {
 

@@ -42,7 +42,7 @@ class ThrottledDispatcher(private val policy: ThrottlePolicy, private val httpSt
             if(work!=null) {
                 requestsTimeStamps.add(System.currentTimeMillis()) //register request timeStamp
                 work.request?.retryPolicy = DefaultRetryPolicy(
-                        DefaultRetryPolicy.DEFAULT_TIMEOUT_MS,
+                        policy.timeFrame,
                         policy.retries,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
 
