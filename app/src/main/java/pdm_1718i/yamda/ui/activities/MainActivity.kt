@@ -56,37 +56,20 @@ class MainActivity : BaseActivity(navigation = false) {
         }
     }
 
-    /*
-    private fun generateRecyclerView(
-            res: Int,
-            providerHandler: (page:Int, completionHandler:(movies:List<Movie>) -> Unit)-> Unit
-    ){
-        with(findViewById(res) as RecyclerView){
-            this.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false)
-            providerHandler(DEFAULT_PAGINATION, {
-                val adapter = MainActAdapter(it)
-                this.adapter = adapter
-            })
-        }
-    }*/
-
-
 
     private fun generateRecyclerViewTask(res: Int, providerHandler: (page:Int) -> List<Movie>) {
+        val resView = findViewById<RecyclerView>(res)
+         val adapter = MainActAdapter(listOf())
+        resView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false)
+        resView.adapter = adapter
         async(UI) {
-            val result = bg{
+            val results = bg{
                 Log.d("reciclerViewTask", "trow new background thread: ${Thread.currentThread().id} to fetch data")
                 providerHandler(DEFAULT_PAGINATION)
             }
-
-            val resView = findViewById<RecyclerView>(res)
-            resView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false)
-            val adapter = MainActAdapter(result.await())
             Log.d("reciclerViewTask", "bg thread retured execution to UI thread:${Thread.currentThread().id}")
-            resView.adapter = adapter
+            adapter.setData(results.await())
         }
-
-
     }
 /*
         private fun generateRecyclerViewTask(res: Int, providerHandler: (page:Int) -> List<Movie>) {

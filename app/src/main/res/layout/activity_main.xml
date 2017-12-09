@@ -26,12 +26,11 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_nowplaying"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:gravity="center_horizontal|center"
-                android:orientation="vertical"
-                android:layout_weight="2">
-            </android.support.v7.widget.RecyclerView>
+                android:orientation="vertical" />
 
             <ImageButton
                 android:layout_width="70dp"
@@ -58,12 +57,11 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_popular"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:gravity="center_horizontal|center"
-                android:orientation="vertical"
-                android:layout_weight="2">
-            </android.support.v7.widget.RecyclerView>
+                android:orientation="vertical" />
 
             <ImageButton
                 android:layout_width="70dp"
@@ -88,12 +86,11 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_upcoming"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:gravity="center_horizontal|center"
-                android:orientation="vertical"
-                android:layout_weight="2">
-            </android.support.v7.widget.RecyclerView>
+                android:orientation="vertical" />
 
             <ImageButton
                 android:layout_width="70dp"
