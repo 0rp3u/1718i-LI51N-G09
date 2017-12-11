@@ -1,84 +1,53 @@
 package pdm_1718i.yamda.data.db
 
 import android.graphics.Bitmap
+import android.util.Log
 import android.widget.ImageView
 import pdm_1718i.yamda.data.MoviesDataSource
-import pdm_1718i.yamda.model.DetailedMovie
+import pdm_1718i.yamda.extensions.toDetailedMovieItem
+import pdm_1718i.yamda.extensions.toMovieList
+import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
-import java.util.*
-/*
-class MoviesDb (private val provider : MoviesDataSource): MoviesDataSource{
 
-    override fun popularMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit){
-        provider.popularMovies(page,completionHandler)
+class MoviesDb(private val provider : MoviesDataSource) : MoviesDataSource{
+
+    override fun popularMovies(page: Int) : List<Movie>{
+        val movieCursor = App.instance.contentResolver.query(MovieContract.MostPopularMovies.CONTENT_URI, MovieContract.MostPopularMovies.PROJECT_ALL, "page = ?", arrayOf("$page"), null)
+        Log.d("movieDB","returned ${movieCursor.count } items")
+        return movieCursor.toMovieList() ?: provider.popularMovies(page)
     }
 
-    override fun upcomingMovies(page: Int, completionHandler: (movies: List<Movie>) -> Unit){
-        val movieCursor = App.instance.contentResolver.query(MovieContract.UpcomingIds.CONTENT_URI, null, null, null, null)
-
-        if (movieCursor.count > 0) {
-
-            val movieId = movieCursor.getColumnIndex(MovieContract.MovieDetails._ID)
-            val movieTitle = movieCursor.getColumnIndex(MovieContract.MovieDetails.TITLE)
-            val movieReleaseDate = movieCursor.getColumnIndex(MovieContract.MovieDetails.RELEASE_DATE)
-            val movieBackdropPath = movieCursor.getColumnIndex(MovieContract.MovieDetails.POSTER_PATH)
-            val movieIsFollowing= movieCursor.getColumnIndex(MovieContract.MovieDetails.IS_FOLLOWING)
-
-
-            val poster_path : String,
-            val release_date : Calendar?,
-            val id: Int,
-            val title : String,
-            val backdrop_path : String,
-            val vote_average: Double
-
-            val movies : MutableList<Movie>
-            movieCursor.moveToFirst()
-            while(!movieCursor.isAfterLast()){
-                movies.add(
-                            movieCursor.getString(movieBackdropPath),
-                            movieCursor.getString(movieReleaseDate)
-                            movieCursor.getString(movieId)
-                        )
-
-                //Gather values
-                String id = c . getString (1);
-                String name = c . getString (iname);
-                String isbn = c . getString (iisbn);
-
-
-
-                movieCursor.moveToNext()
-            }
-
-        }
+    override fun upcomingMovies(page: Int) : List<Movie>{
+        val movieCursor = App.instance.contentResolver.query(MovieContract.UpcomingMovies.CONTENT_URI, MovieContract.UpcomingMovies.PROJECT_ALL, "page = ?", arrayOf("$page"), null)
+        Log.d("movieDB","returned ${movieCursor.count } items")
+        return movieCursor.toMovieList() ?: provider.upcomingMovies(page)
     }
 
-    override fun playingMovies (page: Int, completionHandler: (movies: List<Movie>) -> Unit){
-
-
+    override fun playingMovies (page: Int): List<Movie>{
+        val movieCursor = App.instance.contentResolver.query(MovieContract.NowPlayingMovies.CONTENT_URI, MovieContract.NowPlayingMovies.PROJECT_ALL, "page = ?", arrayOf("$page"), null)
+        Log.d("movieDB","returned ${movieCursor.count } items")
+        return movieCursor.toMovieList() ?: provider.playingMovies(page)
     }
 
-    override fun movieSearch(query: String, page : Int, completionHandler: (movies: List<Movie>) -> Unit){
-
-
+    override fun movieSearch(query: String, page : Int) :List<Movie>{
+        return provider.movieSearch(query,page) //DATABASE does not deal with movie search
     }
 
-    override fun movieDetail(id: Int, completionHandler: (movies: DetailedMovie) -> Unit){
-
+    override fun movieDetail(id: Int) : MovieDetail {
+        val movieCursor = App.instance.contentResolver.query(MovieContract.MovieDetails.CONTENT_URI, MovieContract.MovieDetails.PROJECT_ALL, "_ID = ?", arrayOf("$id"), null)
+        Log.d("movieDB","returned ${movieCursor.count } items")
+        return movieCursor.toDetailedMovieItem() ?: provider.movieDetail(id)
     }
 
     override fun movieImage(image_id: String, imageView: ImageView, image_size: String){
-
-
+        provider.movieImage(image_id,imageView,image_size) //database does not deal with images
     }
 
     override fun movieImage(image_id: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit, image_size: String){
-
+        provider.movieImage(image_id,bitmapCompletionHandler, image_size) //database does not deal with images
 
 
     }
 
-
-}*/
+}

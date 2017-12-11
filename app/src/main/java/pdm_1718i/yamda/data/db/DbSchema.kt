@@ -1,32 +1,35 @@
 package pdm_1718i.yamda.data.db
 
 object DbSchema {
-    val DB_NAME = "movieInfo.db"
-    val DB_VERSION = 2
+    val DB_NAME = "moviedata.db"
+    val DB_VERSION = 1
 
 
     object MovieDetails {
 
         val COL_ID =            MovieContract.MovieDetails._ID
         val VOTE_AVERAGE =      MovieContract.MovieDetails.VOTE_AVERAGE
-        val BACKDROP =          MovieContract.MovieDetails.BACKDROP_PATH
-        val POSTER =            MovieContract.MovieDetails.POSTER_PATH
+        val BACKDROP_PATH =     MovieContract.MovieDetails.BACKDROP_PATH
+        val POSTER_PATH =       MovieContract.MovieDetails.POSTER_PATH
         val TITLE =             MovieContract.MovieDetails.TITLE
         val ORIGINAL_TITLE =    MovieContract.MovieDetails.ORIGINAL_TITLE
         val OVERVIEW =          MovieContract.MovieDetails.OVERVIEW
         val ADULT =             MovieContract.MovieDetails.ADULT
         val RELEASE_DATE =      MovieContract.MovieDetails.RELEASE_DATE
+        val BUDGET =            MovieContract.MovieDetails.BUDGET
         val IS_FOLLOWING =      MovieContract.MovieDetails.IS_FOLLOWING
 
-        val STRUCTURE = "$RELEASE_DATE DATE , " +
-                "$BACKDROP TEXT , " +
-                "$POSTER TEXT , " +
+        val STRUCTURE = "$RELEASE_DATE TEXT , " +
+                "$BACKDROP_PATH TEXT , " +
+                "$POSTER_PATH TEXT , " +
                 "$TITLE TEXT NOT NULL , " +
-                "$ORIGINAL_TITLE TEXT NOT NULL , " +
+                "$ORIGINAL_TITLE TEXT, " +
                 "$OVERVIEW TEXT , " +
                 "$ADULT BOOLEAN , " +
+                "$BUDGET INTEGER , " +
                 "$VOTE_AVERAGE DOUBLE , " +
                 "$IS_FOLLOWING BOOLEAN "
+
 
         val TBL_NAME = "MovieDetails"
 

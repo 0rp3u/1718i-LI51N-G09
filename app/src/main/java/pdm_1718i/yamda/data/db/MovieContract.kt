@@ -6,7 +6,7 @@ import android.provider.BaseColumns
 
 object MovieContract : ContractInterface {
 
-    override val AUTHORITY: String = "pt.android.movies.provider.MovieProvider"
+    override val AUTHORITY: String = "pt.android.movies.provider.DatabaseContentProvider"
     override val MEDIA_BASE_SUBTYPE: String = "/vnd.movies."
     override val BASE_CONTENT_URI: Uri = Uri.parse("content://$AUTHORITY/")
 
@@ -33,6 +33,7 @@ object MovieContract : ContractInterface {
         val BACKDROP_PATH = "backdrop_path"
         val OVERVIEW = "overview"
         val ADULT = "adult"
+        val BUDGET = "budget"
         val IS_FOLLOWING = "isFollowing"
 
         val PROJECT_ALL = arrayOf(
@@ -45,6 +46,7 @@ object MovieContract : ContractInterface {
             BACKDROP_PATH,
             OVERVIEW,
             ADULT,
+            BUDGET,
             IS_FOLLOWING
         )
         val DEFAULT_SORT_ORDER = String()

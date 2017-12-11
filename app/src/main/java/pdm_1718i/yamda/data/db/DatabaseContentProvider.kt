@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
 import android.provider.BaseColumns
 
-class MovieProvider: ContentProvider(){
+class DatabaseContentProvider : ContentProvider(){
 
     object DETAILS{
         val LIST = 1
@@ -197,8 +197,7 @@ class MovieProvider: ContentProvider(){
         val qbuilder = SQLiteQueryBuilder()
         qbuilder.tables = params.first
         val db = dbHelper.readableDatabase
-        val cursor = qbuilder.query(db, projection, null, null, null, null, sortOrder)
-        //val cursor = qbuilder.query(db, projection, params.second, selectionArgs, null, null, sortOrder)
+        val cursor = qbuilder.query(db, projection, params.second, selectionArgs, null, null, sortOrder)
         cursor.setNotificationUri(context.contentResolver, uri)
         return cursor
     }
@@ -222,8 +221,9 @@ class MovieProvider: ContentProvider(){
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-        val table = resolveTableAndSelectionInfoFromUri(uri, null).first
         val db = dbHelper.writableDatabase
+        val table = resolveTableAndSelectionInfoFromUri(uri, null).first
+
 
         val ndel = db.delete(table, null, null)
         if (ndel > 0 && !inBatchMode.get()) {

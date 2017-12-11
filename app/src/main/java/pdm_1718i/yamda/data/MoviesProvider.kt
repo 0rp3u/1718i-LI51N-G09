@@ -1,16 +1,24 @@
 package pdm_1718i.yamda.data
 
 import android.graphics.Bitmap
+import android.util.Log
 import android.widget.ImageView
+import pdm_1718i.yamda.data.db.MoviesDb
 import pdm_1718i.yamda.data.server.TMDBService
-import pdm_1718i.yamda.model.DetailedMovie
+import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.model.Movie
 
 class MoviesProvider {
 
     companion object {
+        val tmdbAPI  by lazy {
+            Log.d("provider", "tmdb api provider instanciated")
+            TMDBService() }
+        val moviesDatabase  by lazy {
+            Log.d("provider", "database provider instanciated")
+            MoviesDb(tmdbAPI) }
 
-        val SOURCE by lazy { TMDBService() }
+        val SOURCE = moviesDatabase
     }
 
     fun nowPlayingMovies (page:Int) :List<Movie>{
@@ -29,7 +37,7 @@ class MoviesProvider {
         return SOURCE.movieSearch(query, page)
     }
 
-    fun movieDetail(id: Int): DetailedMovie{
+    fun movieDetail(id: Int): MovieDetail {
 
         return SOURCE.movieDetail(id)
     }
@@ -41,4 +49,5 @@ class MoviesProvider {
     fun image(image_id: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit, imageOption: String){
         SOURCE.movieImage(image_id, bitmapCompletionHandler , imageOption)
     }
+
 }
