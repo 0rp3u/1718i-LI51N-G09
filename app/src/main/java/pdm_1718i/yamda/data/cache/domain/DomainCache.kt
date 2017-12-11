@@ -1,12 +1,5 @@
 package pdm_1718i.yamda.data.cache.domain
 
-import android.graphics.Bitmap
-import android.util.Log
-import android.widget.ImageView
-import pdm_1718i.yamda.data.MoviesDataSource
-import pdm_1718i.yamda.model.DetailedMovie
-import pdm_1718i.yamda.model.Movie
-
 /*
 class DomainCache(private val provider : MoviesDataSource): MoviesDataSource{
     private val cache : MutableMap<String, Any> = mutableMapOf()  //possible need to be thread safe??
@@ -50,10 +43,10 @@ class DomainCache(private val provider : MoviesDataSource): MoviesDataSource{
         })
     }
 
-    override fun movieDetail(id: Int, completionHandler: (movies: DetailedMovie) -> Unit) {
+    override fun movieDetail(id: Int, completionHandler: (movies: MovieDetail) -> Unit) {
         val uri = "movieDetail/id/$id"
         if(cache.contains(uri))
-            completionHandler(cache[uri] as DetailedMovie)
+            completionHandler(cache[uri] as MovieDetail)
         else provider.movieDetail(id, {
             cache.put(uri, it)
             completionHandler(it)

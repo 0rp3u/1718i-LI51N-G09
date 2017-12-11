@@ -1,9 +1,7 @@
 package pdm_1718i.yamda.ui.activities
 
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
-import android.support.annotation.UiThread
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -23,7 +21,6 @@ import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.UPCOMING
 import pdm_1718i.yamda.ui.adapters.MainActAdapter
 
 class MainActivity : BaseActivity(navigation = false) {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -32,7 +29,6 @@ class MainActivity : BaseActivity(navigation = false) {
         generateRecyclerViewTask(R.id.recycler_view_upcoming,   App.moviesProvider::upcomingMovies)
         generateRecyclerViewTask(R.id.recycler_view_popular,    App.moviesProvider::popularMovies)
 
-        Log.d("Main_on_create", "finisehd on Create")
     }
 
     fun onPopularMore(view: View){
@@ -59,7 +55,7 @@ class MainActivity : BaseActivity(navigation = false) {
 
     private fun generateRecyclerViewTask(res: Int, providerHandler: (page:Int) -> List<Movie>) {
         val resView = findViewById<RecyclerView>(res)
-         val adapter = MainActAdapter(listOf())
+        val adapter = MainActAdapter(listOf())
         resView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false)
         resView.adapter = adapter
         async(UI) {
@@ -67,7 +63,7 @@ class MainActivity : BaseActivity(navigation = false) {
                 Log.d("reciclerViewTask", "trow new background thread: ${Thread.currentThread().id} to fetch data")
                 providerHandler(DEFAULT_PAGINATION)
             }
-            Log.d("reciclerViewTask", "bg thread retured execution to UI thread:${Thread.currentThread().id}")
+            Log.d("reciclerViewTask", "bg thread returned execution to UI thread:${Thread.currentThread().id}")
             adapter.setData(results.await())
         }
     }

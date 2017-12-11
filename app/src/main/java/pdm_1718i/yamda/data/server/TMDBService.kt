@@ -15,7 +15,7 @@ import org.json.JSONObject
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.MoviesDataSource
 import pdm_1718i.yamda.extensions.getImageListener
-import pdm_1718i.yamda.model.DetailedMovie
+import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import java.util.*
@@ -74,11 +74,11 @@ class TMDBService : MoviesDataSource {
                         .toString(),
                 null,
                 Response.Listener<JSONObject> { response ->
-                    Log.d(TAG, "/post request OK! Response for $uriBuilder")
+                    Log.d(TAG, "/get request OK! Response for $uriBuilder")
                     future.onResponse(response)
                 },
                 Response.ErrorListener { error ->
-                    Log.d(TAG, "/post request fail! Error: ${error.message}")
+                    Log.d(TAG, "/get request fail! Error: ${error.message}")
                     future.onErrorResponse(error)
                 }) {}
         App.instance.addToRequestQueue(jsonObjReq, TAG)
@@ -126,7 +126,7 @@ class TMDBService : MoviesDataSource {
         }
     }
 
-    override fun movieDetail(id: Int): DetailedMovie {
+    override fun movieDetail(id: Int): MovieDetail {
         return get(Uri.Builder().appendEncodedPath("movie/$id")).let {
             DataMapper().mapToMovieDetail(gson.fromJson(it.toString(), MovieDetailResult::class.java))
         }

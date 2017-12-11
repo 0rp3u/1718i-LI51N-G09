@@ -28,8 +28,8 @@ class App : Application() {
                     URL("http://${instance.getString(R.string.TMDB_IMAGE_URL)}").authority,
                     URL("http://${instance.getString(R.string.TMDB_URL)}").authority)
             val apiThrottlePolicy = ThrottlePolicy(throttledAuthorities,3,40, 10000)
-            val trottleStack = ThrottledHttpStack(listOf(apiThrottlePolicy))
-            Volley.newRequestQueue(instance, trottleStack)
+            val throttleStack = ThrottledHttpStack(listOf(apiThrottlePolicy))
+            Volley.newRequestQueue(instance, throttleStack)
 
         }
         val imageLoader by lazy {
@@ -53,9 +53,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-
-
-
+/*
             val action = Intent(this, DatabaseUpdater::class.java)
             (getSystemService(ALARM_SERVICE) as AlarmManager).setInexactRepeating(
                     AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -64,7 +62,7 @@ class App : Application() {
                     PendingIntent.getService(this, 1, action, PendingIntent.FLAG_UPDATE_CURRENT)
             )
 
-
+*/
     }
 
     fun <T> addToRequestQueue(request: Request<T>, tag: String = TAG) {

@@ -3,7 +3,6 @@ package pdm_1718i.yamda.ui.activities
 import android.content.ContentValues
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.coroutines.experimental.android.UI
@@ -15,7 +14,7 @@ import pdm_1718i.yamda.data.server.Options
 import pdm_1718i.yamda.data.server.Options.Companion.BIG
 import pdm_1718i.yamda.extensions.getDateFromCalendar
 import pdm_1718i.yamda.extensions.getYearFromCalendar
-import pdm_1718i.yamda.model.DetailedMovie
+import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.ui.App
 
 class MovieDetailActivity : BaseActivity() {
@@ -39,7 +38,7 @@ class MovieDetailActivity : BaseActivity() {
         async(UI) {updateUI( bg{App.moviesProvider.movieDetail(movieId)}.await()) }
     }
 
-    private fun updateUI(movieDetail: DetailedMovie) {
+    private fun updateUI(movieDetail: MovieDetail) {
         with(movieDetail){
             this@MovieDetailActivity.title = "$title"
             this@MovieDetailActivity.supportActionBar?.subtitle = "${getYearFromCalendar(release_date)}"

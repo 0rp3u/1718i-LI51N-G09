@@ -2,6 +2,7 @@ package pdm_1718i.yamda.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import kotlinx.coroutines.experimental.android.UI
@@ -44,6 +45,7 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
 
     override fun loadData() {
         if(CURRENT_PAGE > 0) {
+            Log.d("recicler", "loading page ${CURRENT_PAGE+1}")
             with(intent.getStringExtra(REQUEST_TYPE)) {
                 dispatcher[this]?.let {
                     async(UI) { updateGUI(bg { it(++CURRENT_PAGE) }.await()) }
@@ -54,9 +56,13 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
 
     private fun updateGUI(movies : List< Movie>) {
         if(movies.isNotEmpty()) {
+            Log.d("recicler", "finished loading pages")
+
             listView.addNewData(movies)
         }else{
-          CURRENT_PAGE = -1 //so user does not make calls for unavailable pages
+            Log.d("recicler", "no more pages to load")
+
+            CURRENT_PAGE = -1 //so user does not make calls for unavailable pages
         }
 
 

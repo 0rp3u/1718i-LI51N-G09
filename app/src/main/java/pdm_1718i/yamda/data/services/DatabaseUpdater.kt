@@ -10,8 +10,7 @@ import com.android.volley.VolleyError
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.data.db.MovieContract
-import pdm_1718i.yamda.model.DetailedMovie
-import pdm_1718i.yamda.model.Movie
+import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.ui.App
 
 
@@ -92,7 +91,7 @@ class DatabaseUpdater : Service() {
         val nowPlayingList :MutableSet<Int> = App.moviesProvider.nowPlayingMovies(1).map { it.id }.toMutableSet()
 
         val fetchDetails =  nowPlayingList
-                .filterNot { onDatabase.contains(it) }
+                .filterNot { onDatabase.contains(it)}
                 .filterNot { alreadyFetched.contains(it) }
                  //list of running thread that are fetching movieDetails
 
@@ -119,7 +118,7 @@ class DatabaseUpdater : Service() {
 
     }
 
-    private fun fetchDetail(id: Int) : DetailedMovie{
+    private fun fetchDetail(id: Int) : MovieDetail {
         return App.moviesProvider.movieDetail(id)
     }
 
@@ -144,7 +143,7 @@ class DatabaseUpdater : Service() {
             nowPlaying: List<Int>,
             mostPopular: List<Int>,
             staled: List<Int>,
-            movieDetails: List<DetailedMovie?>)
+            movieDetails: List<MovieDetail?>)
     {
         contentResolver.delete(MovieContract.UpcomingIds.CONTENT_URI, null, null)
         contentResolver.delete(MovieContract.NowPlayingIds.CONTENT_URI, null, null)
@@ -154,17 +153,7 @@ class DatabaseUpdater : Service() {
         }
 
         val moviesContentValue: Array<ContentValues> =  movieDetails.mapNotNull {
-                ContentValues().apply {
-
-                        put(MovieContract.MovieDetails._ID, it!!.id)
-                        put(MovieContract.MovieDetails.IS_FOLLOWING, false)
-                        put(MovieContract.MovieDetails.POSTER_PATH, it!!.poster_path)
-                        put(MovieContract.MovieDetails.TITLE, it!!.title)
-                        put(MovieContract.MovieDetails.RELEASE_DATE, it!!.release_date.toString())
-                        put(MovieContract.MovieDetails.OVERVIEW, it!!.overview)
-                        put(MovieContract.MovieDetails.ORIGINAL_TITLE, "title")
-
-                }
+               it?.toContentValues()
         }.toTypedArray()
 
         val upcomingContentValue: Array<ContentValues> =  upComing.mapNotNull {

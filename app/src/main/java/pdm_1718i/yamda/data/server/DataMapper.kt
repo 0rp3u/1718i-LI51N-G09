@@ -3,7 +3,7 @@ package pdm_1718i.yamda.data.server
 import com.example.pdm_1718i.yamda.data.server.MovieDetailResult
 import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
 import pdm_1718i.yamda.extensions.getCalendar
-import pdm_1718i.yamda.model.DetailedMovie
+import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.model.Genre
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.extensions.removePref
@@ -24,8 +24,8 @@ class DataMapper {
        }
     }
 
-    fun mapToMovieDetail(result: MovieDetailResult): DetailedMovie {
-        return  DetailedMovie(
+    fun mapToMovieDetail(result: MovieDetailResult): MovieDetail {
+        return  MovieDetail(
                 result.poster_path.removePref(1),
                 result.backdrop_path.removePref(1),
                 getCalendar(result.release_date),

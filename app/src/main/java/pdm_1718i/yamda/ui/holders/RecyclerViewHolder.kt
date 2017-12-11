@@ -11,6 +11,7 @@ import pdm_1718i.yamda.ui.activities.MovieDetailActivity
 class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     private lateinit var movie: Movie
+    val imageView = itemView.findViewById<ImageView>(R.id.image_view_item)
 
     init{
         itemView.setOnClickListener(this)
@@ -27,5 +28,5 @@ class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         this.movie = movie
     }
 
-    val imageView = itemView.findViewById<ImageView>(R.id.image_view_item)
+
 }
