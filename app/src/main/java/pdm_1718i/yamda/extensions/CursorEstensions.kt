@@ -1,6 +1,7 @@
 package pdm_1718i.yamda.extensions
 
 import android.database.Cursor
+import android.support.annotation.IdRes
 import pdm_1718i.yamda.data.db.MovieContract
 import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.model.Movie
@@ -93,7 +94,7 @@ inline fun <reified T> typeLiteral(): TypeLiteral<T> = object : TypeLiteral<T>()
  * cursor function
  * @return The item casted to corresponding [T]
  */
-
+/*
 inline fun <reified T> Cursor.getFromColumn(columnName : String): T{
     with(T::class.java) {
         return when (true) {
@@ -108,6 +109,30 @@ inline fun <reified T> Cursor.getFromColumn(columnName : String): T{
         }
     }
 }
+*/
+
+
+inline fun <reified T> Cursor.getFromColumn(columnName : String) : T{
+    val idx = getColumnIndex(columnName)
+    return when(getType(idx)){
+        Cursor.FIELD_TYPE_INTEGER -> {
+            val value = getInt(idx)
+            if(T::class.java.isInstance(Int.MIN_VALUE)) value
+            else value.toBoolean()
+        }
+        Cursor.FIELD_TYPE_STRING -> getString(idx)
+        Cursor.FIELD_TYPE_FLOAT -> {
+            val value =  getFloat(idx)
+            if(T::class.java.isInstance(Float.MIN_VALUE)) value
+            else value.toDouble()
+        }
+        Cursor.FIELD_TYPE_BLOB -> getBlob(idx)
+
+        Cursor.FIELD_TYPE_NULL -> 0
+        else -> throw Exception("type is not supported")
+    } as T
+}
+
 
 /**
 using type literal from https://github.com/JetBrains/kotlin/blob/master/spec-docs/reified-type-parameters.md
