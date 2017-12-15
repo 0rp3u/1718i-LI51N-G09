@@ -3,8 +3,8 @@ package pdm_1718i.yamda.extensions
 import android.database.Cursor
 import android.support.annotation.IdRes
 import pdm_1718i.yamda.data.db.MovieContract
-import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.model.Movie
+import pdm_1718i.yamda.model.MovieDetail
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
@@ -37,7 +37,7 @@ private fun Cursor.constructDetailedMovieItem() = MovieDetail(
             budget =        getFromColumn(MovieContract.MovieDetails.BUDGET),
             overview =      getFromColumn(MovieContract.MovieDetails.OVERVIEW),
             poster_path =   getFromColumn(MovieContract.MovieDetails.POSTER_PATH),
-            isFollowing = false,
+            isFollowing =   getFromColumn(MovieContract.MovieDetails.IS_FOLLOWING),
             vote_average =  getFromColumn(MovieContract.MovieDetails.VOTE_AVERAGE),
             backdrop_path = getFromColumn(MovieContract.MovieDetails.BACKDROP_PATH),
             release_date =  getCalendar(getFromColumn(MovieContract.MovieDetails.RELEASE_DATE)),
@@ -72,7 +72,8 @@ private fun Cursor.constructMovieItem() = Movie(
             poster_path =   getFromColumn(MovieContract.MovieDetails.POSTER_PATH),
             vote_average =  getFromColumn(MovieContract.MovieDetails.VOTE_AVERAGE),
             release_date =  getCalendar(getFromColumn(MovieContract.MovieDetails.RELEASE_DATE)),
-            backdrop_path = getFromColumn(MovieContract.MovieDetails.BACKDROP_PATH)
+            backdrop_path = getFromColumn(MovieContract.MovieDetails.BACKDROP_PATH),
+            isFollowing =   getFromColumn(MovieContract.MovieDetails.IS_FOLLOWING)
     )
 
 
@@ -98,13 +99,14 @@ inline fun <reified T> typeLiteral(): TypeLiteral<T> = object : TypeLiteral<T>()
 inline fun <reified T> Cursor.getFromColumn(columnName : String): T{
     with(T::class.java) {
         return when (true) {
-            isInstance("") -> getString(getColumnIndex(columnName)) as T
-            isInstance(1) -> getInt(getColumnIndex(columnName)) as T
-            isInstance(Short.MIN_VALUE) -> getShort(getColumnIndex(columnName)) as T
-            isInstance(Float.MIN_VALUE) -> getFloat(getColumnIndex(columnName)) as T
-            isInstance(Double.MIN_VALUE) -> getDouble(getColumnIndex(columnName)) as T
-            isInstance(Long.MIN_VALUE) -> getLong(getColumnIndex(columnName)) as T
-            isInstance(ByteArray(0)) -> getBlob(getColumnIndex(columnName)) as T
+            isInstance("")              -> getString(getColumnIndex(columnName)) as T
+            isInstance(1)               -> getInt(getColumnIndex(columnName)) as T
+            isInstance(true)            -> getInt(getColumnIndex(columnName)).toBoolean() as T
+            isInstance(Short.MIN_VALUE)      -> getShort(getColumnIndex(columnName)) as T
+            isInstance(Float.MIN_VALUE)      -> getFloat(getColumnIndex(columnName)) as T
+            isInstance(Double.MIN_VALUE)     -> getDouble(getColumnIndex(columnName)) as T
+            isInstance(Long.MIN_VALUE)       -> getLong(getColumnIndex(columnName)) as T
+            isInstance(ByteArray(0))    -> getBlob(getColumnIndex(columnName)) as T
             else -> throw Exception("${T::class.java.name} is not supported")
         }
     }
@@ -189,7 +191,5 @@ fun Cursor.toMovieList(): List<Movie>? {
         }
     } else null
 }
-
-
 
 
