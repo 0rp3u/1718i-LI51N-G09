@@ -28,7 +28,7 @@ class DiskLruImageCache2(private val mDiskCache : Cache) : ImageCache {
             entry.data = stream.toByteArray()
             mDiskCache.put(key, entry)
             stream.close()
-            Log.d("cache_test_DISK_", "$key was put on disk ")
+            //Log.d("cache_test_DISK_", "$key was put on disk ")
     }
 
     override fun getBitmap(key: String): Bitmap? {
@@ -38,7 +38,7 @@ class DiskLruImageCache2(private val mDiskCache : Cache) : ImageCache {
                 entry = mDiskCache.get(key)
 
                 if (entry == null) {
-                    Log.d("cache_test_DISK_", "$key was not on disk (snapshot) ")
+                    //Log.d("cache_test_DISK_", "$key was not on disk (snapshot) ")
                     return null
                 }
                 bitmap = BitmapFactory.decodeByteArray(entry.data, 0, entry.data.size)
@@ -47,7 +47,7 @@ class DiskLruImageCache2(private val mDiskCache : Cache) : ImageCache {
                 e.printStackTrace()
             }
 
-                Log.d("cache_test_DISK_", if (bitmap == null) "" else "image read from disk " + key)
+                //Log.d("cache_test_DISK_", if (bitmap == null) "" else "image read from disk " + key)
 
             return bitmap
 
@@ -55,7 +55,7 @@ class DiskLruImageCache2(private val mDiskCache : Cache) : ImageCache {
 
     fun containsKey(key: String): Boolean {
         val contained =  mDiskCache[key]  != null
-        Log.d("cache_test_DISK_", "cache contained $key image: $contained")
+        //Log.d("cache_test_DISK_", "cache contained $key image: $contained")
         return contained
 
     }

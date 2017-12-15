@@ -14,6 +14,7 @@ import com.google.gson.Gson
 import org.json.JSONObject
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.MoviesDataSource
+import pdm_1718i.yamda.extensions.getDate
 import pdm_1718i.yamda.extensions.getImageListener
 import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.model.Movie
@@ -99,6 +100,9 @@ class TMDBService : MoviesDataSource {
         return get(
                 Uri.Builder()
                         .appendEncodedPath("movie/upcoming")
+                        .appendQueryParameter("region", Locale.getDefault().country)
+                        .appendQueryParameter("sort_by","release_date.asc")
+                        .appendQueryParameter("release_date.gte", Calendar.getInstance().getDate())
                         .appendQueryParameter("page", "$page")
         ).let {
             DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java))

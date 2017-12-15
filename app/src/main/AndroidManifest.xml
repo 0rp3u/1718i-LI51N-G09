@@ -14,7 +14,7 @@
     android:theme="@style/AppTheme">
 
     <provider
-        android:authorities="pt.android.movies.provider.MovieProvider"
+        android:authorities="pt.android.movies.provider.DatabaseContentProvider"
         android:name=".data.db.DatabaseContentProvider"
         android:enabled="true"
         android:exported="false"/>
