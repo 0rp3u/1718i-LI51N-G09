@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.AbsListView
 import android.widget.ListView
+import pdm_1718i.yamda.R
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.adapters.EndlessAdapter
 
@@ -28,6 +29,7 @@ class EndlessListView : ListView, AbsListView.OnScrollListener{
     private var isLoading: Boolean = false
     private var listener: EndlessListener? = null
     private var adapter: EndlessAdapter? = null
+    private var full: Boolean = false
 
     fun setListener(listener: EndlessListener)
     {
@@ -38,7 +40,7 @@ class EndlessListView : ListView, AbsListView.OnScrollListener{
         if (getAdapter()==null || getAdapter().count==0 ) return
 
         val l : Int = visibleItemCount + firstVisibleItem
-        if(l >= totalItemCount && !isLoading){
+        if(!full && l >= totalItemCount && !isLoading){
             isLoading = true
             //Add new data
             this.addFooterView(footer)
@@ -49,7 +51,10 @@ class EndlessListView : ListView, AbsListView.OnScrollListener{
 
     override fun onScrollStateChanged(view: AbsListView?, loadState: Int) {}
 
-    fun setLoadingView(resId: Int){
+
+
+    fun setFooterView(resId: Int){
+        this.removeFooterView(footer)
         var inflater: LayoutInflater = super.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         footer = inflater.inflate(resId,null)
         this.addFooterView(footer)
@@ -77,5 +82,12 @@ class EndlessListView : ListView, AbsListView.OnScrollListener{
 
     interface EndlessListener {
         fun loadData()
+    }
+
+    fun setFull() {
+        full = true
+        setFooterView(R.layout.no_more_items_layout)
+
+
     }
 }

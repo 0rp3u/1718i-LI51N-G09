@@ -28,5 +28,4 @@ class RecyclerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), Vi
         this.movie = movie
     }
 
-
 }

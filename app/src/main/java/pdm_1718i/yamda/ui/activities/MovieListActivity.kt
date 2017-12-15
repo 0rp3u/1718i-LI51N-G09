@@ -63,6 +63,7 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
             Log.d("recicler", "no more pages to load")
 
             CURRENT_PAGE = -1 //so user does not make calls for unavailable pages
+            listView.setFull()
         }
 
 
@@ -72,11 +73,14 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
         if(movies.isNotEmpty()) {
             listView.setAdapter(EndlessAdapter(this, movies))
             listView.setListener(this)
-            listView.setLoadingView(R.layout.loading_layout)
+            listView.setFooterView(R.layout.loading_layout)
 
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-                val movieId = (listView.adapter.getItem(position) as Movie).id
-                startActivity(Intent(applicationContext, MovieDetailActivity::class.java).putExtra(MOVIE_KEY, movieId))
+                val item = listView.adapter.getItem(position)
+                if(item != null){
+                    val movieId = (item as Movie).id
+                    startActivity(Intent(applicationContext, MovieDetailActivity::class.java).putExtra(MOVIE_KEY, movieId))
+                }
             }
         }else{
             emptyView.visibility = View.VISIBLE

@@ -1,7 +1,6 @@
 package pdm_1718i.yamda.ui.activities
 
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -33,7 +32,7 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
     }
 
     private fun handleIntent(intent: Intent) {
-        listView.setLoadingView(R.layout.loading_layout)
+        listView.setFooterView(R.layout.loading_layout)
         val query = intent.getStringExtra(QUERY_KEY)
         title = "$RESULT_TITLE: $query"
         async(UI) {
@@ -74,6 +73,7 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
             listView.addNewData(movies)
         }else{
            CURRENT_PAGE = -1 //so user does not make calls for unavailable pages
+           listView.setFull()
         }
 
 
