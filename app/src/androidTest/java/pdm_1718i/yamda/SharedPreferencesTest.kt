@@ -3,24 +3,24 @@ package pdm_1718i.yamda
 import android.content.SharedPreferences
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class SharedPreferencesTest {
 
+    val TEST_NAME_KEY = "TEST_NAME"
+    val TEST_NAME = "Nome_de_teste"
+
+    val TEST_EMAIL_KEY = "TEST_EMAIL"
+    val TEST_EMAIL = "EMAIL_DE_TESTE@TESTE.COM"
+
     @Test
     @Throws(Exception::class)
     fun usingSharedPreferences() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-
-        val TEST_NAME_KEY = "TEST_NAME"
-        val TEST_NAME = "Nome_de_teste"
-
-        val TEST_EMAIL_KEY = "TEST_EMAIL"
-        val TEST_EMAIL = "EMAIL_DE_TESTE@TESTE.COM"
-
 
         val prefs : SharedPreferences = appContext.getSharedPreferences("TEST_SHARED_PREFERENCES", 0)
         val editor : SharedPreferences.Editor = prefs.edit()
@@ -41,10 +41,6 @@ class SharedPreferencesTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
 
-        val TEST_NAME_KEY = "TEST_NAME"
-        val TEST_NAME = "Nome_de_teste"
-
-        val TEST_EMAIL_KEY = "TEST_EMAIL"
         val prefs : SharedPreferences = appContext.getSharedPreferences("TEST_SHARED_PREFERENCES", 0)
         val editor : SharedPreferences.Editor = prefs.edit()
 
