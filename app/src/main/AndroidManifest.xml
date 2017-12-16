@@ -4,6 +4,7 @@
 
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
 <application
     android:name=".ui.App"
@@ -14,7 +15,7 @@
     android:theme="@style/AppTheme">
 
     <provider
-        android:authorities="pt.android.movies.provider.MovieProvider"
+        android:authorities="pt.android.movies.provider.DatabaseContentProvider"
         android:name=".data.db.DatabaseContentProvider"
         android:enabled="true"
         android:exported="false"/>
@@ -24,6 +25,10 @@
         android:enabled="true"
         android:exported="true" />
 
+    <service
+        android:name=".data.services.FollowNotificationService"
+        android:label="Follow Movies Service"
+        android:permission="android.permission.BIND_JOB_SERVICE" />
 
     <activity android:name=".ui.activities.MainActivity">
         <intent-filter>
