@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:title="@string/connection_type_title">
+
+        <CheckBoxPreference
+            android:key="@string/connection_type_key"
+            android:defaultValue="true"
+            android:summary= "@string/connection_type_summary"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title = "@string/periodicity_title">
+        <ListPreference
+            android:summary="%s"
+            android:key="@string/preference_periodicity_key"
+            android:entries="@array/pref_sync_frequency_titles"
+            android:entryValues="@array/pref_sync_frequency_values"
+            android:negativeButtonText="@string/periodicity_list_cancel"
+            android:positiveButtonText="@null"
+            android:dialogTitle="@string/periodicity_list_title"
+            android:defaultValue="24"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/notification_title">
+
+        <SwitchPreference
+            android:key = "@string/preference_notification_key"
+            android:summary = "@string/notification_summary"
+            android:defaultValue="true" />
+
+        <SwitchPreference
+            android:key = "@string/preference_vibrate_key"
+            android:dependency="preference_notification"
+            android:summary="@string/notification_vibrate"
+            android:defaultValue="true"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
