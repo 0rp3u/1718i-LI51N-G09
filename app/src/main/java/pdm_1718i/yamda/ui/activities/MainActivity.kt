@@ -63,8 +63,13 @@ class MainActivity : BaseActivity(navigation = false) {
                 Log.d("reciclerViewTask", "trow new background thread: ${Thread.currentThread().id} to fetch data")
                 providerHandler(DEFAULT_PAGINATION)
             }
-            Log.d("reciclerViewTask", "bg thread returned execution to UI thread:${Thread.currentThread().id}")
-            adapter.setData(results.await())
+            try{
+            val movies = results.await()
+            Log.d("reciclerViewTask", "After Await:${Thread.currentThread().id} | Fetched ${movies.size} movies")
+            adapter.setData(movies)
+            }catch (e: Exception){
+                Log.d("Exeption", "${e.message}")
+            }
         }
     }
 /*
