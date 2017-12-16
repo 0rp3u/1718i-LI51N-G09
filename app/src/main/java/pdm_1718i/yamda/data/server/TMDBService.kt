@@ -101,6 +101,9 @@ class TMDBService : MoviesDataSource {
         return get(
                 Uri.Builder()
                         .appendEncodedPath("movie/upcoming")
+                        .appendQueryParameter("region", Locale.getDefault().country)
+                        .appendQueryParameter("sort_by","release_date.asc")
+                        .appendQueryParameter("release_date.gte", Calendar.getInstance().getDate())
                         .appendQueryParameter("page", "$page")
                         .appendQueryParameter("release_date.gte", Calendar.getInstance().getDate())
         ).let {

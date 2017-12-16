@@ -85,5 +85,6 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="toast_follow">Following</string>
+    <string name="no_more_results_to_show">no more results to show</string>
     <string name="toast_unfollow">Unfollowed</string>
 </resources>

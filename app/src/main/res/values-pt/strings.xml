@@ -24,6 +24,7 @@
     <string name="summary">Resumo</string>
     <string name="detail_summary">Resumo</string>
     <string name="results_for">Resultados para</string>
+    <string name="no_more_results_to_show">Não há mais resultados</string>
     <string name="title_activity_settings">Configurações</string>
     <string name="pref_header_data_sync">Dados e Sincronização</string>
     <string name="pref_title_sync_frequency">Frequência de Sincronização</string>

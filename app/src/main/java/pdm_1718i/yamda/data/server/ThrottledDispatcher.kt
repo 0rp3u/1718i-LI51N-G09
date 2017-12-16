@@ -13,32 +13,26 @@ import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
-/*
-    this is a test throttled dispatcher,
-    might be susceptible to dead locks or race conditions!!
-*/
-
-class DispatchableRequest(val request: Request<*>?, val additionalHeaders: MutableMap<String, String>?) {
-    val future: RequestFuture<HttpResponse> = RequestFuture.newFuture()//future that caller is waiting
+class DispatchRequest(val request: Request<*>?, val additionalHeaders: MutableMap<String, String>?) {
+    val future: RequestFuture<HttpResponse> = RequestFuture.newFuture()//future that caller is waiting on
 }
 
 class ThrottledDispatcher(private val policy: ThrottlePolicy, private val httpStack: HttpStack) {
 
     private val requestsTimeStamps: ConcurrentLinkedQueue<Long> = ConcurrentLinkedQueue()
-    private val requestQueue : LinkedBlockingQueue<DispatchableRequest> = LinkedBlockingQueue()
+    private val requestQueue : LinkedBlockingQueue<DispatchRequest> = LinkedBlockingQueue()
 
     val dispatcher = thread(true, true, null, "dispatcher_Thread", Thread.NORM_PRIORITY, {
         Log.d("dispatcher_Thread ${Thread.currentThread().id}", "Dispatcher initialized")
         while (true) {
-                val work = requestQueue.poll(60*10, TimeUnit.SECONDS)
-            Log.d("dispatcher_Thread ${Thread.currentThread().id}", "There is work to do")
+            val work = requestQueue.poll(60*10, TimeUnit.SECONDS)
+            if(execededTimeframe(policy.maxRequestsInTimeFrame)) {
+                val waitTime = policy.timeFrame - (System.currentTimeMillis() - requestsTimeStamps.last())
+                Log.d("dispatcher_Thread ${Thread.currentThread().id}", "reached API limit, going to wait for $waitTime milliseconds, next work is ${work.request?.url}")
 
-            if(execededTimeframe(policy.maxRequestsinTimeFrame)) {
-                    val waitTime = policy.timeFrame - (System.currentTimeMillis() - requestsTimeStamps.last())
-                    Log.d("dispatcher_Thread ${Thread.currentThread().id}", "reached API limit, going to wait for $waitTime miliseconds")
-                    Thread.sleep(waitTime)
-                    requestsTimeStamps.clear()
-                }
+                try { Thread.sleep(waitTime) }catch (e: InterruptedException) { Log.e("dispatcher_Thread", "${e.message}")}
+                requestsTimeStamps.clear()
+            }
             if(work!=null) {
                 requestsTimeStamps.add(System.currentTimeMillis()) //register request timeStamp
                 work.request?.retryPolicy = DefaultRetryPolicy(
@@ -46,7 +40,7 @@ class ThrottledDispatcher(private val policy: ThrottlePolicy, private val httpSt
                         policy.retries,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
 
-                //on another thread so dispatcher do not block waiting for http response
+                //on another thread so dispatcher do not block waiting for the http response while it could be dispatching more requests
                 launch {
                     Log.d("Launch ${Thread.currentThread().id}", "dispatching ${work.request?.url}")
                     try {
@@ -59,7 +53,7 @@ class ThrottledDispatcher(private val policy: ThrottlePolicy, private val httpSt
         }
     })
 
-    fun put(request: DispatchableRequest): RequestFuture<HttpResponse> {
+    fun put(request: DispatchRequest): RequestFuture<HttpResponse> {
         requestQueue.put(request)
         return request.future
     }

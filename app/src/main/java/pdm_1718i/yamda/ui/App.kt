@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import com.android.volley.Request
+import com.android.volley.RequestQueue
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
 import pdm_1718i.yamda.R
@@ -21,17 +22,19 @@ import java.net.URL
 class App : Application() {
 
     companion object {
+        private val TAG = App::class.java.simpleName
+
         lateinit var instance: App
             private set
-        val requestQueue by lazy {
-            val throttledAuthorities = listOf(
-                    URL("http://${instance.getString(R.string.TMDB_IMAGE_URL)}").authority,
-                    URL("http://${instance.getString(R.string.TMDB_URL)}").authority)
-            val apiThrottlePolicy = ThrottlePolicy(throttledAuthorities,3,40, 10000)
+
+        private val requestQueue: RequestQueue by lazy {
+            val apiThrottlePolicy = ThrottlePolicy(
+                    URL("http://${instance.getString(R.string.TMDB_URL)}").authority
+                    ,3,40, 10000)
             val throttleStack = ThrottledHttpStack(listOf(apiThrottlePolicy))
             Volley.newRequestQueue(instance, throttleStack)
-
         }
+
         val imageLoader by lazy {
             //val cache = BitmapLruCache(DiskLruImageCache(this.instance, "imageCache"))
             val cache = DiskLruImageCache2(requestQueue.cache)
@@ -39,7 +42,8 @@ class App : Application() {
         }
 
         val moviesProvider by lazy { MoviesProvider() }
-        private val TAG = App::class.java.simpleName
+
+
         val isNetworkAvailable: Boolean
             get(){
 
@@ -53,7 +57,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-/*
+
             val action = Intent(this, DatabaseUpdater::class.java)
             (getSystemService(ALARM_SERVICE) as AlarmManager).setInexactRepeating(
                     AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -62,7 +66,7 @@ class App : Application() {
                     PendingIntent.getService(this, 1, action, PendingIntent.FLAG_UPDATE_CURRENT)
             )
 
-*/
+
     }
 
     fun <T> addToRequestQueue(request: Request<T>, tag: String = TAG) {
@@ -75,5 +79,4 @@ class App : Application() {
     fun cancelPendingRequests(tag: Any) {
         requestQueue.cancelAll(tag)
     }
-
 }

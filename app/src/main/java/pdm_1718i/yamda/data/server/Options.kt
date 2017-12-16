@@ -1,8 +1,5 @@
 package pdm_1718i.yamda.data.server;
 
-/**
- * Created by Red on 25/10/2017.
- */
 
 object Options{
     val SMALL = "SMALL"
