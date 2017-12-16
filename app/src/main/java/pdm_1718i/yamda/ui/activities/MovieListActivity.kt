@@ -48,7 +48,13 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
             Log.d("recicler", "loading page ${CURRENT_PAGE+1}")
             with(intent.getStringExtra(REQUEST_TYPE)) {
                 dispatcher[this]?.let {
-                    async(UI) { updateGUI(bg { it(++CURRENT_PAGE) }.await()) }
+                    async(UI) {
+                        val result = bg {
+                            it(CURRENT_PAGE + 1)
+                        }.await()
+                        updateGUI(result)
+
+                    }
                 }
             }
         }
@@ -61,12 +67,9 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
             listView.addNewData(movies)
         }else{
             Log.d("recicler", "no more pages to load")
-
             CURRENT_PAGE = -1 //so user does not make calls for unavailable pages
             listView.setFull()
         }
-
-
     }
 
     private fun createGUI(movies : List< Movie>){

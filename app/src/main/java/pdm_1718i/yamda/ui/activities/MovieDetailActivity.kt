@@ -1,43 +1,46 @@
 package pdm_1718i.yamda.ui.activities
 
-import android.content.ContentValues
-import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.R
-import pdm_1718i.yamda.data.db.MovieContract
+import pdm_1718i.yamda.data.db.Util
 import pdm_1718i.yamda.data.server.Options
-import pdm_1718i.yamda.data.server.Options.Companion.BIG
+import pdm_1718i.yamda.data.server.Options.BIG
 import pdm_1718i.yamda.extensions.getDateFromCalendar
 import pdm_1718i.yamda.extensions.getYearFromCalendar
+import pdm_1718i.yamda.extensions.isFuture
+import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.ui.App
 
 class MovieDetailActivity : BaseActivity() {
 
-    private val release_date        by lazy { findViewById(R.id.release_date)   as TextView }
-    private val ratingTextView      by lazy { findViewById(R.id.rating)         as TextView }
-    private val genreTextView       by lazy { findViewById(R.id.genres)         as TextView }
-    private val overviewTextView    by lazy { findViewById(R.id.overview)       as TextView }
-    private val moviePoster         by lazy { findViewById(R.id.movie_poster)   as ImageView }
-    private val followIcon          by lazy { findViewById(R.id.follow_icon)   as ImageView }
+    private val release_date            by lazy { findViewById(R.id.release_date)   as TextView }
+    private val ratingTextView          by lazy { findViewById(R.id.rating)         as TextView }
+    private val genreTextView           by lazy { findViewById(R.id.genres)         as TextView }
+    private val overviewTextView        by lazy { findViewById(R.id.overview)       as TextView }
+    private val moviePoster             by lazy { findViewById(R.id.movie_poster)   as ImageView }
+    private val followIcon              by lazy { findViewById(R.id.follow_icon)    as ImageView }
+//    private val NOTIFICATION_OFF_ICON   by lazy { getDrawable(R.drawable.ic_notifications_none_black_24dp) }
+//    private val NOTIFICATION_ON_ICON    by lazy{ getDrawable(R.drawable.ic_notifications_active_black_24dp) }
+    private val NOTIFICATION_OFF_ICON = R.drawable.ic_notifications_none_black_24dp
+    private val NOTIFICATION_ON_ICON = R.drawable.ic_notifications_active_black_24dp
 
     private var followIconState: Boolean = false
-    private val NOTIFICATION_OFF = R.drawable.ic_notifications_none_black_24dp
-    private val NOTIFICATION_ON = R.drawable.ic_notifications_active_black_24dp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
         val movieId = intent.getIntExtra("movieId", -1)
-        //registerEvents(movieId)
         async(UI) {updateUI( bg{App.moviesProvider.movieDetail(movieId)}.await()) }
     }
 
+    //@RequiresApi(api = 21)//getDrawable
     private fun updateUI(movieDetail: MovieDetail) {
         with(movieDetail){
             this@MovieDetailActivity.title = "$title"
@@ -52,38 +55,63 @@ class MovieDetailActivity : BaseActivity() {
             }else{
                 moviePoster.setImageResource(R.drawable.ic_movie_thumbnail)
             }
-
-            if(movieDetail.isFollowing){
-                followIcon.setImageResource(NOTIFICATION_ON)
-                followIconState = true
-            }else{
-                followIcon.setImageResource(NOTIFICATION_OFF)
-                followIconState = false
+            if(movieDetail.release_date != null && movieDetail.release_date.isFuture()){
+                if(movieDetail.isFollowing){
+                    toast("Thread:${Thread.currentThread()} ON")
+                    followIcon.setImageResource(NOTIFICATION_ON_ICON)
+                    followIconState = true
+                }else{
+                    toast("Thread:${Thread.currentThread()} OFF")
+                    followIcon.setImageResource(NOTIFICATION_OFF_ICON)
+                    followIconState = false
+                }
+                registerEvents(movieDetail)
             }
         }
     }
 
-    private fun registerEvents(movieID: Int){
+    private fun registerEvents(movie: MovieDetail){
         followIcon.setOnClickListener {
-            val MOVIE_ID = Integer.toString(movieID)
-            val cr = this.contentResolver
-            val uri = MovieContract.MovieDetails.CONTENT_URI
-            val movieUri = Uri.withAppendedPath(uri, MOVIE_ID)
-            val contentValues = ContentValues().apply {
-                put(MovieContract.MovieDetails.IS_FOLLOWING, !followIconState)
-            }
-            val where = "_ID = ?"
-            val selectionArgs: Array<String> = arrayOf(MOVIE_ID)
-            val nchanged = cr.update(movieUri, contentValues, where, selectionArgs)
-            //val nchanged1 = cr.insert(movieUri, )
-            with(it as ImageView){
-                if(followIconState){
-                    setImageResource(NOTIFICATION_OFF)
-                    followIconState = false
-                }else{
-                    setImageResource(NOTIFICATION_ON)
-                    followIconState = true
+            it.isEnabled = false
+            async(UI) {
+                val task: Deferred<Boolean?> = bg {
+                   Util.updateFollowingState(movie, !followIconState, this@MovieDetailActivity)
                 }
+                val result: Boolean? = task.await()
+                if(result != null){
+                    with(it as ImageView){
+                        if(result){
+                            toast(App.instance.getString(R.string.toast_follow))
+                            setImageResource(NOTIFICATION_ON_ICON)
+                        }else{
+                            toast(App.instance.getString(R.string.toast_unfollow))
+                            setImageResource(NOTIFICATION_OFF_ICON)
+                        }
+                        followIconState = result
+                    }
+
+//                    val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+//                    JobInfo.Builder(
+//                            123,
+//                            ComponentName(applicationContext, FollowNotificationService::class.java)
+//                    ).apply {
+//                        //Low Battery filter
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                            setRequiresBatteryNotLow(true)
+//                        }
+//
+//                        //Persist after boot
+//                        setPersisted(true)
+//
+//                        //Timeframe to trigger
+//                        setMinimumLatency(1000 * 3) //wait at least
+//
+//                        //Schedule the job
+//                        jobScheduler.schedule(build())
+//                    }
+
+                }
+                it.isEnabled = true
             }
         }
     }

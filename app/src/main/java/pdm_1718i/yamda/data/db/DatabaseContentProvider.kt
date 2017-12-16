@@ -33,7 +33,7 @@ class DatabaseContentProvider : ContentProvider(){
         val ITEM = 10
     }
 
-    object THEATERS{
+    object THEATERS{//todo change name to Now_Playing
         val LIST = 11
         val ITEM = 12
     }

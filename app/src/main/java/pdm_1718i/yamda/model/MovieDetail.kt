@@ -25,7 +25,7 @@ data class MovieDetail(
         put(MovieContract.MovieDetails.BACKDROP_PATH, backdrop_path)
         put(MovieContract.MovieDetails.VOTE_AVERAGE, vote_average.toDouble())
         put(MovieContract.MovieDetails.TITLE, title)
-        put(MovieContract.MovieDetails.RELEASE_DATE, getDateFromCalendar(release_date))
+        put(MovieContract.MovieDetails.RELEASE_DATE, getDateFromCalendar(release_date))//todo rever
         put(MovieContract.MovieDetails.OVERVIEW, overview)
         put(MovieContract.MovieDetails.ORIGINAL_TITLE, title)
     }

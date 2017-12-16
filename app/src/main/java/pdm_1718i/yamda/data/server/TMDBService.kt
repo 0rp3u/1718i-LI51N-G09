@@ -16,8 +16,8 @@ import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.MoviesDataSource
 import pdm_1718i.yamda.extensions.getDate
 import pdm_1718i.yamda.extensions.getImageListener
-import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.model.Movie
+import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.ui.App
 import java.util.*
 
@@ -72,6 +72,7 @@ class TMDBService : MoviesDataSource {
                         .encodedAuthority(basePath)
                         .appendQueryParameter("api_key", API_KEY)
                         .appendQueryParameter("language", Locale.getDefault().toString())
+                        .appendQueryParameter("region", Locale.getDefault().country)
                         .toString(),
                 null,
                 Response.Listener<JSONObject> { response ->
@@ -83,7 +84,7 @@ class TMDBService : MoviesDataSource {
                     future.onErrorResponse(error)
                 }) {}
         App.instance.addToRequestQueue(jsonObjReq, TAG)
-        return future.get()
+        return future.get() //todo exception handling
     }
 
     override fun popularMovies(page: Int): List<Movie> {
@@ -104,6 +105,7 @@ class TMDBService : MoviesDataSource {
                         .appendQueryParameter("sort_by","release_date.asc")
                         .appendQueryParameter("release_date.gte", Calendar.getInstance().getDate())
                         .appendQueryParameter("page", "$page")
+                        .appendQueryParameter("release_date.gte", Calendar.getInstance().getDate())
         ).let {
             DataMapper().mapToMovieList(gson.fromJson(it.toString(), MovieSearchResult::class.java))
         }

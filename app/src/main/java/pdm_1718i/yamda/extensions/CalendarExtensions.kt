@@ -14,6 +14,10 @@ fun Calendar.setTime(date: String): Calendar{
 
 fun Calendar.getYear(): Int = get(Calendar.YEAR)
 
+fun Calendar.getMonth(): Int = get(Calendar.MONTH)
+
+fun Calendar.getDay(): Int = get(Calendar.DAY_OF_MONTH)
+
 fun Calendar.getDate(): String = parser.format(time)
 
 fun getCalendar(date: String): Calendar?{
@@ -36,3 +40,7 @@ fun getDateFromCalendar(calendar: Calendar?): String{
         false -> calendar!!.getDate()
     }
 }
+
+fun Calendar.FromPresentInMillis() = timeInMillis - Date().time
+
+fun Calendar.isFuture() = this.time.after(Date())
