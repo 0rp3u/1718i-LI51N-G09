@@ -27,7 +27,7 @@ class ThrottledDispatcher(private val policy: ThrottlePolicy, private val httpSt
     private val requestsTimeStamps: ConcurrentLinkedQueue<Long> = ConcurrentLinkedQueue()
     private val requestQueue : LinkedBlockingQueue<DispatchableRequest> = LinkedBlockingQueue()
 
-    val dispatcher = thread(true, false, null, "dispatcher_Thread", -1, {
+    val dispatcher = thread(true, true, null, "dispatcher_Thread", Thread.NORM_PRIORITY, {
         Log.d("dispatcher_Thread ${Thread.currentThread().id}", "Dispatcher initialized")
         while (true) {
                 val work = requestQueue.poll(60*10, TimeUnit.SECONDS)

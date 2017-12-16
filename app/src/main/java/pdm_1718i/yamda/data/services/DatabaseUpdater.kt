@@ -23,7 +23,6 @@ class DatabaseUpdater : Service() {
     /** @see Service.onStartCommand */
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-
         fetchDataToUpdate()
 
         /*with(ConnectivityManager){
@@ -45,28 +44,27 @@ class DatabaseUpdater : Service() {
         //if any of those are already on database dont fetch them
         //delete stale data from DB, update other data
 
-
-
         async {
             val detailsToFetch : MutableSet<Int> = mutableSetOf() //concurrently updated with the movies that are already fetched
 
-            val upcomingJob = bg{ fetchUpcoming(onDatabase,detailsToFetch) }
-            val nowPLayingJob = bg{ fetchNowPlaying(onDatabase,detailsToFetch)}
-            val mostPopularjob = bg{ fetchMostPopular(onDatabase,detailsToFetch)}
+            //TODO details to fetch needs to be Thread-Safe here
+            val upcomingJob =       bg{ fetchUpcoming(onDatabase,detailsToFetch) }
+            val nowPLayingJob =     bg{ fetchNowPlaying(onDatabase,detailsToFetch)}
+            val mostPopularjob =    bg{ fetchMostPopular(onDatabase,detailsToFetch)}
 
-
+            //relatorio: não faz fetch dos filmes que já se encontram na tabela details, não fazendo
+            // update à informação dos filmes em si, mas apenas no sentido em que vai buscar os
+            // filmes que ainda não existiam na BD e remove os que já não fazem parte da lista, com
+            // excepção aos Following.
             updateDb(
                     upcomingJob.await(),
                     nowPLayingJob.await(),
                     mostPopularjob.await(),
                     onDatabase.filter { detailsToFetch.contains(it) }, //staled data
-                    detailsToFetch.map{
-                        bg { fetchDetail(it) }}.map {
-                        try{
-                            it.await()
-                        }catch (e: Throwable){
-                            null
-                        }}
+                    detailsToFetch.map{ bg { fetchDetail(it)}}.map {
+                        try{it.await()}
+                        catch (e: Throwable){null}
+                    }
             )
         }
     }

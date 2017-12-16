@@ -14,16 +14,16 @@ class ThrottlePolicy(val authorities : List<String>, val retries :Int, val maxRe
 
 class ThrottledHttpStack(policies :List<ThrottlePolicy>) : HttpStack{
 
-        private val httpStack = if (Build.VERSION.SDK_INT >= 9) { HurlStack() } else { HttpClientStack(AndroidHttpClient.newInstance("Volley/0")) }
-        private val dispatchers : ConcurrentHashMap<String, ThrottledDispatcher> = ConcurrentHashMap()
+    private val httpStack = if (Build.VERSION.SDK_INT >= 9) { HurlStack() } else { HttpClientStack(AndroidHttpClient.newInstance("Volley/0")) }
+    private val dispatchers : ConcurrentHashMap<String, ThrottledDispatcher> = ConcurrentHashMap()
 
-        init {
+    init {
         policies.forEach {
             val dispatcher = ThrottledDispatcher(it, httpStack)
             it.authorities.forEach {dispatchers.put(it, dispatcher)}
         }
-
     }
+
     override fun performRequest(request: Request<*>?, additionalHeaders: MutableMap<String, String>?): org.apache.http.HttpResponse {
         val authority : String = URL(request?.url).authority
 
@@ -32,8 +32,5 @@ class ThrottledHttpStack(policies :List<ThrottlePolicy>) : HttpStack{
         }else{
             httpStack.performRequest(request, additionalHeaders)
         }
-
     }
-
-
 }

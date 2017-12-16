@@ -6,8 +6,8 @@ import android.widget.ImageView
 import pdm_1718i.yamda.data.MoviesDataSource
 import pdm_1718i.yamda.extensions.toDetailedMovieItem
 import pdm_1718i.yamda.extensions.toMovieList
-import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.model.Movie
+import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.ui.App
 
 class MoviesDb(private val provider : MoviesDataSource) : MoviesDataSource{
@@ -37,7 +37,14 @@ class MoviesDb(private val provider : MoviesDataSource) : MoviesDataSource{
     override fun movieDetail(id: Int) : MovieDetail {
         val movieCursor = App.instance.contentResolver.query(MovieContract.MovieDetails.CONTENT_URI, MovieContract.MovieDetails.PROJECT_ALL, "_ID = ?", arrayOf("$id"), null)
         Log.d("movieDB","returned ${movieCursor.count } items")
-        return movieCursor.toDetailedMovieItem() ?: provider.movieDetail(id)
+        val movie = movieCursor.toDetailedMovieItem()
+        if(movie == null){
+            val webResult = provider.movieDetail(id)
+            App.instance.contentResolver
+                    .insert(MovieContract.MovieDetails.CONTENT_URI, webResult.toContentValues())
+            return webResult
+        }
+        return movie
     }
 
     override fun movieImage(image_id: String, imageView: ImageView, image_size: String){
