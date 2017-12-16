@@ -24,4 +24,13 @@
     <string name="summary">Resumo</string>
     <string name="detail_summary">Resumo</string>
     <string name="results_for">Resultados para</string>
+    <string name="title_activity_settings">Configurações</string>
+    <string name="pref_header_data_sync">Dados e Sincronização</string>
+    <string name="pref_title_sync_frequency">Frequência de Sincronização</string>
+    <string name="pref_title_system_sync_settings">Configurações de Sistema</string>
+    <string name="pref_header_notifications">Notificações</string>
+    <string name="pref_title_new_message_notifications">Nova mensagem de notificação</string>
+    <string name="pref_title_vibrate">Vibração</string>
+    <string name="toast_follow">Subscrito</string>
+    <string name="toast_unfollow">Subscrição anulada</string>
 </resources>
