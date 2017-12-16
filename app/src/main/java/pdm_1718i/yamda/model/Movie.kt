@@ -8,5 +8,6 @@ data class Movie(
         val id: Int,
         val title : String,
         val backdrop_path : String,
-        val vote_average: Double
+        val vote_average: Double,
+        val isFollowing : Boolean = false
 )

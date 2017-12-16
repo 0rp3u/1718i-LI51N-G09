@@ -30,7 +30,7 @@ class App : Application() {
         private val requestQueue: RequestQueue by lazy {
             val apiThrottlePolicy = ThrottlePolicy(
                     URL("http://${instance.getString(R.string.TMDB_URL)}").authority
-                    ,3,40, 10000)
+                    ,3,39, 10000)
             val throttleStack = ThrottledHttpStack(listOf(apiThrottlePolicy))
             Volley.newRequestQueue(instance, throttleStack)
         }
