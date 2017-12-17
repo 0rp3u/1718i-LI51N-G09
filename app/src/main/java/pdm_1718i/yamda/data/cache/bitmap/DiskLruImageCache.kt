@@ -15,7 +15,7 @@ import java.io.*
      or by the user clicking "clean cache"
  */
 
-class DiskLruImageCache2(private val mDiskCache : Cache) : ImageCache {
+class DiskLruImageCache(private val mDiskCache : Cache) : ImageCache {
 
     private var mCompressFormat = CompressFormat.JPEG
     private var mCompressQuality = 70
