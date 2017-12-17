@@ -1,4 +1,4 @@
-package pdm_1718i.yamda.ui.activities
+package pdm_1718i.yamda.ui.fragments
 
 import android.os.Bundle
 import android.preference.PreferenceFragment
