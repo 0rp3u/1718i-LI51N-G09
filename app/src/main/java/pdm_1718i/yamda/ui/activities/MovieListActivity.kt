@@ -22,10 +22,12 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
         val POPULAR = "Popular"
         val PLAYING = "Now Playing"
         val UPCOMING = "Upcoming"
+        val FOLLOWING = "Following"
         @JvmStatic val dispatcher = mapOf<String, (Int) -> List<Movie>>(
                 POPULAR     to App.moviesProvider::popularMovies,
                 PLAYING     to App.moviesProvider::nowPlayingMovies,
-                UPCOMING    to App.moviesProvider::upcomingMovies
+                UPCOMING    to App.moviesProvider::upcomingMovies,
+                FOLLOWING   to App.moviesProvider::followingMovies
         )
 
 

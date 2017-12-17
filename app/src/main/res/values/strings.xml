@@ -22,6 +22,7 @@
     <string name="now_playing">Now Playing</string>
     <string name="popular">Popular</string>
     <string name="upcoming">Upcoming</string>
+    <string name="following">Following</string>
     <string name="references">References:</string>
     <string name="source2">\u2022 Data provided by The Movie DB WebAPI</string>
     <string name="toolbar_search">Search</string>

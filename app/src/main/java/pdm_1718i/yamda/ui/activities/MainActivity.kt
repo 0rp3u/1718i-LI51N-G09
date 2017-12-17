@@ -14,6 +14,7 @@ import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.server.TMDBService.Companion.DEFAULT_PAGINATION
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
+import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.FOLLOWING
 import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.PLAYING
 import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.POPULAR
 import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.REQUEST_TYPE
@@ -28,6 +29,7 @@ class MainActivity : BaseActivity(navigation = false) {
         generateRecyclerViewTask(R.id.recycler_view_nowplaying, App.moviesProvider::nowPlayingMovies)
         generateRecyclerViewTask(R.id.recycler_view_upcoming,   App.moviesProvider::upcomingMovies)
         generateRecyclerViewTask(R.id.recycler_view_popular,    App.moviesProvider::popularMovies)
+        generateRecyclerViewTask(R.id.recycler_view_following,  App.moviesProvider::followingMovies)
 
     }
 
@@ -52,6 +54,13 @@ class MainActivity : BaseActivity(navigation = false) {
         }
     }
 
+    fun onFollowingMore(view: View){
+        with(Intent(applicationContext, MovieListActivity::class.java)){
+            putExtra(REQUEST_TYPE, FOLLOWING)
+            startActivity(this)
+        }
+    }
+
 
     private fun generateRecyclerViewTask(res: Int, providerHandler: (page:Int) -> List<Movie>) {
         val resView = findViewById<RecyclerView>(res)
@@ -59,14 +68,14 @@ class MainActivity : BaseActivity(navigation = false) {
         resView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false)
         resView.adapter = adapter
         async(UI) {
-            val results = bg{
-                Log.d("reciclerViewTask", "trow new background thread: ${Thread.currentThread().id} to fetch data")
-                providerHandler(DEFAULT_PAGINATION)
-            }
             try{
-            val movies = results.await()
-            Log.d("reciclerViewTask", "After Await:${Thread.currentThread().id} | Fetched ${movies.size} movies")
-            adapter.setData(movies)
+                val results = bg{
+                    Log.d("reciclerViewTask", "trow new background thread: ${Thread.currentThread().id} to fetch data")
+                    providerHandler(DEFAULT_PAGINATION)
+                }
+                val movies = results.await()
+                Log.d("reciclerViewTask", "After Await:${Thread.currentThread().id} | Fetched ${movies.size} movies")
+                adapter.setData(movies)
             }catch (e: Exception){
                 Log.d("Exeption", "${e.message}")
             }
