@@ -1,6 +1,7 @@
 package pdm_1718i.yamda.data.cache.domain
 
-/*
+/* //FASE 1
+
 class DomainCache(private val provider : MoviesDataSource): MoviesDataSource{
     private val cache : MutableMap<String, Any> = mutableMapOf()  //possible need to be thread safe??
 
