@@ -18,7 +18,9 @@ class MainActAdapter(private var movies : List<Movie>) : RecyclerView.Adapter<Re
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         val movie = movies[position]
         holder.bindMovie(movie)
-        App.moviesProvider.image(movie.poster_path, holder.imageView, Options.poster_sizes["SMALL"]!!)
+        if(movie.poster_path.isNotEmpty())
+            App.moviesProvider.image(movie.poster_path, holder.imageView, Options.poster_sizes["SMALL"]!!)
+        else holder.imageView.setImageResource(R.drawable.ic_movie_thumbnail)
     }
 
     override fun getItemCount(): Int {

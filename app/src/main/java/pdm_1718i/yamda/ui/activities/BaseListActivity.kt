@@ -39,7 +39,8 @@ open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyEl
             listView.setListener(this)
 
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-                val movieId = (listView.adapterEndless.getItem(position) as Movie).id
+                val item = listView.adapterEndless.getItem(position)
+                val movieId = item.id
                 with(Intent(applicationContext, MovieDetailActivity::class.java).putExtra(MOVIE_KEY, movieId)){
                     startActivity(this)
                 }
