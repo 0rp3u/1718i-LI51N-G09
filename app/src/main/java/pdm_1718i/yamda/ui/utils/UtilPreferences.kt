@@ -1,4 +1,4 @@
-package pdm_1718i.yamda.extensions
+package pdm_1718i.yamda.ui.utils
 
 import android.content.SharedPreferences
 import android.content.res.Resources

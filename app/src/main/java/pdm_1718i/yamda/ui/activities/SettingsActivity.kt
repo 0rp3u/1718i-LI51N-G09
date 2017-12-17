@@ -4,9 +4,9 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceActivity
 import android.preference.PreferenceManager
-import android.preference.SwitchPreference
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.extensions.toast
+import pdm_1718i.yamda.ui.fragments.SettingsFragment
 
 /**
  * A [PreferenceActivity] that presents a set of application settings. On
