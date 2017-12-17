@@ -1,18 +1,20 @@
 package pdm_1718i.yamda.data.db
 
 import android.content.ContentValues
-import android.content.Context
 import android.net.Uri
-import android.util.Log
+import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.services.JobNotification
 import pdm_1718i.yamda.extensions.isFuture
+import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.ui.App
 
 object Util{
+    val FOLLOW = true
+    val UNFOLLOW = false
+    val ERROR_FOLLOW by lazy { App.instance.getString(R.string.toast_follow_error) }
 
-    fun updateFollowingState(movie:MovieDetail, newState: Boolean, context: Context) : Boolean?{
-        //question: use application context or pass caller context by parameter?
+    fun updateFollowingState(movie:MovieDetail, newState: Boolean) : Boolean?{
         val cr = App.instance.contentResolver
         val MOVIE_ID = Integer.toString(movie.id)
         val uri = MovieContract.MovieDetails.CONTENT_URI
@@ -26,14 +28,22 @@ object Util{
 
         /** Schedule Job **/
         if(nchanged > 0){
-            with(movie.release_date){
-                if(this != null && isFuture()){
-                    val scheduled = JobNotification.schedule(movie.id, this, context)
-                    if(scheduled) Log.d("JobNotification", "Scheduled with success!")
+            when(newState){
+                FOLLOW -> {
+                    with(movie.release_date){
+                        if(this != null && isFuture()){
+                            JobNotification.schedule(movie.id, this)
+                        }
+                    }
+                }
+
+                UNFOLLOW ->{
+                    JobNotification.cancel(movie.id)
                 }
             }
-            return true
+            return newState
         }else{
+            App.instance.toast(ERROR_FOLLOW)
             return null
         }
     }

@@ -75,7 +75,7 @@ class MovieDetailActivity : BaseActivity() {
             it.isEnabled = false
             async(UI) {
                 val task: Deferred<Boolean?> = bg {
-                   Util.updateFollowingState(movie, !followIconState, this@MovieDetailActivity)
+                   Util.updateFollowingState(movie, !followIconState)
                 }
                 val result: Boolean? = task.await()
                 if(result != null){
@@ -89,27 +89,6 @@ class MovieDetailActivity : BaseActivity() {
                         }
                         followIconState = result
                     }
-
-//                    val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-//                    JobInfo.Builder(
-//                            123,
-//                            ComponentName(applicationContext, FollowNotificationService::class.java)
-//                    ).apply {
-//                        //Low Battery filter
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                            setRequiresBatteryNotLow(true)
-//                        }
-//
-//                        //Persist after boot
-//                        setPersisted(true)
-//
-//                        //Timeframe to trigger
-//                        setMinimumLatency(1000 * 3) //wait at least
-//
-//                        //Schedule the job
-//                        jobScheduler.schedule(build())
-//                    }
-
                 }
                 it.isEnabled = true
             }
