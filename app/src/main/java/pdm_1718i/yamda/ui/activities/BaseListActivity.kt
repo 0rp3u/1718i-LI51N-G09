@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.TextView
 import kotlinx.coroutines.experimental.android.UI
@@ -19,7 +20,7 @@ open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyEl
 
     private val MOVIE_KEY = "movieId"
 
-    protected val listView: EndlessListView by lazy { findViewById<EndlessListView>(listView_id) }
+    private val listView: EndlessListView by lazy { findViewById<EndlessListView>(listView_id) }
     private val emptyView: TextView by lazy { findViewById<TextView>(emptyElement_id) }
     private var CURRENT_PAGE: Int = TMDBService.DEFAULT_PAGINATION
 
@@ -38,7 +39,7 @@ open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyEl
             listView.setListener(this)
 
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-                val movieId = (listView.adapter.getItem(position) as Movie).id
+                val movieId = (listView.adapterEndless.getItem(position) as Movie).id
                 with(Intent(applicationContext, MovieDetailActivity::class.java).putExtra(MOVIE_KEY, movieId)){
                     startActivity(this)
                 }
