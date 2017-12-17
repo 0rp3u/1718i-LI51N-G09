@@ -34,4 +34,5 @@
     <string name="pref_title_vibrate">Vibração</string>
     <string name="toast_follow">Subscrito</string>
     <string name="toast_unfollow">Subscrição anulada</string>
+    <string name="toast_follow_error">Erro Subscrição</string>
 </resources>
