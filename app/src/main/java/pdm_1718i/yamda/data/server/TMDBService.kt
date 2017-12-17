@@ -76,7 +76,7 @@ class TMDBService : MoviesDataSource {
                         .toString(),
                 null,
                 Response.Listener<JSONObject> { response ->
-                    Log.d(TAG, "/get request OK! Response for $uriBuilder")
+                    //Log.d(TAG, "/get request OK! Response for $uriBuilder")
                     future.onResponse(response)
                 },
                 Response.ErrorListener { error ->

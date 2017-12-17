@@ -35,4 +35,24 @@
     <string name="toast_follow">Subscrito</string>
     <string name="toast_unfollow">Subscrição anulada</string>
     <string name="toast_follow_error">Erro Subscrição</string>
+    <!-- Preferences Fragment Strings-->
+    <string name="connection_type_title">Conectividade</string>
+    <string name="connection_type_summary">Só usar Wi-Fi</string>
+    <string name="notification_title">Notificações</string>
+    <string name="notification_summary">Receber Notificações</string>
+    <string name="periodicity_title">Actualização da Base de Dados</string>
+    <string name="periodicity_list_title">Frequência</string>
+    <string name="periodicity_list_cancel">Cancelar</string>
+    <string name="notification_vibrate">Vibrar</string>
+
+    <string-array name="pref_sync_frequency_titles">
+        <item>12 horas</item>
+        <item>24 horas</item>
+        <item>3 dias</item>
+        <item>7 dias</item>
+        <item>14 dias</item>
+        <item>30 dias</item>
+        <item>Nunca</item>
+    </string-array>
+
 </resources>

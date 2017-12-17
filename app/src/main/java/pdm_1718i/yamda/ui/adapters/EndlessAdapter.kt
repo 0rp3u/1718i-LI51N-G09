@@ -23,7 +23,7 @@ class EndlessAdapter(private val context : Activity, private val searchedMovies:
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val itemView = convertView ?: inflater.inflate(itemLayoutId, parent, false)
         val movie : Movie = getItem(position)
-        var movieViewHolder : SimpleMovieHolder
+        val movieViewHolder : SimpleMovieHolder
         if (convertView == null) {
             val image = itemView.findViewById<ImageView>(R.id.image)
             val title = itemView.findViewById<TextView>(R.id.title)

@@ -159,12 +159,13 @@ inline fun <reified T> Cursor.getFromColumn(columnName : String): T{
  * @return The newly created [MovieItem]
  */
 fun Cursor.toDetailedMovieItem(): MovieDetail? {
-    return if(count>0){
-        use {
+    use {
+        return if (count > 0) {
             moveToFirst()
             return constructDetailedMovieItem()
-        }
-    } else null
+
+        } else null
+    }
 }
 
 /**
@@ -172,8 +173,8 @@ fun Cursor.toDetailedMovieItem(): MovieDetail? {
  * @return The newly created list of [Movie]
  */
 fun Cursor.toMovieList(): List<Movie>? {
-    return if (count > 0) {
-        use {
+    use {
+        return if (count > 0) {
             val cursorIterator = object : AbstractIterator<Movie>() {
                 override fun computeNext() {
                     when (isAfterLast) {
@@ -188,8 +189,8 @@ fun Cursor.toMovieList(): List<Movie>? {
                 it.addAll(Iterable { cursorIterator })
                 it
             }
-        }
-    } else null
+        } else null
+    }
 }
 
 

@@ -102,5 +102,34 @@
                 android:layout_weight="1"/>
         </LinearLayout>
 
+        <!-- Following Movies -->
+        <TextView
+            style="@style/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/following" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_following"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center"
+                android:orientation="vertical"
+                android:layout_weight="2">
+            </android.support.v7.widget.RecyclerView>
+
+            <ImageButton
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:background="@android:color/transparent"
+                android:onClick="onFollowingMore"
+                android:src="@mipmap/ic_view_list"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

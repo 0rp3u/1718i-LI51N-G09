@@ -33,6 +33,10 @@ class MoviesProvider {
         return SOURCE.popularMovies(page)
     }
 
+    fun followingMovies (page: Int) :List<Movie> {
+        return SOURCE.followingMovies(page)
+    }
+
     fun searchMovies(query: String, page : Int): List<Movie>{
         return SOURCE.movieSearch(query, page)
     }

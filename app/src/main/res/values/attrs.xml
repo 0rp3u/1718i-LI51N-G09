@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name = "connection_type_key">preference_connection_type</string>
+    <string name = "preference_periodicity_key">preference_periodicity</string>
+    <string name = "preference_notification_key">preference_notification</string>
+    <string name = "preference_vibrate_key">preference_vibrate</string>
+    <string name = "connection_type">preference_connection_type</string>
+
+    <string-array name="pref_sync_frequency_values">
+        <item>12</item>
+        <item>24</item>
+        <item>72</item>
+        <item>168</item>
+        <item>336</item>
+        <item>720</item>
+        <item>-1</item>
+    </string-array>
+
+</resources>

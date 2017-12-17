@@ -10,6 +10,11 @@ object MovieContract : ContractInterface {
     override val MEDIA_BASE_SUBTYPE: String = "/vnd.movies."
     override val BASE_CONTENT_URI: Uri = Uri.parse("content://$AUTHORITY/")
 
+    object MovieListId {
+        val DETAILS_ID = "DETAILS_ID"
+        val PAGE = "PAGE"
+    }
+
     object MovieDetails : BaseColumns {
         val RESOURCE = "MovieDetails"
 
@@ -66,8 +71,8 @@ object MovieContract : ContractInterface {
         val CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
 
-        val DETAILS_ID = "DETAILS_ID"
-        val PAGE = "PAGE"
+        val DETAILS_ID = MovieListId.DETAILS_ID
+        val PAGE =  MovieListId.PAGE
 
         val PROJECT_ALL = arrayOf(DETAILS_ID, PAGE)
         val DEFAULT_SORT_ORDER = String()
@@ -87,8 +92,8 @@ object MovieContract : ContractInterface {
         val CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
 
-        val DETAILS_ID = "DETAILS_ID"
-        val PAGE = "PAGE"
+        val DETAILS_ID = MovieListId.DETAILS_ID
+        val PAGE =  MovieListId.PAGE
 
         val PROJECT_ALL = arrayOf(DETAILS_ID, PAGE)
         val DEFAULT_SORT_ORDER = String()
@@ -109,13 +114,12 @@ object MovieContract : ContractInterface {
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
 
 
-        val DETAILS_ID = "DETAILS_ID"
-        val PAGE = "PAGE"
+        val DETAILS_ID = MovieListId.DETAILS_ID
+        val PAGE =  MovieListId.PAGE
 
         val PROJECT_ALL = arrayOf(DETAILS_ID, PAGE)
         val DEFAULT_SORT_ORDER = String()
     }
-
 
     object NowPlayingMovies : BaseColumns{
         val RESOURCE = "NowPlayingMovies"
