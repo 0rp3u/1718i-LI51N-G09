@@ -56,5 +56,9 @@ class EndlessAdapter(context : Activity, private val searchedMovies: List<Movie>
         return searchedMovies
     }
 
+    fun getItemCount(): Int{
+        return searchedMovies.size
+    }
+
 
 }

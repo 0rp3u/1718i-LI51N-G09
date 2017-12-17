@@ -13,7 +13,7 @@ import pdm_1718i.yamda.data.db.MovieContract
 import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.model.MovieDetail
-import pdm_1718i.yamda.ui.utils.UtilPreferences
+import pdm_1718i.yamda.data.utils.UtilPreferences
 
 class DatabaseUpdater : JobService() {
     override fun onStopJob(p0: JobParameters?): Boolean {
