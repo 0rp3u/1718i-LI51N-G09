@@ -150,7 +150,7 @@ class TMDBService : MoviesDataSource {
                 .get(uri, getImageListener(imageView, R.drawable.ic_loading, R.drawable.ic_movie_thumbnail, uri))
     }
 
-    override fun movieImage(image_id: String, bitmapCompletionHandler: (bitmap: Bitmap) -> Unit, image_size: String) {
+    override fun movieImage(image_id: String, image_size: String, bitmapCompletionHandler: (bitmap: Bitmap) -> Unit) {
         val uri = Uri.Builder()
                 .appendEncodedPath(image_size)
                 .appendEncodedPath(image_id)

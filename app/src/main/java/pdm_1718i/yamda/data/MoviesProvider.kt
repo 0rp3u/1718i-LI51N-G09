@@ -5,8 +5,8 @@ import android.util.Log
 import android.widget.ImageView
 import pdm_1718i.yamda.data.db.MoviesDb
 import pdm_1718i.yamda.data.server.TMDBService
-import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.model.Movie
+import pdm_1718i.yamda.model.MovieDetail
 
 class MoviesProvider {
 
@@ -46,8 +46,8 @@ class MoviesProvider {
         return SOURCE.movieImage(image_id, imageView , imageOption)
     }
 
-    fun image(image_id: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit, imageOption: String){
-        SOURCE.movieImage(image_id, bitmapCompletionHandler , imageOption)
+    fun image(image_id: String, imageOption: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit){
+        SOURCE.movieImage(image_id, imageOption, bitmapCompletionHandler)
     }
 
 }
