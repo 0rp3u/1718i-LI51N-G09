@@ -10,18 +10,20 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.data.MoviesProvider.Companion.tmdbAPI
 import pdm_1718i.yamda.data.db.MovieContract
+import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.ui.utils.UtilPreferences
 
 class DatabaseUpdater : JobService() {
     override fun onStopJob(p0: JobParameters?): Boolean {
-        //re-schedule service
         UtilPreferences.getPeriodicity()
+        //re-schedule service
         return true
     }
 
     override fun onStartJob(p0: JobParameters?): Boolean {
+        toast("Started DBSync")
         fetchDataToUpdate()
         return true
     }
