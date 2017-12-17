@@ -12,11 +12,12 @@ import pdm_1718i.yamda.data.MoviesProvider.Companion.tmdbAPI
 import pdm_1718i.yamda.data.db.MovieContract
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.model.MovieDetail
+import pdm_1718i.yamda.ui.utils.UtilPreferences
 
 class DatabaseUpdater : JobService() {
     override fun onStopJob(p0: JobParameters?): Boolean {
         //re-schedule service
-        
+        UtilPreferences.getPeriodicity()
         return true
     }
 
