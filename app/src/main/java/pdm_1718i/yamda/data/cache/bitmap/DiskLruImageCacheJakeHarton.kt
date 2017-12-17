@@ -20,7 +20,7 @@ import java.io.OutputStream
     Adroid does not recognize this cache as a cleanable cache, recognizes as application data
  */
 
-class DiskLruImageCache(context: Context, uniqueName: String, diskCacheSize: Int = 20000) : ImageCache {
+class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCacheSize: Int = 20000) : ImageCache {
 
     private lateinit var mDiskCache: DiskLruCache
     private var mCompressFormat = CompressFormat.JPEG
