@@ -9,7 +9,6 @@ import android.os.Build
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.R
-import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.ui.App
 
 
@@ -19,7 +18,6 @@ class FollowNotificationService: JobService(){
     }
 
     override fun onStartJob(jobParameters: JobParameters?): Boolean {
-        toast("OnStartJob - Follow Service")
         val movie_id: Int = jobParameters?.extras?.getInt(JobNotification.BUNDLE_ID) ?: return false
 
         async {
@@ -40,6 +38,7 @@ class FollowNotificationService: JobService(){
                 setContentTitle("New movie released")
                 setSmallIcon(R.drawable.ic_video_camera_80s)
                 setAutoCancel(false)
+                //insert intent in the future
                 movieJob?.await()?.run {
                     setContentText(this.title)
                 }

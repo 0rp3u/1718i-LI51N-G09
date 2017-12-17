@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.TextView
 import kotlinx.coroutines.experimental.android.UI
@@ -14,9 +13,10 @@ import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.server.TMDBService
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.adapters.EndlessAdapter
+import pdm_1718i.yamda.ui.adapters.EndlessListener
 import pdm_1718i.yamda.ui.holders.EndlessListView
 
-open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyElement_id: Int) : BaseActivity(actionBar), EndlessListView.EndlessListener {
+open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyElement_id: Int) : BaseActivity(actionBar), EndlessListener{
 
     private val MOVIE_KEY = "movieId"
 

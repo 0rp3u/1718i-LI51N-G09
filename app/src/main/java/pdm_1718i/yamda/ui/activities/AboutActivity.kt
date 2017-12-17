@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import pdm_1718i.yamda.R
 
-class AboutActivity :BaseActivity(withMenu = false) {
+class AboutActivity :BaseActivity(menuOptions = false) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

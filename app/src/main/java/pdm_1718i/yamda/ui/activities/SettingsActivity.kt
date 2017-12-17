@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceActivity
 import android.preference.PreferenceManager
-import android.preference.SwitchPreference
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.extensions.toast
 
@@ -19,7 +18,7 @@ import pdm_1718i.yamda.extensions.toast
  * for more information on developing a Settings UI.
  */
 
-class SettingsActivity : BaseActivity(withMenu = false){
+class SettingsActivity : BaseActivity(menuOptions = false){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

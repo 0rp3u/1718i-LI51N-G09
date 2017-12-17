@@ -1,62 +1,38 @@
 package pdm_1718i.yamda.data.services
 
-import android.app.Service
+import android.app.job.JobParameters
+import android.app.job.JobService
 import android.content.ContentValues
-import android.content.Intent
 import android.database.Cursor
-import android.os.IBinder
 import android.util.Log
 import com.android.volley.VolleyError
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
-import pdm_1718i.yamda.data.ConnectivityManager
 import pdm_1718i.yamda.data.MoviesProvider.Companion.tmdbAPI
 import pdm_1718i.yamda.data.db.MovieContract
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.model.MovieDetail
 
-class DatabaseUpdater : Service() {
+class DatabaseUpdater : JobService() {
+    override fun onStopJob(p0: JobParameters?): Boolean {
+        //re-schedule service
+        
+        return true
+    }
 
-
-    /** @see Service.onBind */
-    override fun onBind(intent: Intent): IBinder? = null
-
-    /** @see Service.onStartCommand */
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
-
-        with(ConnectivityManager){
-
-            if(isConnected() && isWifi())
-                fetchDataToUpdate()
-            else{
-                //TODO("Schedule db sync for when device is connected")
-            }
-        }
-        return Service.START_REDELIVER_INTENT
+    override fun onStartJob(p0: JobParameters?): Boolean {
+        fetchDataToUpdate()
+        return true
     }
 
     private fun fetchDataToUpdate() {
-        /*val deleted = contentResolver.delete(MovieContract.MovieDetails.CONTENT_URI, null, null)
-         Log.d("databa_updater", "deleted $deleted details from database")
-        */
-        val onDatabase: Set<Int> = moviesInDataBase()
-
-        //Get DataBase Details ID's, so we do not fetch those
-        //fetch upcoming, mostPopular and nowplaying movie ids
-        //if any of those are already on database dont fetch them
-        //delete stale data from DB, update other data
-
-
         async {
-
-
+            val onDatabase: Set<Int> = moviesInDataBase()
             val detailsToFetch: MutableSet<Int> = mutableSetOf() //concurrently updated with the movies that are already fetched
 
             val upcomingJob = bg { fetchUpcoming(onDatabase, detailsToFetch) }
             val nowPLayingJob = bg { fetchNowPlaying(onDatabase, detailsToFetch) }
             val mostPopularJob = bg { fetchMostPopular(onDatabase, detailsToFetch) }
-
 
             updateDb(
                     upcomingJob.await(),
@@ -114,7 +90,6 @@ class DatabaseUpdater : Service() {
                 ids.add(cursor.getInt(0))
                 cursor.moveToNext()
             }
-
         }
         cursor.close()
         return ids.toSet()
@@ -125,14 +100,15 @@ class DatabaseUpdater : Service() {
             nowPlaying: Set<MovieListEntry>,
             mostPopular: Set<MovieListEntry>,
             staled: Set<Int>,
-            movieDetails: Set<MovieDetail?>) {
+            movieDetails: Set<MovieDetail?>
+    ) {
+
         contentResolver.delete(MovieContract.UpcomingIds.CONTENT_URI, null, null)
         contentResolver.delete(MovieContract.NowPlayingIds.CONTENT_URI, null, null)
         contentResolver.delete(MovieContract.MostPopularIds.CONTENT_URI, null, null)
         staled.forEach {
             contentResolver.delete(MovieContract.MovieDetails.CONTENT_URI, "$it", null)
         }
-
 
         val moviesContentValue: Array<ContentValues> =  movieDetails.mapNotNull {
             it?.toContentValues()
@@ -155,8 +131,6 @@ class DatabaseUpdater : Service() {
 
         val count = contentResolver.bulkInsert(MovieContract.MovieDetails.CONTENT_URI, moviesContentValue)
         Log.d("databa_updater", "updated $count movie details to the database")
-
-
     }
 
     private fun Set<MovieListEntry>.toContentValues() =
