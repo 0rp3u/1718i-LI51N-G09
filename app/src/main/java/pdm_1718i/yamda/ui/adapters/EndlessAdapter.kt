@@ -14,7 +14,7 @@ import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.holders.SimpleMovieHolder
 
-class EndlessAdapter(private val context : Activity, private val searchedMovies: List<Movie>)
+class EndlessAdapter(context : Activity, private val searchedMovies: List<Movie>)
     : ArrayAdapter<Movie>(context, R.layout.item_search_result, searchedMovies)
 {
     private val itemLayoutId = R.layout.item_search_result
