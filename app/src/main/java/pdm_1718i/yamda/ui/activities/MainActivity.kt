@@ -93,8 +93,8 @@ class MainActivity : BaseActivity(navigation = false) {
             override fun onPostExecute(result: List<Movie>) {
                 val resView = findViewById<RecyclerView>(res)
                 resView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false)
-                    val adapter = MainActAdapter(result)
-                    resView.adapter = adapter
+                    val adapterEndless = MainActAdapter(result)
+                    resView.adapterEndless = adapterEndless
                 Log.d("reciclerViewTask", "onPostExecute in ${Thread.currentThread().id}")
 
             }
