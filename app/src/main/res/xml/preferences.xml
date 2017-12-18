@@ -2,17 +2,15 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory
-        android:title="@string/connection_type_title">
+        android:title="@string/database_category_title">
 
         <CheckBoxPreference
             android:key="@string/preference_connection_type_key"
             android:summary= "@string/connection_type_summary"
             android:defaultValue="@string/preference_connection_type_DEFAULT_VALUE"/>
-    </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title = "@string/periodicity_title">
         <ListPreference
+            android:title="@string/periodicity_title"
             android:summary="%s"
             android:key="@string/preference_periodicity_key"
             android:entries="@array/pref_sync_frequency_titles"
@@ -27,9 +25,9 @@
             android:summary ="@string/low_battery_update_summary"
             android:defaultValue="@string/preference_low_battery_update_DEFAULT_VALUE"/>
 
-        <ListPreference
-            android:summary="@string/sync_db_summary"
-            android:onClick="requestDbUpdate"/>
+        <Preference
+            android:key = "@string/preference_sync_data"
+            android:summary="@string/sync_db_summary" />
 
     </PreferenceCategory>
 
