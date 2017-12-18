@@ -5,9 +5,9 @@
         android:title="@string/connection_type_title">
 
         <CheckBoxPreference
-            android:key="@string/connection_type_key"
-            android:defaultValue="true"
-            android:summary= "@string/connection_type_summary"/>
+            android:key="@string/preference_connection_type_key"
+            android:summary= "@string/connection_type_summary"
+            android:defaultValue="@string/preference_connection_type_DEFAULT_VALUE"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -20,8 +20,13 @@
             android:negativeButtonText="@string/periodicity_list_cancel"
             android:positiveButtonText="@null"
             android:dialogTitle="@string/periodicity_list_title"
-            android:defaultValue="24"/>
+            android:defaultValue="@string/preference_periodicity_DEFAULT_VALUE"/>
     </PreferenceCategory>
+
+    <SwitchPreference
+        android:key = "@string/preference_low_battery_update_key"
+        android:summary ="@string/low_battery_update_summary"
+        android:defaultValue="@string/preference_low_battery_update_DEFAULT_VALUE"/>
 
     <PreferenceCategory
         android:title="@string/notification_title">
@@ -29,13 +34,13 @@
         <SwitchPreference
             android:key = "@string/preference_notification_key"
             android:summary = "@string/notification_summary"
-            android:defaultValue="true" />
+            android:defaultValue="@string/preference_notification_DEFAULT_VALUE" />
 
         <SwitchPreference
             android:key = "@string/preference_vibrate_key"
             android:dependency="preference_notification"
             android:summary="@string/notification_vibrate"
-            android:defaultValue="true"/>
+            android:defaultValue="@string/preference_vibrate_DEFAULT_VALUE"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
