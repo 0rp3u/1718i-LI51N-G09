@@ -3,6 +3,7 @@ package pdm_1718i.yamda.extensions
 import android.database.Cursor
 import android.support.annotation.IdRes
 import pdm_1718i.yamda.data.db.MovieContract
+import pdm_1718i.yamda.model.Genre
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.model.MovieDetail
 import java.lang.reflect.ParameterizedType
@@ -26,7 +27,7 @@ private fun Cursor.constructDetailedMovieItem(): MovieDetail {
             vote_average =  getFloat(getColumnIndex(MovieContract.MovieDetails.VOTE_AVERAGE)),
             backdrop_path = getString(getColumnIndex(MovieContract.MovieDetails.BACKDROP_PATH)),
             release_date =  getCalendar(getString(getColumnIndex(MovieContract.MovieDetails.RELEASE_DATE))),
-            genres = listOf()
+            genres = listOf(Genre(getString(getColumnIndex(MovieContract.MovieDetails.GENRES))))
     )
 }*/
 
@@ -41,7 +42,7 @@ private fun Cursor.constructDetailedMovieItem() = MovieDetail(
             vote_average =  getFromColumn(MovieContract.MovieDetails.VOTE_AVERAGE),
             backdrop_path = getFromColumn(MovieContract.MovieDetails.BACKDROP_PATH),
             release_date =  getCalendar(getFromColumn(MovieContract.MovieDetails.RELEASE_DATE)),
-            genres = getFromColumn(MovieContract.MovieDetails.GENRES)
+            genres = listOf(Genre(getFromColumn(MovieContract.MovieDetails.GENRES))) //small hack, because we dont deal with genres as a list on database
     )
 
 /**
@@ -122,9 +123,7 @@ inline fun <reified T> Cursor.getFromColumn(columnName : String) : T{
             if(T::class.java.isInstance(Int.MIN_VALUE)) value
             else value.toBoolean()
         }
-        Cursor.FIELD_TYPE_STRING ->
-            if(T::class.java.isArray || T::class.java.isInstance(listOf<String>())) listOf(getString(idx)) //hack :(
-            else getString(idx)
+        Cursor.FIELD_TYPE_STRING -> getString(idx)
         Cursor.FIELD_TYPE_FLOAT -> {
             val value =  getFloat(idx)
             if(T::class.java.isInstance(Float.MIN_VALUE)) value
