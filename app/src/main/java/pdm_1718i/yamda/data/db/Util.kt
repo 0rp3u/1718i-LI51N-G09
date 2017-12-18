@@ -22,7 +22,7 @@ object Util{
         val contentValues = ContentValues().apply {
             put(MovieContract.MovieDetails.IS_FOLLOWING, newState)
         }
-        val where = "_ID = ?"
+        val where = "${MovieContract.MovieDetails._ID} = ?"
         val selectionArgs: Array<String> = arrayOf(MOVIE_ID)
         val nchanged = cr.update(movieUri, contentValues, where, selectionArgs)
 

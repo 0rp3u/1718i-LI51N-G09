@@ -20,12 +20,12 @@ import pdm_1718i.yamda.ui.App
 
 class MovieDetailActivity : BaseActivity() {
 
-    private val release_date            by lazy { findViewById(R.id.release_date)   as TextView }
-    private val ratingTextView          by lazy { findViewById(R.id.rating)         as TextView }
-    private val genreTextView           by lazy { findViewById(R.id.genres)         as TextView }
-    private val overviewTextView        by lazy { findViewById(R.id.overview)       as TextView }
-    private val moviePoster             by lazy { findViewById(R.id.movie_poster)   as ImageView }
-    private val followIcon              by lazy { findViewById(R.id.follow_icon)    as ImageView }
+    private val releaseDateView         by lazy { findViewById<TextView>(R.id.release_date) }
+    private val ratingTextView          by lazy { findViewById<TextView>(R.id.rating) }
+    private val genreTextView           by lazy { findViewById<TextView>(R.id.genres) }
+    private val overviewTextView        by lazy { findViewById<TextView>(R.id.overview) }
+    private val moviePoster             by lazy { findViewById<ImageView>(R.id.movie_poster) }
+    private val followIcon              by lazy { findViewById<ImageView>(R.id.follow_icon) }
 //    private val NOTIFICATION_OFF_ICON   by lazy { getDrawable(R.drawable.ic_notifications_none_black_24dp) }
 //    private val NOTIFICATION_ON_ICON    by lazy{ getDrawable(R.drawable.ic_notifications_active_black_24dp) }
 
@@ -49,9 +49,9 @@ class MovieDetailActivity : BaseActivity() {
     //@RequiresApi(api = 21)//getDrawable
     private fun updateUI(movieDetail: MovieDetail) {
         with(movieDetail){
-            this@MovieDetailActivity.title = "$title"
-            this@MovieDetailActivity.supportActionBar?.subtitle = "${getYearFromCalendar(release_date)}"
-            this@MovieDetailActivity.release_date.text = getDateFromCalendar(release_date)
+            this@MovieDetailActivity.title = title
+            this@MovieDetailActivity.supportActionBar?.subtitle = getYearFromCalendar(release_date)
+            this@MovieDetailActivity.releaseDateView.text = getDateFromCalendar(release_date)
             ratingTextView.text = vote_average.toString()
             val genres = genres.joinToString(separator = ", ") {it.name}
             genreTextView.text = genres
@@ -62,14 +62,14 @@ class MovieDetailActivity : BaseActivity() {
                 moviePoster.setImageResource(R.drawable.ic_movie_thumbnail)
             }
             if(movieDetail.release_date != null && movieDetail.release_date.isFuture()){
-                if(movieDetail.isFollowing){
+                followIconState = if(movieDetail.isFollowing){
                     //toast("Thread:${Thread.currentThread()} ON")
                     followIcon.setImageResource(NOTIFICATION_ON_ICON)
-                    followIconState = true
+                    true
                 }else{
                     //toast("Thread:${Thread.currentThread()} OFF")
                     followIcon.setImageResource(NOTIFICATION_OFF_ICON)
-                    followIconState = false
+                    false
                 }
                 registerEvents(movieDetail)
             }
