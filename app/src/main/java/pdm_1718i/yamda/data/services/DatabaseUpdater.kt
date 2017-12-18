@@ -97,7 +97,7 @@ class DatabaseUpdater : JobService() {
         val cursor: Cursor = contentResolver.query(MovieContract.MovieDetails.CONTENT_URI, arrayOf(MovieContract.MovieDetails._ID,MovieContract.MovieDetails.RELEASE_DATE,MovieContract.MovieDetails.IS_FOLLOWING ), null, null, null)
         val inDB = cursor.toMovieList()
 
-        return inDB!!.toSet()
+        return inDB?.toSet() ?: setOf()
     }
 
     private fun updateDb(
