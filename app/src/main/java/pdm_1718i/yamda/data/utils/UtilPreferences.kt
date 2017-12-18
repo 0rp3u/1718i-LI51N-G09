@@ -15,7 +15,7 @@ object UtilPreferences {
     val resources : Resources = App.instance.resources
     val editor: SharedPreferences.Editor = prefs.edit()
 
-    fun getWifi(): Boolean{
+    fun getOnlyWifi(): Boolean{
         return prefs
                 .getBoolean(resources.getString(R.string.connection_type_key), DEFAULT_BOOLEAN_VALUE)
     }
