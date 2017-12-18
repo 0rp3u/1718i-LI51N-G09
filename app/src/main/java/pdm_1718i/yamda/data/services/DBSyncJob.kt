@@ -41,10 +41,7 @@ object DBSyncJob{
 
     fun schedule(calendar: Calendar? = null): Boolean{
         val jobScheduler = App.instance.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        return when(jobScheduler.schedule(newInstance(calendar))){
-            JobScheduler.RESULT_SUCCESS -> true
-            else -> false
-        }
+        return jobScheduler.schedule(newInstance(calendar))==JobScheduler.RESULT_SUCCESS
     }
 
     fun cancel(){
