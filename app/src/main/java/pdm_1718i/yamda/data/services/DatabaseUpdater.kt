@@ -4,30 +4,31 @@ import android.app.job.JobParameters
 import android.app.job.JobService
 import android.content.ContentValues
 import android.database.Cursor
-import android.net.Uri
 import android.util.Log
 import com.android.volley.VolleyError
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.data.MoviesProvider.Companion.tmdbAPI
 import pdm_1718i.yamda.data.db.MovieContract
-import pdm_1718i.yamda.extensions.toast
-import pdm_1718i.yamda.model.Movie
-import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.data.utils.UtilPreferences
 import pdm_1718i.yamda.extensions.isFuture
 import pdm_1718i.yamda.extensions.toMovieList
+import pdm_1718i.yamda.extensions.toast
+import pdm_1718i.yamda.model.Movie
+import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.ui.App
 
 class DatabaseUpdater : JobService() {
     override fun onStopJob(p0: JobParameters?): Boolean {
+        //todo
         UtilPreferences.getPeriodicity()
+        toast("DBSync ended")
         //re-schedule service
         return true
     }
 
     override fun onStartJob(p0: JobParameters?): Boolean {
-        toast("Started DBSync")
+        toast("DBSync started")
         fetchDataToUpdate()
         return true
     }
