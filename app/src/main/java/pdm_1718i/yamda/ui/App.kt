@@ -59,6 +59,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        DBSyncJob.schedule()
     }
 
     fun <T> addToRequestQueue(request: Request<T>, tag: String = TAG) {
