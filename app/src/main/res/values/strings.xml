@@ -38,9 +38,7 @@
     <string name="title_activity_settings">Settings</string>
 
     <!-- Preferences Fragment Strings-->
-
-    <!-- Preferences Keys-->
-    <string name="connection_type_title">Update Connectivity</string>
+    <string name="database_category_title">Update Connectivity</string>
     <string name="connection_type_summary">Only use Wi-Fi</string>
     <string name="notification_title">Notifications</string>
     <string name="notification_summary">Receive Notifications</string>
@@ -48,6 +46,12 @@
     <string name="periodicity_list_title">Frequency</string>
     <string name="periodicity_list_cancel">Cancel</string>
     <string name="notification_vibrate">Vibrate</string>
+    <string name="toast_follow">Following</string>
+    <string name="toast_unfollow">Unfollowed</string>
+    <string name="toast_follow_error">Error Following</string>
+    <string name="low_battery_update_summary">Update Database when battery is low</string>
+    <string name="sync_db_summary">Sync Data</string>
+
 
     <string-array name="pref_sync_frequency_titles">
         <item>12 hours</item>
@@ -59,15 +63,5 @@
         <item>Never</item>
     </string-array>
 
-    <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
-    <string name="pref_title_new_message_notifications">New message notifications</string>
-    <string name="pref_title_vibrate">Vibrate</string>
-    <string name="toast_follow">Following</string>
-    <string name="no_more_results_to_show">no more results to show</string>
-    <string name="toast_unfollow">Unfollowed</string>
-    <string name="toast_follow_error">Error Following</string>
-    <string name="low_battery_update_summary">Update Database when battery is low</string>
-    <string name="sync_db_summary">Sync Data</string>
 
 </resources>
