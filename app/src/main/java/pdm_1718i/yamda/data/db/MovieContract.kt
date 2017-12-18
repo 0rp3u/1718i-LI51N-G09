@@ -39,7 +39,9 @@ object MovieContract : ContractInterface {
         val OVERVIEW = "overview"
         val ADULT = "adult"
         val BUDGET = "budget"
+        val GENRES = "genres"
         val IS_FOLLOWING = "isFollowing"
+
 
         val PROJECT_ALL = arrayOf(
             _ID,
@@ -52,6 +54,7 @@ object MovieContract : ContractInterface {
             OVERVIEW,
             ADULT,
             BUDGET,
+            GENRES,
             IS_FOLLOWING
         )
         val DEFAULT_SORT_ORDER = String()

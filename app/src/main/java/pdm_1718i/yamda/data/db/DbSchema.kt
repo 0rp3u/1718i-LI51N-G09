@@ -17,6 +17,7 @@ object DbSchema {
         val ADULT =             MovieContract.MovieDetails.ADULT
         val RELEASE_DATE =      MovieContract.MovieDetails.RELEASE_DATE
         val BUDGET =            MovieContract.MovieDetails.BUDGET
+        val GENRES =            MovieContract.MovieDetails.GENRES
         val IS_FOLLOWING =      MovieContract.MovieDetails.IS_FOLLOWING
 
         val STRUCTURE = "$RELEASE_DATE TEXT , " +
@@ -25,6 +26,7 @@ object DbSchema {
                 "$TITLE TEXT NOT NULL , " +
                 "$ORIGINAL_TITLE TEXT, " +
                 "$OVERVIEW TEXT , " +
+                "$GENRES TEXT , " +
                 "$ADULT BOOLEAN , " +
                 "$BUDGET INTEGER , " +
                 "$VOTE_AVERAGE DOUBLE , " +

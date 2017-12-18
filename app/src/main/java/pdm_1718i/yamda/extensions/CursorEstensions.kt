@@ -41,7 +41,7 @@ private fun Cursor.constructDetailedMovieItem() = MovieDetail(
             vote_average =  getFromColumn(MovieContract.MovieDetails.VOTE_AVERAGE),
             backdrop_path = getFromColumn(MovieContract.MovieDetails.BACKDROP_PATH),
             release_date =  getCalendar(getFromColumn(MovieContract.MovieDetails.RELEASE_DATE)),
-            genres = listOf()
+            genres = getFromColumn(MovieContract.MovieDetails.GENRES)
     )
 
 /**
