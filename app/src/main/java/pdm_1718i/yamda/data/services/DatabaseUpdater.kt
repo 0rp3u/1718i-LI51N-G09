@@ -94,7 +94,7 @@ class DatabaseUpdater : JobService() {
     }
 
     private fun moviesInDataBase(): Set<Movie> {
-        val cursor: Cursor = contentResolver.query(MovieContract.MovieDetails.CONTENT_URI, arrayOf(MovieContract.MovieDetails._ID,MovieContract.MovieDetails.RELEASE_DATE,MovieContract.MovieDetails.IS_FOLLOWING ), null, null, null)
+        val cursor: Cursor = contentResolver.query(MovieContract.MovieDetails.CONTENT_URI,MovieContract.MovieDetails.PROJECT_ALL, null, null, null)
         val inDB = cursor.toMovieList()
 
         return inDB?.toSet() ?: setOf()

@@ -30,10 +30,7 @@ object JobNotification{
 
     fun schedule(id: Int, calendar: Calendar): Boolean{
         val jobScheduler = App.instance.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        return when(jobScheduler.schedule(newInstance(id, calendar))){
-            JobScheduler.RESULT_SUCCESS -> true
-            else -> false
-        }
+        return jobScheduler.schedule(newInstance(id, calendar)) == JobScheduler.RESULT_SUCCESS
     }
 
     fun cancel(id: Int){

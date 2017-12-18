@@ -6,6 +6,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
+import android.os.Environment
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.ImageLoader
@@ -59,7 +61,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        DBSyncJob.schedule()
     }
 
     fun <T> addToRequestQueue(request: Request<T>, tag: String = TAG) {
@@ -72,4 +73,5 @@ class App : Application() {
     fun cancelPendingRequests(tag: Any) {
         requestQueue.cancelAll(tag)
     }
+
 }

@@ -78,11 +78,11 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
                 if (writeBitmapToFile(data, editor)) {
                     mDiskCache.flush()
                     editor.commit()
-                        Log.d("cache_test_DISK_", "image put on disk cache " + key)
+                        //Log.d("cache_test_DISK_", "image put on disk cache " + key)
 
                 } else {
                     editor.abort()
-                        Log.d("cache_test_DISK_", "ERROR on: image put on disk cache " + key)
+                        //Log.d("cache_test_DISK_", "ERROR on: image put on disk cache " + key)
                 }
             } catch (e: IOException) {
                     Log.d("cache_test_DISK_", "ERROR on: image put on disk cache " + key)
@@ -105,7 +105,7 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
 
                 snapshot = mDiskCache.get(key)
                 if (snapshot == null) {
-                    Log.d("cache_test_DISK_", "$key was not on disk (snapshot) ")
+                    //Log.d("cache_test_DISK_", "$key was not on disk (snapshot) ")
 
                     return null
                 }
@@ -122,7 +122,7 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
                 }
             }
 
-                Log.d("cache_test_DISK_", if (bitmap == null) "" else "image read from disk " + key)
+               // Log.d("cache_test_DISK_", if (bitmap == null) "" else "image read from disk " + key)
 
             return bitmap
 
@@ -143,7 +143,7 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
                     snapshot.close()
                 }
             }
-        Log.d("cache_test_DISK_", "cache contained $key image: $contained")
+        //Log.d("cache_test_DISK_", "cache contained $key image: $contained")
 
 
         mDiskCache
