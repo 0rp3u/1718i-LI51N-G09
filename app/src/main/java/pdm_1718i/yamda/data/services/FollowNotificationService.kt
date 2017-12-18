@@ -30,7 +30,7 @@ class FollowNotificationService: JobService(){
     }
 
     override fun onStartJob(jobParameters: JobParameters?): Boolean {
-        if(UtilPreferences.getNotification()) return false
+        if(!UtilPreferences.getNotification()) return false
         val movie_id: Int = jobParameters?.extras?.getInt(JobNotification.BUNDLE_ID_KEY) ?: return false
 
         async {
