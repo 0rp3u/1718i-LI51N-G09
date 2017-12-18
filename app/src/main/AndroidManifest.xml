@@ -23,7 +23,8 @@
     <service
         android:name=".data.services.DatabaseUpdater"
         android:enabled="true"
-        android:exported="true" />
+        android:exported="true"
+        android:permission="android.permission.BIND_JOB_SERVICE"/>
 
     <service
         android:name=".data.services.FollowNotificationService"

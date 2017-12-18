@@ -8,9 +8,6 @@ import pdm_1718i.yamda.ui.App
 
 object UtilPreferences {
 
-    val DEFAULT_INT_VALUE = 0
-    val DEFAULT_BOOLEAN_VALUE = false
-
     val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(App.instance)
     val resources : Resources = App.instance.resources
     val editor: SharedPreferences.Editor = prefs.edit()

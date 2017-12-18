@@ -5,6 +5,7 @@ import android.preference.Preference
 import android.preference.PreferenceFragment
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.services.DBSyncJob
+import pdm_1718i.yamda.data.utils.UtilPreferences
 
 /*
     A aplicação	 inclui	 também	 um	 ecrã	 onde	 o	 utilizador	 especifica
@@ -27,7 +28,7 @@ class SettingsFragment : PreferenceFragment() {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.preferences)
 
-        val syncData : Preference = findPreference(R.string.preference_sync_data_key.toString())
+        val syncData : Preference = findPreference(UtilPreferences.resources.getString(R.string.preference_sync_data_key))
 
         syncData.setOnPreferenceClickListener {
             DBSyncJob.schedule()
