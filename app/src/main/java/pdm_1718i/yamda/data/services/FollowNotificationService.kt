@@ -13,6 +13,7 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.utils.UtilPreferences
+import pdm_1718i.yamda.extensions.getVibrationFromPreferences
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.activities.MovieDetailActivity
 import pdm_1718i.yamda.ui.activities.MovieDetailActivity.Companion.BUNDLE_ID_KEY
@@ -45,8 +46,9 @@ class FollowNotificationService: JobService(){
                 //todo create Notification Channel
                 Notification.Builder(this@FollowNotificationService, NotificationChannel.DEFAULT_CHANNEL_ID)
             } else {
-                Notification.Builder(this@FollowNotificationService)
-                        .setDefaults(Notification.DEFAULT_VIBRATE)
+                Notification.Builder(this@FollowNotificationService).run {
+                    setDefaults(getVibrationFromPreferences())
+                }
             }.apply {
                 setContentTitle("New movie released")
                 setSmallIcon(R.drawable.ic_video_camera_80s)
@@ -70,16 +72,6 @@ class FollowNotificationService: JobService(){
             }
         }
         return true //code is running asynchronously
-    }
-
-    private fun notify(id: Int, notification: Notification){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            with(getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager){
-                this.notify()
-            }
-        }else{
-
-        }
     }
 
 }
