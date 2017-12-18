@@ -4,6 +4,7 @@ import android.app.job.JobParameters
 import android.app.job.JobService
 import android.content.ContentValues
 import android.database.Cursor
+import android.net.Uri
 import android.util.Log
 import com.android.volley.VolleyError
 import kotlinx.coroutines.experimental.async
@@ -14,6 +15,9 @@ import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.data.utils.UtilPreferences
+import pdm_1718i.yamda.extensions.isFuture
+import pdm_1718i.yamda.extensions.toMovieList
+import pdm_1718i.yamda.ui.App
 
 class DatabaseUpdater : JobService() {
     override fun onStopJob(p0: JobParameters?): Boolean {
@@ -30,12 +34,16 @@ class DatabaseUpdater : JobService() {
 
     private fun fetchDataToUpdate() {
         async {
-            val onDatabase: Set<Int> = moviesInDataBase()
-            val detailsToFetch: MutableSet<Int> = mutableSetOf() //concurrently updated with the movies that are already fetched
 
+            val moviesOnDatabase: Set<Movie> = moviesInDataBase()
+            val onDatabase: Set<Int> = moviesOnDatabase.map{it.id}.toSet()
+
+            val detailsToFetch: MutableSet<Int> = mutableSetOf() //concurrently updated with the movies that are already fetched
             val upcomingJob = bg { fetchUpcoming(onDatabase, detailsToFetch) }
             val nowPLayingJob = bg { fetchNowPlaying(onDatabase, detailsToFetch) }
             val mostPopularJob = bg { fetchMostPopular(onDatabase, detailsToFetch) }
+
+            updateStaledFollowing(moviesOnDatabase) //remove following from movies that where already notified
 
             updateDb(
                     upcomingJob.await(),
@@ -84,18 +92,11 @@ class DatabaseUpdater : JobService() {
         return MovieListEntry(page, entryIds.toSet())
     }
 
-    private fun moviesInDataBase(): Set<Int> {
-        val cursor: Cursor = contentResolver.query(MovieContract.MovieDetails.CONTENT_URI, null, null, null, null)
-        val ids = mutableSetOf<Int>()
-        if (cursor.count > 0) {
-            cursor.moveToFirst()
-            while (!cursor.isAfterLast) {
-                ids.add(cursor.getInt(0))
-                cursor.moveToNext()
-            }
-        }
-        cursor.close()
-        return ids.toSet()
+    private fun moviesInDataBase(): Set<Movie> {
+        val cursor: Cursor = contentResolver.query(MovieContract.MovieDetails.CONTENT_URI, arrayOf(MovieContract.MovieDetails._ID,MovieContract.MovieDetails.RELEASE_DATE,MovieContract.MovieDetails.IS_FOLLOWING ), null, null, null)
+        val inDB = cursor.toMovieList()
+
+        return inDB!!.toSet()
     }
 
     private fun updateDb(
@@ -110,7 +111,7 @@ class DatabaseUpdater : JobService() {
         contentResolver.delete(MovieContract.NowPlayingIds.CONTENT_URI, null, null)
         contentResolver.delete(MovieContract.MostPopularIds.CONTENT_URI, null, null)
         staled.forEach {
-            contentResolver.delete(MovieContract.MovieDetails.CONTENT_URI, "$it", null)
+            contentResolver.delete(MovieContract.MovieDetails.CONTENT_URI, "${MovieContract.MovieDetails._ID} = ?", arrayOf("$it"))
         }
 
         val moviesContentValue: Array<ContentValues> =  movieDetails.mapNotNull {
@@ -151,8 +152,21 @@ class DatabaseUpdater : JobService() {
                 acc
             }.distinctBy { it.getAsInteger(MovieContract.MovieListId.DETAILS_ID) }.toTypedArray() //small hack, because different pages can have repeated movies
 
+
+    private fun updateStaledFollowing(onDatabase : Set<Movie>){
+        onDatabase.filter{ it.isFollowing && it.release_date!!.isFuture().not() }.forEach {
+            App.instance.contentResolver.update(
+                    MovieContract.MovieDetails.CONTENT_URI,
+                    ContentValues().apply { put(MovieContract.MovieDetails.IS_FOLLOWING, false)},
+                    "${MovieContract.MovieDetails._ID} = ?",
+                    arrayOf("${it.id}")
+            )
+        }
+    }
+
     private fun handleError(error: VolleyError): Unit {
         // TODO
         Log.v("DEMO", "KABBUMMM")
     }
+
 }
