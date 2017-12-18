@@ -24,7 +24,7 @@ class DatabaseUpdater : JobService() {
         UtilPreferences.getPeriodicity()
         toast("DBSync ended")
         //re-schedule service
-        return true
+        return false
     }
 
     override fun onStartJob(p0: JobParameters?): Boolean {
