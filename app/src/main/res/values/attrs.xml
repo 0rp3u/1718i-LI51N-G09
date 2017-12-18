@@ -6,6 +6,7 @@
     <string name = "preference_notification_key">preference_notification</string>
     <string name = "preference_vibrate_key">preference_vibrate</string>
     <string name = "preference_low_battery_update_key">preference_low_battery_update</string>
+    <string name = "preference_sync_data_key">preference_sync_data</string>
 
     <string-array name="pref_sync_frequency_values">
         <item>12</item>
