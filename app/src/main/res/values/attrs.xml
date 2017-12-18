@@ -8,7 +8,7 @@
     <string name = "preference_low_battery_update_key">preference_low_battery_update</string>
     <string name = "preference_sync_data_key">preference_sync_data</string>
 
-    <integer-array name="pref_sync_frequency_values">
+    <string-array name="pref_sync_frequency_values">
         <item>12</item>
         <item>24</item>
         <item>72</item>
@@ -16,7 +16,7 @@
         <item>336</item>
         <item>720</item>
         <item>-1</item>
-    </integer-array>
+    </string-array>
 
     <!-- DEFAULT VALUES FOR PREFERENCES-->
     <bool name = "preference_connection_type_DEFAULT_VALUE">true</bool>
