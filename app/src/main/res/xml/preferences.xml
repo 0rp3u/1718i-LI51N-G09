@@ -26,7 +26,7 @@
             android:defaultValue="@string/preference_low_battery_update_DEFAULT_VALUE"/>
 
         <Preference
-            android:key = "@string/preference_sync_data"
+            android:key = "@string/preference_sync_data_key"
             android:summary="@string/sync_db_summary" />
 
     </PreferenceCategory>
