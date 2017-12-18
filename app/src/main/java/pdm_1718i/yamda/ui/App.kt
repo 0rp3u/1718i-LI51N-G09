@@ -13,8 +13,10 @@ import com.android.volley.toolbox.Volley
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.MoviesProvider
 import pdm_1718i.yamda.data.cache.bitmap.DiskLruImageCache
+import pdm_1718i.yamda.data.cache.bitmap.DiskLruImageCacheJakeHarton
 import pdm_1718i.yamda.data.server.ThrottlePolicy
 import pdm_1718i.yamda.data.server.ThrottledHttpStack
+import pdm_1718i.yamda.data.services.DBSyncJob
 import pdm_1718i.yamda.data.services.DatabaseUpdater
 import java.net.URL
 
@@ -36,8 +38,8 @@ class App : Application() {
         }
 
         val imageLoader by lazy {
-            //val cache = BitmapLruCache(DiskLruImageCacheJakeHarton(this.instance, "imageCache"))
-            val cache = DiskLruImageCache(requestQueue.cache)
+            val cache = DiskLruImageCacheJakeHarton(this.instance, "imageCache")
+            //val cache = DiskLruImageCache(requestQueue.cache)
             ImageLoader(requestQueue,cache)
         }
 
@@ -57,16 +59,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-
-            val action = Intent(this, DatabaseUpdater::class.java)
-            (getSystemService(ALARM_SERVICE) as AlarmManager).setInexactRepeating(
-                    AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    0,
-                    AlarmManager.INTERVAL_DAY,
-                    PendingIntent.getService(this, 1, action, PendingIntent.FLAG_UPDATE_CURRENT)
-            )
-
-
+        DBSyncJob.schedule()
     }
 
     fun <T> addToRequestQueue(request: Request<T>, tag: String = TAG) {

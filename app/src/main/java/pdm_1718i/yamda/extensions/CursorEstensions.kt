@@ -41,7 +41,7 @@ private fun Cursor.constructDetailedMovieItem() = MovieDetail(
             vote_average =  getFromColumn(MovieContract.MovieDetails.VOTE_AVERAGE),
             backdrop_path = getFromColumn(MovieContract.MovieDetails.BACKDROP_PATH),
             release_date =  getCalendar(getFromColumn(MovieContract.MovieDetails.RELEASE_DATE)),
-            genres = listOf()
+            genres = getFromColumn(MovieContract.MovieDetails.GENRES)
     )
 
 /**
@@ -122,7 +122,9 @@ inline fun <reified T> Cursor.getFromColumn(columnName : String) : T{
             if(T::class.java.isInstance(Int.MIN_VALUE)) value
             else value.toBoolean()
         }
-        Cursor.FIELD_TYPE_STRING -> getString(idx)
+        Cursor.FIELD_TYPE_STRING ->
+            if(T::class.java.isArray || T::class.java.isInstance(listOf<String>())) listOf(getString(idx)) //hack :(
+            else getString(idx)
         Cursor.FIELD_TYPE_FLOAT -> {
             val value =  getFloat(idx)
             if(T::class.java.isInstance(Float.MIN_VALUE)) value

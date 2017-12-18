@@ -20,9 +20,12 @@ object UtilPreferences {
     }
 
     fun getPeriodicity() : Int{
-        return prefs
-                .getInt(resources.getString(R.string.preference_periodicity_key),
-                        resources.getInteger(R.integer.preference_periodicity_DEFAULT_VALUE))
+        val DEFAULT_VALUE : Int = resources.getInteger(R.integer.preference_periodicity_DEFAULT_VALUE)
+        val key : String= resources.getString(R.string.preference_periodicity_key)
+        val ret : String =prefs
+                .getString(key,
+                        DEFAULT_VALUE.toString())
+        return ret.toInt()
     }
 
     fun getLowBatteryUpdate(): Boolean{

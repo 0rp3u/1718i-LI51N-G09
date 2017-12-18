@@ -28,6 +28,7 @@ data class MovieDetail(
         put(MovieContract.MovieDetails.RELEASE_DATE, getDateFromCalendar(release_date))//todo rever
         put(MovieContract.MovieDetails.OVERVIEW, overview)
         put(MovieContract.MovieDetails.ORIGINAL_TITLE, title)
+        put(MovieContract.MovieDetails.GENRES, genres.joinToString(", ") { it.name })
     }
 }
 
