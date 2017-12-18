@@ -37,7 +37,7 @@
     <string name="toast_follow_error">Erro Subscrição</string>
 
     <!-- Preferences Fragment Strings-->
-    <string name="connection_type_title">Conectividade de Actualização</string>
+    <string name="database_category_title">Conectividade de Actualização</string>
     <string name="connection_type_summary">Só usar Wi-Fi</string>
     <string name="notification_title">Notificações</string>
     <string name="notification_summary">Receber Notificações</string>

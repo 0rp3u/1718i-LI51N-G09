@@ -1,11 +1,9 @@
 package pdm_1718i.yamda.ui.activities
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceActivity
 import android.preference.PreferenceManager
 import pdm_1718i.yamda.R
-import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.ui.fragments.SettingsFragment
 
 /**
@@ -39,27 +37,5 @@ class SettingsActivity : BaseActivity(menuOptions = false){
                 set readAgain to true.
          */
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
-
-
-        /*TODO*/
-        //NAO ESQUECER TIRAR ISTO
-        val prefs : SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        toast(
-                "Use Wifi-Only(True/False): "+prefs.getBoolean(resources.getString(R.string.preference_connection_type_key),
-                        resources.getString(R.string.preference_connection_type_key).toBoolean()).toString()
-                +"\n"+
-                "Periodicity: "+prefs.getString(resources.getString(R.string.preference_periodicity_key),
-                        resources.getString(R.string.preference_periodicity_DEFAULT_VALUE)).toString()
-                +"\n"+
-                "Notify (True/False): "+prefs.getBoolean(resources.getString(R.string.preference_notification_key),
-                        resources.getString(R.string.preference_notification_DEFAULT_VALUE).toBoolean()).toString()
-                +"\n"+
-                "Vibrate (True/False): "+prefs.getBoolean(resources.getString(R.string.preference_vibrate_key),
-                        resources.getString(R.string.preference_vibrate_DEFAULT_VALUE).toBoolean()).toString()
-                +"\n"+
-                "UpdateWhenLowBattery(True/False): "+prefs.getBoolean(resources.getString(R.string.preference_low_battery_update_key),
-                        resources.getString(R.string.preference_low_battery_update_DEFAULT_VALUE).toBoolean()).toString()
-        )
-
     }
 }
