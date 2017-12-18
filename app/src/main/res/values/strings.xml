@@ -68,5 +68,6 @@
     <string name="toast_unfollow">Unfollowed</string>
     <string name="toast_follow_error">Error Following</string>
     <string name="low_battery_update_summary">Update Database when battery is low</string>
+    <string name="sync_db_summary">Sync Data</string>
 
 </resources>
