@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name = "connection_type_key">preference_connection_type</string>
+    <string name = "preference_connection_type_key">preference_connection_type</string>
     <string name = "preference_periodicity_key">preference_periodicity</string>
     <string name = "preference_notification_key">preference_notification</string>
     <string name = "preference_vibrate_key">preference_vibrate</string>
-    <string name = "connection_type">preference_connection_type</string>
+    <string name = "preference_low_battery_update_key">preference_low_battery_update</string>
 
     <string-array name="pref_sync_frequency_values">
         <item>12</item>
@@ -16,5 +16,12 @@
         <item>720</item>
         <item>-1</item>
     </string-array>
+
+    <!-- DEFAULT VALUES FOR PREFERENCES-->
+    <string name = "preference_connection_type_DEFAULT_VALUE">true</string>
+    <string name = "preference_periodicity_DEFAULT_VALUE">24</string>
+    <string name = "preference_low_battery_update_DEFAULT_VALUE">false</string>
+    <string name = "preference_notification_DEFAULT_VALUE">true</string>
+    <string name = "preference_vibrate_DEFAULT_VALUE">true</string>
 
 </resources>

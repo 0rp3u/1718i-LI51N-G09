@@ -40,7 +40,7 @@
     <!-- Preferences Fragment Strings-->
 
     <!-- Preferences Keys-->
-    <string name="connection_type_title">Connectivity</string>
+    <string name="connection_type_title">Update Connectivity</string>
     <string name="connection_type_summary">Only use Wi-Fi</string>
     <string name="notification_title">Notifications</string>
     <string name="notification_summary">Receive Notifications</string>
@@ -67,5 +67,6 @@
     <string name="no_more_results_to_show">no more results to show</string>
     <string name="toast_unfollow">Unfollowed</string>
     <string name="toast_follow_error">Error Following</string>
+    <string name="low_battery_update_summary">Update Database when battery is low</string>
 
 </resources>
