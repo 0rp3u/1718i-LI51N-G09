@@ -15,24 +15,37 @@ object UtilPreferences {
     val resources : Resources = App.instance.resources
     val editor: SharedPreferences.Editor = prefs.edit()
 
+
+
     fun getWifi(): Boolean{
         return prefs
-                .getBoolean(resources.getString(R.string.connection_type_key), DEFAULT_BOOLEAN_VALUE)
+                .getBoolean(resources.getString(R.string.preference_connection_type_key),
+                            resources.getString(R.string.preference_connection_type_DEFAULT_VALUE).toBoolean()
+                )
     }
 
     fun getPeriodicity() : Int{
         return prefs
-                .getInt(resources.getString(R.string.preference_periodicity_key), DEFAULT_INT_VALUE)
+                .getInt(resources.getString(R.string.preference_periodicity_key),
+                        resources.getString(R.string.preference_periodicity_DEFAULT_VALUE).toInt())
+    }
+
+    fun getLowBatteryUpdate(): Boolean{
+        return prefs
+                .getBoolean(resources.getString(R.string.preference_low_battery_update_key),
+                        resources.getString(R.string.preference_low_battery_update_DEFAULT_VALUE).toBoolean())
     }
 
     fun getNotification(): Boolean{
         return prefs
-                .getBoolean(resources.getString(R.string.preference_notification_key), DEFAULT_BOOLEAN_VALUE)
+                .getBoolean(resources.getString(R.string.preference_notification_key),
+                        resources.getString(R.string.preference_notification_DEFAULT_VALUE).toBoolean())
     }
 
     fun getVibration(): Boolean{
         return prefs
-                .getBoolean(resources.getString(R.string.preference_vibrate_key), DEFAULT_BOOLEAN_VALUE)
+                .getBoolean(resources.getString(R.string.preference_vibrate_key),
+                        resources.getString(R.string.preference_vibrate_DEFAULT_VALUE).toBoolean())
     }
 
     fun putBooleanPreference(key:String, value:Boolean)
