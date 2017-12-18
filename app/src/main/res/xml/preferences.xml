@@ -27,6 +27,10 @@
             android:summary ="@string/low_battery_update_summary"
             android:defaultValue="@string/preference_low_battery_update_DEFAULT_VALUE"/>
 
+        <ListPreference
+            android:summary="@string/sync_db_summary"
+            android:onClick="requestDbUpdate"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

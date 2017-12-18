@@ -46,6 +46,7 @@
     <string name="periodicity_list_cancel">Cancelar</string>
     <string name="notification_vibrate">Vibrar</string>
     <string name="low_battery_update_summary">Actualizar Base de Dados quando bateria fraca</string>
+    <string name="sync_db_summary">Sincronizar Data</string>
 
     <string-array name="pref_sync_frequency_titles">
         <item>12 horas</item>
