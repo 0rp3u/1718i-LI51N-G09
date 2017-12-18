@@ -28,6 +28,12 @@ class MovieDetailActivity : BaseActivity() {
     private val followIcon              by lazy { findViewById(R.id.follow_icon)    as ImageView }
 //    private val NOTIFICATION_OFF_ICON   by lazy { getDrawable(R.drawable.ic_notifications_none_black_24dp) }
 //    private val NOTIFICATION_ON_ICON    by lazy{ getDrawable(R.drawable.ic_notifications_active_black_24dp) }
+
+    companion object {
+        val BUNDLE_ID_KEY = "movieId"
+        val BUNDLE_INVALID_VALUE = -1
+    }
+
     private val NOTIFICATION_OFF_ICON = R.drawable.ic_notifications_none_black_24dp
     private val NOTIFICATION_ON_ICON = R.drawable.ic_notifications_active_black_24dp
 
@@ -36,7 +42,7 @@ class MovieDetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
-        val movieId = intent.getIntExtra("movieId", -1)
+        val movieId = intent.getIntExtra(BUNDLE_ID_KEY, BUNDLE_INVALID_VALUE)
         async(UI) {updateUI( bg{App.moviesProvider.movieDetail(movieId)}.await()) }
     }
 
@@ -57,11 +63,11 @@ class MovieDetailActivity : BaseActivity() {
             }
             if(movieDetail.release_date != null && movieDetail.release_date.isFuture()){
                 if(movieDetail.isFollowing){
-                    toast("Thread:${Thread.currentThread()} ON")
+                    //toast("Thread:${Thread.currentThread()} ON")
                     followIcon.setImageResource(NOTIFICATION_ON_ICON)
                     followIconState = true
                 }else{
-                    toast("Thread:${Thread.currentThread()} OFF")
+                    //toast("Thread:${Thread.currentThread()} OFF")
                     followIcon.setImageResource(NOTIFICATION_OFF_ICON)
                     followIconState = false
                 }
