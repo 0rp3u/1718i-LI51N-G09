@@ -9,7 +9,7 @@ import pdm_1718i.yamda.extensions.FromPresentInMillis
 import pdm_1718i.yamda.ui.App
 import java.util.*
 
-object JobNotification{
+object MovieNotification {
 
     val BUNDLE_ID_KEY = "id"
 

@@ -3,7 +3,7 @@ package pdm_1718i.yamda.data.db
 import android.content.ContentValues
 import android.net.Uri
 import pdm_1718i.yamda.R
-import pdm_1718i.yamda.data.services.JobNotification
+import pdm_1718i.yamda.data.services.MovieNotification
 import pdm_1718i.yamda.extensions.isFuture
 import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.MovieDetail
@@ -31,12 +31,12 @@ object Util{
             when(newState){
                 FOLLOW -> {
                     movie.release_date?.run{
-                        if(isFuture())JobNotification.schedule(movie.id, this)
+                        if(isFuture()) MovieNotification.schedule(movie.id, this)
                     }
                 }
 
                 UNFOLLOW ->{
-                    JobNotification.cancel(movie.id)
+                    MovieNotification.cancel(movie.id)
                 }
             }
             return newState

@@ -17,14 +17,6 @@ import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.model.MovieDetail
 
-/**
- * Vai buscar todos os details a base de dados,
- *
- *
- *
- *
- *
- */
 
 class DatabaseUpdater : JobService() {
     val TAG = this.javaClass.simpleName

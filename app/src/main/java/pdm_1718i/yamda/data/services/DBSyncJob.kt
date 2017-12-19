@@ -7,15 +7,18 @@ import android.content.Context
 import android.os.Build
 import android.os.PersistableBundle
 import pdm_1718i.yamda.data.utils.UtilPreferences
+import pdm_1718i.yamda.extensions.FromPresentInMillis
 import pdm_1718i.yamda.extensions.getNetworkTypeFromPreferences
 import pdm_1718i.yamda.ui.App
 import java.util.*
 
 object DBSyncJob{
-    val BUNDLE_ID = "id"
+    val BUNDLE_ID_KEY = "id"
+    val JOB_ID_FORCE_UPDATE = -2
     val JOB_ID = -1
 
     private fun newInstance(calendar: Calendar?): JobInfo {
+        val job_id = if(calendar != null) JOB_ID else JOB_ID_FORCE_UPDATE
         return JobInfo.Builder(
                 JOB_ID,
                 ComponentName(App.instance.applicationContext, DatabaseUpdater::class.java)
@@ -29,12 +32,11 @@ object DBSyncJob{
             setPersisted(true)
 
             if(calendar != null){
-                //setMinimumLatency(calendar.FromPresentInMillis()) //todo change setMinimumLatency on release
-                setMinimumLatency(1000 * 5)
+                setPeriodic(calendar.FromPresentInMillis())
             }
 
             setExtras(PersistableBundle().apply {
-                putInt(BUNDLE_ID, JOB_ID)
+                putInt(BUNDLE_ID_KEY, job_id)
             })
             build()
         }
@@ -45,9 +47,4 @@ object DBSyncJob{
         return jobScheduler.schedule(newInstance(calendar))==JobScheduler.RESULT_SUCCESS
     }
 
-    fun cancel(){
-        with(App.instance.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler){
-            cancel(JOB_ID)
-        }
-    }
 }

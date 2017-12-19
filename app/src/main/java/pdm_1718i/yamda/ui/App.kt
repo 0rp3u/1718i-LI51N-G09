@@ -1,8 +1,6 @@
 package pdm_1718i.yamda.ui
 
 import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.ImageLoader
@@ -13,10 +11,13 @@ import pdm_1718i.yamda.data.cache.bitmap.DiskLruImageCache
 import pdm_1718i.yamda.data.server.ThrottlePolicy
 import pdm_1718i.yamda.data.server.ThrottledHttpStack
 import pdm_1718i.yamda.data.services.DBSyncJob
+import pdm_1718i.yamda.data.utils.UtilPreferences
 import pdm_1718i.yamda.data.utils.UtilPreferences.isFirstInstance
 import pdm_1718i.yamda.data.utils.UtilPreferences.updateIsFirstInstance
+import pdm_1718i.yamda.extensions.AddHoursToPresent
 import pdm_1718i.yamda.extensions.caseTrue
 import java.net.URL
+import java.util.*
 
 
 class App : Application() {
@@ -42,15 +43,6 @@ class App : Application() {
         }
 
         val moviesProvider by lazy { MoviesProvider() }
-
-        val isNetworkAvailable: Boolean
-            get(){
-
-                val conMgr = instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                with(conMgr.activeNetworkInfo){
-                    return this != null && this.isConnected && this.isAvailable
-                }
-            }
     }
 
     override fun onCreate() {
@@ -58,7 +50,9 @@ class App : Application() {
         instance = this
         isFirstInstance().caseTrue {
             updateIsFirstInstance()
-            DBSyncJob.schedule()
+            val hours = UtilPreferences.getPeriodicity()
+            val calendar = Calendar.getInstance().AddHoursToPresent(hours)
+            DBSyncJob.schedule(calendar)
         }
     }
 

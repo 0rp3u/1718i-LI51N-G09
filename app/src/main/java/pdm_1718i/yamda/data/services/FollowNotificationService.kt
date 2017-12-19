@@ -13,7 +13,6 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.utils.UtilPreferences
-import pdm_1718i.yamda.extensions.getVibrationFromPreferences
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.activities.MovieDetailActivity
 import pdm_1718i.yamda.ui.activities.MovieDetailActivity.Companion.BUNDLE_ID_KEY
@@ -23,15 +22,15 @@ class FollowNotificationService: JobService(){
 
     override fun onStopJob(jobParameters: JobParameters?): Boolean {
         //Job was cancelled
-        val movie_id = jobParameters?.extras?.getInt(JobNotification.BUNDLE_ID_KEY) ?: return false
+        jobParameters?.extras?.getInt(MovieNotification.BUNDLE_ID_KEY) ?: return false
         return true //re-schedule the job
     }
 
     override fun onStartJob(jobParameters: JobParameters?): Boolean {
         if(!UtilPreferences.getNotification()) return false
-        val movie_id: Int = jobParameters?.extras?.getInt(JobNotification.BUNDLE_ID_KEY) ?: return false
+        val movie_id: Int = jobParameters?.extras?.getInt(MovieNotification.BUNDLE_ID_KEY) ?: return false
 
-        async {
+        async{
             val movieJob = bg {
                 try {
                     App.moviesProvider.movieDetail(movie_id)
@@ -45,9 +44,11 @@ class FollowNotificationService: JobService(){
                 Notification.Builder(this@FollowNotificationService, NotificationChannel.DEFAULT_CHANNEL_ID)
             } else {
                 Notification.Builder(this@FollowNotificationService).apply {
-                    if(UtilPreferences.getVibration()){
-                        setDefaults(getVibrationFromPreferences())
-                        setVibrate(LongArray(1, {0L}))
+                    if(!UtilPreferences.getVibration()){
+                        //setDefaults(getVibrationFromPreferences())
+                        setVibrate(LongArray(1, {0}))
+                    }else{
+                        setVibrate(LongArray(2, {1000}))
                     }
                     this
                 }
@@ -64,7 +65,6 @@ class FollowNotificationService: JobService(){
 
                 movieJob?.await()?.run {
                     setContentText(this.title)
-                    
                 }
 
                 val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
