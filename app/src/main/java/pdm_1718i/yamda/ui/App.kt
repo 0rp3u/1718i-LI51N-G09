@@ -40,8 +40,8 @@ class App : Application() {
         }
 
         val imageLoader by lazy {
-            val cache = DiskLruImageCacheJakeHarton(this.instance, "imageCache")
-            //val cache = DiskLruImageCache(requestQueue.cache)
+            //val cache = DiskLruImageCacheJakeHarton(this.instance, "imageCache")
+            val cache = DiskLruImageCache(requestQueue.cache)
             ImageLoader(requestQueue,cache)
         }
 

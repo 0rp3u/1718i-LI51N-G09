@@ -138,7 +138,7 @@ class TMDBService : MoviesDataSource {
         }
     }
 
-    override fun movieImage(image_id: String, imageView: ImageView, image_size: String) {
+    override fun movieImage(image_id: String, imageView: ImageView, image_size: String){
         val uri = Uri.Builder()
                 .appendEncodedPath(image_size)
                 .appendEncodedPath(image_id)
