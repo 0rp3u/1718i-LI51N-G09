@@ -7,7 +7,7 @@ import java.util.*
 
 val parser = SimpleDateFormat("yyyy-MM-dd")
 
-fun Calendar.setTime(date: String): Calendar{
+fun Calendar.setDate(date: String): Calendar{
     time = parser.parse(date)
     return this
 }
@@ -24,7 +24,7 @@ fun getCalendar(date: String): Calendar?{
     return if(TextUtils.isEmpty(date))
         return null
     else
-        Calendar.getInstance().setTime(date)
+        Calendar.getInstance().setDate(date)
 }
 
 fun getYearFromCalendar(calendar: Calendar?): String{
@@ -44,3 +44,8 @@ fun getDateFromCalendar(calendar: Calendar?): String{
 fun Calendar.FromPresentInMillis() = timeInMillis - Date().time
 
 fun Calendar.isFuture() = this.time.after(Date())
+
+fun Calendar.AddHoursToPresent(hours: Int) = apply{
+    time = Date()
+    add(Calendar.HOUR_OF_DAY, hours)
+}

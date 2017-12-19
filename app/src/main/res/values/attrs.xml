@@ -7,6 +7,7 @@
     <string name = "preference_vibrate_key">preference_vibrate</string>
     <string name = "preference_low_battery_update_key">preference_low_battery_update</string>
     <string name = "preference_sync_data_key">preference_sync_data</string>
+    <string name = "preference_first_instance_key">preference_first_instance</string>
 
     <string-array name="pref_sync_frequency_values">
         <item>12</item>
@@ -24,5 +25,6 @@
     <bool name = "preference_low_battery_update_DEFAULT_VALUE">false</bool>
     <bool name = "preference_notification_DEFAULT_VALUE">true</bool>
     <bool name = "preference_vibrate_DEFAULT_VALUE">true</bool>
+    <bool name = "preference_first_instance_DEFAULT_VALUE">true</bool>
 
 </resources>

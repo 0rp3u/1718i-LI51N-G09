@@ -51,4 +51,17 @@ object UtilPreferences {
         editor.putBoolean(key, value)
         editor.commit()
     }
+
+    fun updateIsFirstInstance(){
+        putBooleanPreference(resources.getString(R.string.preference_first_instance_key), false)
+    }
+
+    fun isFirstInstance(): Boolean = prefs
+            .getBoolean(resources.getString(R.string.preference_first_instance_key),
+                    resources.getBoolean(R.bool.preference_first_instance_DEFAULT_VALUE))
+
+    fun ringtone(){
+        //Screaming_Cowboy.mp3
+
+    }
 }

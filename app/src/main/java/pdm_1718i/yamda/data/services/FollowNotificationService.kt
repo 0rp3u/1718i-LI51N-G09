@@ -21,12 +21,10 @@ import pdm_1718i.yamda.ui.activities.MovieDetailActivity.Companion.BUNDLE_ID_KEY
 
 class FollowNotificationService: JobService(){
 
-    companion object {
-        val REQUEST_CODE = -2
-    }
-
-    override fun onStopJob(p0: JobParameters?): Boolean {
-        return false //no need to re-schedule the job
+    override fun onStopJob(jobParameters: JobParameters?): Boolean {
+        //Job was cancelled
+        val movie_id = jobParameters?.extras?.getInt(JobNotification.BUNDLE_ID_KEY) ?: return false
+        return true //re-schedule the job
     }
 
     override fun onStartJob(jobParameters: JobParameters?): Boolean {
@@ -46,31 +44,33 @@ class FollowNotificationService: JobService(){
                 //todo create Notification Channel
                 Notification.Builder(this@FollowNotificationService, NotificationChannel.DEFAULT_CHANNEL_ID)
             } else {
-                Notification.Builder(this@FollowNotificationService).run {
-                    setDefaults(getVibrationFromPreferences())
+                Notification.Builder(this@FollowNotificationService).apply {
+                    if(UtilPreferences.getVibration()){
+                        setDefaults(getVibrationFromPreferences())
+                        setVibrate(LongArray(1, {0L}))
+                    }
+                    this
                 }
             }.apply {
                 setContentTitle("New movie released")
                 setSmallIcon(R.drawable.ic_video_camera_80s)
                 setAutoCancel(true)
 
-                //setPriority(Notification.PRIORITY_MAX)
-
                 //insert intent in the future
                 Intent(App.instance, MovieDetailActivity::class.java).let {
                     it.putExtra(BUNDLE_ID_KEY, movie_id)
-                    it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    PendingIntent.getActivity(App.instance, REQUEST_CODE, it, PendingIntent.FLAG_CANCEL_CURRENT)
+                    PendingIntent.getActivity(App.instance, movie_id, it, PendingIntent.FLAG_CANCEL_CURRENT)
                 }.let{ setContentIntent(it)}
 
                 movieJob?.await()?.run {
                     setContentText(this.title)
+                    
                 }
 
                 val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 notificationManager.notify(movie_id, build())
 
-                jobFinished(jobParameters, false) //TODO verify this
+                jobFinished(jobParameters, false)
             }
         }
         return true //code is running asynchronously

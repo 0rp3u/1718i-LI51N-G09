@@ -10,7 +10,6 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.data.MoviesProvider.Companion.tmdbAPI
 import pdm_1718i.yamda.data.db.MovieContract
-import pdm_1718i.yamda.data.utils.UtilPreferences
 import pdm_1718i.yamda.extensions.isFuture
 import pdm_1718i.yamda.extensions.toMovieList
 import pdm_1718i.yamda.extensions.toast
@@ -20,11 +19,9 @@ import pdm_1718i.yamda.ui.App
 
 class DatabaseUpdater : JobService() {
     override fun onStopJob(p0: JobParameters?): Boolean {
-        //todo
-        UtilPreferences.getPeriodicity()
-        toast("DBSync ended")
-        //re-schedule service
-        return false
+        //DBSync was somehow cancelled
+        toast("Sync cancelled")
+        return true //re-schedule service
     }
 
     override fun onStartJob(p0: JobParameters?): Boolean {
@@ -64,7 +61,7 @@ class DatabaseUpdater : JobService() {
             )
 
 
-            jobFinished(p0, false) //TODO verify this
+            jobFinished(p0, false)
         }
     }
 

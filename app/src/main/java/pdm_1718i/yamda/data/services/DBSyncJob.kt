@@ -25,6 +25,7 @@ object DBSyncJob{
             }
 
             setRequiredNetworkType(this.getNetworkTypeFromPreferences())
+            setRequiresDeviceIdle(true)
             setPersisted(true)
 
             if(calendar != null){

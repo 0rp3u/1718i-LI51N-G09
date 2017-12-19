@@ -12,14 +12,18 @@ object JobNotification{
 
     val BUNDLE_ID_KEY = "id"
 
-    private fun newInstance(id:Int, calendar: Calendar): JobInfo{
+    private fun newInstance(id:Int, calendar: Calendar?): JobInfo{
         return JobInfo.Builder(
             id,
             ComponentName(App.instance.applicationContext, FollowNotificationService::class.java)
         ).run {
-            //todo change setMinimumLatency on release
-            //setMinimumLatency(calendar.FromPresentInMillis()) //wait at least
-            setMinimumLatency(1000 * 5) //wait at least
+            if(calendar != null){
+                //todo change setMinimumLatency on release
+//                setMinimumLatency(calendar.FromPresentInMillis()) //wait at least
+//                setOverrideDeadline(calendar.apply{add(Calendar.HOUR_OF_DAY, 1)}.FromPresentInMillis()) // agendar para até 1 hora depois do minLatency
+                setMinimumLatency(1000 * 1) //wait at least
+                setOverrideDeadline(1000 * 2)
+            }
 
             setExtras(PersistableBundle().apply {
                 putInt(BUNDLE_ID_KEY, id)
@@ -28,7 +32,7 @@ object JobNotification{
         }
     }
 
-    fun schedule(id: Int, calendar: Calendar): Boolean{
+    fun schedule(id: Int, calendar: Calendar? = null): Boolean{
         val jobScheduler = App.instance.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
         return jobScheduler.schedule(newInstance(id, calendar)) == JobScheduler.RESULT_SUCCESS
     }

@@ -10,6 +10,7 @@ fun JobInfo.Builder.getNetworkTypeFromPreferences(): Int = when(UtilPreferences.
 }
 
 fun Notification.Builder.getVibrationFromPreferences(): Int = when(UtilPreferences.getVibration()){
-    true -> Notification.DEFAULT_VIBRATE
+    true -> Notification.DEFAULT_LIGHTS or Notification.DEFAULT_SOUND
+//    true -> Notification.DEFAULT_LIGHTS or Notification.DEFAULT_SOUND
     false -> Notification.DEFAULT_ALL
 }
