@@ -18,6 +18,15 @@ import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.model.MovieDetail
 
+/**
+ * Vai buscar todos os details a base de dados,
+ *
+ *
+ *
+ *
+ *
+ */
+
 class DatabaseUpdater : JobService() {
     val TAG = this.javaClass.simpleName
 
@@ -39,8 +48,8 @@ class DatabaseUpdater : JobService() {
     private fun fetchDataToUpdate(p0: JobParameters?) {
         async {
 
-            val moviesOnDatabase: Set<Movie> = moviesInDataBase()
-            val onDatabase: Set<Int> = moviesOnDatabase.map{it.id}.toSet()
+            val moviesOnDatabase: List<Movie> = moviesInDataBase()
+            val onDatabase: List<Int> = moviesOnDatabase.map{it.id}
 
             val detailsToFetch: MutableSet<Int> = mutableSetOf() //concurrently updated with the movies that are already fetched
             val upcomingJob = bg { fetchUpcoming(onDatabase, detailsToFetch) }
@@ -53,13 +62,14 @@ class DatabaseUpdater : JobService() {
                     upcomingJob.await(),
                     nowPLayingJob.await(),
                     mostPopularJob.await(),
-                    onDatabase.filter { detailsToFetch.contains(it) }.toSet(), //staled data
+                    moviesOnDatabase,
                     detailsToFetch.map {
                         bg { tmdbAPI.movieDetail(it) }
                     }.map {
                         try {
                             it.await()
                         } catch (e: Throwable) {
+                            Log.d(TAG, "${e.message}")
                             null
                         }
                     }.toSet()
@@ -72,22 +82,22 @@ class DatabaseUpdater : JobService() {
 
     private class MovieListEntry(val page: Int, val list: Set<Int>)
 
-    private fun fetchMostPopular(onDatabase: Set<Int>, alreadyFetched: MutableSet<Int>): Set<MovieListEntry> {
+    private fun fetchMostPopular(onDatabase: List<Int>, alreadyFetched: MutableSet<Int>): Set<MovieListEntry> {
         Log.d(TAG, "${Thread.currentThread().id} fetching most Popular movies ")
         return (1..5).map { fetchListEntry(it, tmdbAPI::popularMovies, onDatabase, alreadyFetched) }.toSet()
     }
 
-    private fun fetchNowPlaying(onDatabase: Set<Int>, alreadyFetched: MutableSet<Int>): Set<MovieListEntry> {
+    private fun fetchNowPlaying(onDatabase: List<Int>, alreadyFetched: MutableSet<Int>): Set<MovieListEntry> {
         Log.d(TAG, "${Thread.currentThread().id} fetching most nowPlaying movies ")
         return (1..5).map { fetchListEntry(it, tmdbAPI::playingMovies, onDatabase, alreadyFetched) }.toSet()
     }
 
-    private fun fetchUpcoming(onDatabase: Set<Int>, alreadyFetched: MutableSet<Int>): Set<MovieListEntry> {
+    private fun fetchUpcoming(onDatabase: List<Int>, alreadyFetched: MutableSet<Int>): Set<MovieListEntry> {
         Log.d(TAG, "${Thread.currentThread().id} fetching upcoming movies ")
         return (1..5).map { fetchListEntry(it, tmdbAPI::upcomingMovies, onDatabase, alreadyFetched) }.toSet()
     }
 
-    private fun fetchListEntry(page: Int, providerHandler: (page: Int) -> List<Movie>, onDatabase: Set<Int>, alreadyFetched: MutableSet<Int>): MovieListEntry {
+    private fun fetchListEntry(page: Int, providerHandler: (page: Int) -> List<Movie>, onDatabase: List<Int>, alreadyFetched: MutableSet<Int>): MovieListEntry {
         val entryIds: MutableSet<Int> = providerHandler(page).map { it.id }.toMutableSet()
         synchronized(alreadyFetched,{
             alreadyFetched.addAll( // remove all that are already on database, or on the list to fetch/fetched and add them to the list
@@ -99,20 +109,22 @@ class DatabaseUpdater : JobService() {
         return MovieListEntry(page, entryIds.toSet())
     }
 
-    private fun moviesInDataBase(): Set<Movie> {
+    private fun moviesInDataBase(): List<Movie> {
         val cursor: Cursor = contentResolver.query(MovieContract.MovieDetails.CONTENT_URI,MovieContract.MovieDetails.PROJECT_ALL, null, null, null)
         val inDB = cursor.toMovieList()
 
-        return inDB?.toSet() ?: setOf()
+        return inDB ?: listOf()
     }
 
     private fun updateDb(
             upComing: Set<MovieListEntry>,
             nowPlaying: Set<MovieListEntry>,
             mostPopular: Set<MovieListEntry>,
-            staled: Set<Int>,
+            onDatabase: List<Movie>,
             movieDetails: Set<MovieDetail?>
     ) {
+
+       val staled = staledMovies(onDatabase, nowPlaying, mostPopular, upComing)
 
         val deleteOps = ArrayList<ContentProviderOperation>()
 
@@ -168,7 +180,7 @@ class DatabaseUpdater : JobService() {
             }.distinctBy { it.getAsInteger(MovieContract.MovieListId.DETAILS_ID) }.toTypedArray() //small hack, because different pages can have repeated movies
 
 
-    private fun updateStaledFollowing(onDatabase : Set<Movie>){
+    private fun updateStaledFollowing(onDatabase : List<Movie>){
         val updateOps = ArrayList<ContentProviderOperation>()
 
         updateOps.addAll(
@@ -183,9 +195,24 @@ class DatabaseUpdater : JobService() {
         Log.d(TAG, "applied ${updateOps.size} update following operations, updated $updated")
     }
 
+
+    /**
+     * returns the ids of the movies in the database that are not being followed
+     * and are not in any of the lists
+     */
+    private fun staledMovies(
+            onDatabase : List<Movie>,
+            nowPlaying: Set<MovieListEntry>,
+            mostPopular: Set<MovieListEntry>,
+            upComing: Set<MovieListEntry>)
+            = onDatabase.filter {
+            val id = it.id
+            it.isFollowing
+            !(nowPlaying.find{ it.list.contains(id) } != null || mostPopular.find{ it.list.contains(id)} != null || upComing.find{ it.list.contains(id) } != null) //not on any of this lists
+        }.map { it.id }
+
     private fun handleError(error: VolleyError): Unit {
         // TODO
         Log.v(TAG, "KABBUMMM")
     }
-
 }

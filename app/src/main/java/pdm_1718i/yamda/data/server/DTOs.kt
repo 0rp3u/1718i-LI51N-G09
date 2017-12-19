@@ -38,7 +38,7 @@ data class MovieDetailResult(
         //val production_companies array[object]
         //val production_countries : array[object]
         val release_date: String,
-        val revenue : Int,
+        val revenue : Long,
         val runtime : Int?,
         //val spoken_languages array[object]
         val status : String,
