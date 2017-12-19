@@ -2,6 +2,7 @@ package pdm_1718i.yamda.data.services
 
 import android.app.job.JobParameters
 import android.app.job.JobService
+import android.content.ContentProviderOperation
 import android.content.ContentValues
 import android.database.Cursor
 import android.util.Log
@@ -15,9 +16,10 @@ import pdm_1718i.yamda.extensions.toMovieList
 import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.model.MovieDetail
-import pdm_1718i.yamda.ui.App
 
 class DatabaseUpdater : JobService() {
+    val TAG = this.javaClass.simpleName
+
     override fun onStopJob(p0: JobParameters?): Boolean {
         //DBSync was somehow cancelled
         toast("Sync cancelled")
@@ -68,17 +70,17 @@ class DatabaseUpdater : JobService() {
     private class MovieListEntry(val page: Int, val list: Set<Int>)
 
     private fun fetchMostPopular(onDatabase: Set<Int>, alreadyFetched: MutableSet<Int>): Set<MovieListEntry> {
-        Log.d("databa_updater", "${Thread.currentThread().id} fetching most Popular movies ")
+        Log.d(TAG, "${Thread.currentThread().id} fetching most Popular movies ")
         return (1..5).map { fetchListEntry(it, tmdbAPI::popularMovies, onDatabase, alreadyFetched) }.toSet()
     }
 
     private fun fetchNowPlaying(onDatabase: Set<Int>, alreadyFetched: MutableSet<Int>): Set<MovieListEntry> {
-        Log.d("databa_updater", "${Thread.currentThread().id} fetching most nowPlaying movies ")
+        Log.d(TAG, "${Thread.currentThread().id} fetching most nowPlaying movies ")
         return (1..5).map { fetchListEntry(it, tmdbAPI::playingMovies, onDatabase, alreadyFetched) }.toSet()
     }
 
     private fun fetchUpcoming(onDatabase: Set<Int>, alreadyFetched: MutableSet<Int>): Set<MovieListEntry> {
-        Log.d("databa_updater", "${Thread.currentThread().id} fetching upcoming movies ")
+        Log.d(TAG, "${Thread.currentThread().id} fetching upcoming movies ")
         return (1..5).map { fetchListEntry(it, tmdbAPI::upcomingMovies, onDatabase, alreadyFetched) }.toSet()
     }
 
@@ -109,12 +111,20 @@ class DatabaseUpdater : JobService() {
             movieDetails: Set<MovieDetail?>
     ) {
 
-        contentResolver.delete(MovieContract.UpcomingIds.CONTENT_URI, null, null)
-        contentResolver.delete(MovieContract.NowPlayingIds.CONTENT_URI, null, null)
-        contentResolver.delete(MovieContract.MostPopularIds.CONTENT_URI, null, null)
-        staled.forEach {
-            contentResolver.delete(MovieContract.MovieDetails.CONTENT_URI, "${MovieContract.MovieDetails._ID} = ?", arrayOf("$it"))
-        }
+        val deleteOps = ArrayList<ContentProviderOperation>()
+
+        deleteOps.add(ContentProviderOperation.newDelete(MovieContract.UpcomingIds.CONTENT_URI).build())
+        deleteOps.add(ContentProviderOperation.newDelete(MovieContract.NowPlayingIds.CONTENT_URI).build())
+        deleteOps.add(ContentProviderOperation.newDelete(MovieContract.MostPopularIds.CONTENT_URI).build())
+        deleteOps.addAll(
+                staled.map {
+                    ContentProviderOperation.newDelete(MovieContract.MovieDetails.CONTENT_URI)
+                            .withSelection("${MovieContract.MovieDetails._ID} = ?", arrayOf("$it"))
+                            .build()
+                }
+        )
+        val deleted = contentResolver.applyBatch(MovieContract.AUTHORITY,  deleteOps).size
+        Log.d(TAG, "applied ${deleteOps.size} delete opperaions, deleted $deleted")
 
         val moviesContentValue: Array<ContentValues> =  movieDetails.mapNotNull {
             it?.toContentValues()
@@ -127,16 +137,16 @@ class DatabaseUpdater : JobService() {
         val nowPlayingContentValue: Array<ContentValues> = nowPlaying.toContentValues()
 
         val upcomingCount = contentResolver.bulkInsert(MovieContract.UpcomingIds.CONTENT_URI, upcomingContentValue)
-        Log.d("databa_updater", "updated $upcomingCount upcoming movies to the database")
+        Log.d(TAG, "updated $upcomingCount upcoming movies to the database")
 
         val mostPopularCount = contentResolver.bulkInsert(MovieContract.MostPopularIds.CONTENT_URI, mostPopularContentValue)
-        Log.d("databa_updater", "updated $mostPopularCount MostPopular movies to the database")
+        Log.d(TAG, "updated $mostPopularCount MostPopular movies to the database")
 
         val nowPlayingCount = contentResolver.bulkInsert(MovieContract.NowPlayingIds.CONTENT_URI, nowPlayingContentValue)
-        Log.d("databa_updater", "updated $nowPlayingCount nowPlaying movies to the database")
+        Log.d(TAG, "updated $nowPlayingCount nowPlaying movies to the database")
 
         val count = contentResolver.bulkInsert(MovieContract.MovieDetails.CONTENT_URI, moviesContentValue)
-        Log.d("databa_updater", "updated $count movie details to the database")
+        Log.d(TAG, "updated $count movie details to the database")
     }
 
     private fun Set<MovieListEntry>.toContentValues() =
@@ -156,19 +166,23 @@ class DatabaseUpdater : JobService() {
 
 
     private fun updateStaledFollowing(onDatabase : Set<Movie>){
-        onDatabase.filter{ it.isFollowing && it.release_date!!.isFuture().not() }.forEach {
-            App.instance.contentResolver.update(
-                    MovieContract.MovieDetails.CONTENT_URI,
-                    ContentValues().apply { put(MovieContract.MovieDetails.IS_FOLLOWING, false)},
-                    "${MovieContract.MovieDetails._ID} = ?",
-                    arrayOf("${it.id}")
-            )
-        }
+        val updateOps = ArrayList<ContentProviderOperation>()
+
+        updateOps.addAll(
+        onDatabase.filter{ it.isFollowing && it.release_date!!.isFuture().not() }.map {
+            ContentProviderOperation.newUpdate(MovieContract.MovieDetails.CONTENT_URI)
+                    .withSelection("${MovieContract.MovieDetails._ID} = ?", arrayOf("${it.id}"))
+                    .withValues(ContentValues().apply { put(MovieContract.MovieDetails.IS_FOLLOWING, false)})
+                    .build()
+        })
+
+        val updated = contentResolver.applyBatch(MovieContract.AUTHORITY,  updateOps).size
+        Log.d(TAG, "applied ${updateOps.size} update following operations, updated $updated")
     }
 
     private fun handleError(error: VolleyError): Unit {
         // TODO
-        Log.v("DEMO", "KABBUMMM")
+        Log.v(TAG, "KABBUMMM")
     }
 
 }

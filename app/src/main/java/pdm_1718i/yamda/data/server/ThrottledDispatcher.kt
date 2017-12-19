@@ -42,7 +42,7 @@ class ThrottledDispatcher(private val policy: ThrottlePolicy, private val httpSt
 
                 //on another thread so dispatcher do not block waiting for the http response while it could be dispatching more requests
                 launch {
-                    Log.d("Launch ${Thread.currentThread().id}", "dispatching ${work.request?.url}")
+                    //Log.d("Launch ${Thread.currentThread().id}", "dispatching ${work.request?.url}")
                     try {
                         work.future.onResponse(httpStack.performRequest(work.request, work.additionalHeaders))
                     } catch (e: Exception) {
