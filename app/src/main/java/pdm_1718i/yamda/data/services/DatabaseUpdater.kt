@@ -32,7 +32,6 @@ class DatabaseUpdater : JobService() {
         return true
     }
 
-
     private fun fetchDataToUpdate(p0: JobParameters?) {
         async {
 
@@ -61,8 +60,6 @@ class DatabaseUpdater : JobService() {
                         }
                     }.toSet()
             )
-
-
             jobFinished(p0, false)
         }
     }

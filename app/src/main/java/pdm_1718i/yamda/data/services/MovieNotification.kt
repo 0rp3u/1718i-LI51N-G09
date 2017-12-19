@@ -5,6 +5,7 @@ import android.app.job.JobScheduler
 import android.content.ComponentName
 import android.content.Context
 import android.os.PersistableBundle
+import pdm_1718i.yamda.extensions.FromPresentInMillis
 import pdm_1718i.yamda.ui.App
 import java.util.*
 
@@ -18,11 +19,8 @@ object JobNotification{
             ComponentName(App.instance.applicationContext, FollowNotificationService::class.java)
         ).run {
             if(calendar != null){
-                //todo change setMinimumLatency on release
-//                setMinimumLatency(calendar.FromPresentInMillis()) //wait at least
-//                setOverrideDeadline(calendar.apply{add(Calendar.HOUR_OF_DAY, 1)}.FromPresentInMillis()) // agendar para até 1 hora depois do minLatency
-                setMinimumLatency(1000 * 1) //wait at least
-                setOverrideDeadline(1000 * 2)
+                setMinimumLatency(calendar.FromPresentInMillis()) //wait at least
+                setOverrideDeadline(calendar.apply{add(Calendar.HOUR_OF_DAY, 1)}.FromPresentInMillis()) // agendar para até 1 hora depois do minLatency
             }
 
             setExtras(PersistableBundle().apply {
