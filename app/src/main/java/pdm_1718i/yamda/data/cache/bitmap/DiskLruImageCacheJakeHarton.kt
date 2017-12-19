@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import com.android.volley.toolbox.ImageLoader.ImageCache
 import com.jakewharton.disklrucache.DiskLruCache
+import pdm_1718i.yamda.extensions.memoize
 
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
@@ -97,7 +98,8 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
             }
     }
 
-    override fun getBitmap(key: String): Bitmap? {
+    //TODO this is temporary, we sould do a soft get on the disk cache so the headers are in order with bitmap access
+    override fun getBitmap(key: String): Bitmap? = memoize<String, Bitmap?>({
             var bitmap: Bitmap? = null
             var snapshot: DiskLruCache.Snapshot? = null
             var key = createKey(key)
@@ -107,7 +109,7 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
                 if (snapshot == null) {
                     //Log.d("cache_test_DISK_", "$key was not on disk (snapshot) ")
 
-                    return null
+                    return@memoize null
                 }
                 val inBuf = snapshot.getInputStream(0)
                 if (inBuf != null) {
@@ -121,12 +123,9 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
                     snapshot.close()
                 }
             }
-
                // Log.d("cache_test_DISK_", if (bitmap == null) "" else "image read from disk " + key)
-
-            return bitmap
-
-    }
+        return@memoize bitmap
+    }).invoke(key)
 
     fun containsKey(key: String): Boolean {
         var contained = false
