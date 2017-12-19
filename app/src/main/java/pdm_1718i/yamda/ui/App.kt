@@ -1,25 +1,21 @@
 package pdm_1718i.yamda.ui
 
-import android.app.AlarmManager
 import android.app.Application
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.net.ConnectivityManager
-import android.os.Environment
-import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.Volley
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.MoviesProvider
-import pdm_1718i.yamda.data.cache.bitmap.DiskLruImageCache
 import pdm_1718i.yamda.data.cache.bitmap.DiskLruImageCacheJakeHarton
 import pdm_1718i.yamda.data.server.ThrottlePolicy
 import pdm_1718i.yamda.data.server.ThrottledHttpStack
 import pdm_1718i.yamda.data.services.DBSyncJob
-import pdm_1718i.yamda.data.services.DatabaseUpdater
+import pdm_1718i.yamda.data.utils.UtilPreferences.isFirstInstance
+import pdm_1718i.yamda.data.utils.UtilPreferences.updateIsFirstInstance
+import pdm_1718i.yamda.extensions.caseTrue
 import java.net.URL
 
 
@@ -47,7 +43,6 @@ class App : Application() {
 
         val moviesProvider by lazy { MoviesProvider() }
 
-
         val isNetworkAvailable: Boolean
             get(){
 
@@ -61,6 +56,10 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        isFirstInstance().caseTrue {
+            updateIsFirstInstance()
+            DBSyncJob.schedule()
+        }
     }
 
     fun <T> addToRequestQueue(request: Request<T>, tag: String = TAG) {
