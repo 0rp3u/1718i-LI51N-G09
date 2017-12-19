@@ -12,11 +12,12 @@ class MoviesProvider {
 
     companion object {
         val tmdbAPI  by lazy {
-            Log.d("provider", "tmdb api provider instanciated")
-            TMDBService() }
+            TMDBService()
+        }
+
         val moviesDatabase  by lazy {
-            Log.d("provider", "database provider instanciated")
-            MoviesDb(tmdbAPI) }
+            MoviesDb(tmdbAPI)
+        }
 
         val SOURCE = moviesDatabase
     }
