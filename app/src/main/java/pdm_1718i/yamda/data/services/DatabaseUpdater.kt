@@ -29,11 +29,12 @@ class DatabaseUpdater : JobService() {
 
     override fun onStartJob(p0: JobParameters?): Boolean {
         toast("DBSync started")
-        fetchDataToUpdate()
+        fetchDataToUpdate(p0)
         return true
     }
 
-    private fun fetchDataToUpdate() {
+
+    private fun fetchDataToUpdate(p0: JobParameters?) {
         async {
 
             val moviesOnDatabase: Set<Movie> = moviesInDataBase()
@@ -61,6 +62,9 @@ class DatabaseUpdater : JobService() {
                         }
                     }.toSet()
             )
+
+
+            jobFinished(p0, false) //TODO verify this
         }
     }
 

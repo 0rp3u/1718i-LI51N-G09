@@ -40,7 +40,7 @@ open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyEl
 
             listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
                 if(listView.adapterEndless.getItemCount() > position){
-                    val movieId = (listView.adapterEndless.getItem(position) as Movie).id
+                    val movieId = (listView.adapterEndless.getItem(position)).id
                     with(Intent(applicationContext, MovieDetailActivity::class.java).putExtra(MOVIE_KEY, movieId)){
                         startActivity(this)
                     }
@@ -74,7 +74,6 @@ open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyEl
 
     private fun updateGUI(movies: List<Movie>) {
         if (movies.isNotEmpty()) {
-
             listView.addNewData(movies)
         } else {
             CURRENT_PAGE = -1 //so user does not make calls for unavailable pages

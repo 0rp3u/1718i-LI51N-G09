@@ -30,10 +30,8 @@ object Util{
         if(nchanged > 0){
             when(newState){
                 FOLLOW -> {
-                    with(movie.release_date){
-                        if(this != null && isFuture()){
-                            JobNotification.schedule(movie.id, this)
-                        }
+                    movie.release_date?.run{
+                        if(isFuture())JobNotification.schedule(movie.id, this)
                     }
                 }
 

@@ -69,6 +69,8 @@ class FollowNotificationService: JobService(){
 
                 val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 notificationManager.notify(movie_id, build())
+
+                jobFinished(jobParameters, false) //TODO verify this
             }
         }
         return true //code is running asynchronously
