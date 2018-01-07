@@ -34,7 +34,9 @@ class DataMapper {
                 result.vote_average.toFloat(),
                 result.budget,
                 result.genres.map { Genre(it.name) },
-                result.overview
+                result.overview,
+                imdbId = result.imdb_id ?: ""
+
         )
     }
 }

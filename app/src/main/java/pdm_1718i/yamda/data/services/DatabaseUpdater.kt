@@ -62,6 +62,7 @@ class DatabaseUpdater : JobService() {
                         }
                     }.toSet()
             )
+            toast("DBSync finished")
             jobFinished(p0, false)
         }
     }

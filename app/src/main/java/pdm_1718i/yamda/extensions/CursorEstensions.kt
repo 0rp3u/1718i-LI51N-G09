@@ -42,8 +42,9 @@ private fun Cursor.constructDetailedMovieItem() = MovieDetail(
             vote_average =  getFromColumn(MovieContract.MovieDetails.VOTE_AVERAGE),
             backdrop_path = getFromColumn(MovieContract.MovieDetails.BACKDROP_PATH),
             release_date =  getCalendar(getFromColumn(MovieContract.MovieDetails.RELEASE_DATE)),
-            genres = listOf(Genre(getFromColumn(MovieContract.MovieDetails.GENRES))) //small hack, because we dont deal with genres as a list on database
-    )
+            genres = listOf(Genre(getFromColumn(MovieContract.MovieDetails.GENRES))), //small hack, because we dont deal with genres as a list on database
+            imdbId = getFromColumn(MovieContract.MovieDetails.IMDB_ID)
+)
 
 /**
  * Function that builds a [Movie] instance from the given [Cursor]

@@ -3,10 +3,11 @@
     <string name="search_value">Search</string>
     <string name="API_KEY" translatable="false">e6b5c7874febd4c400f94838548bafac</string>
     <string name="TMDB_URL" translatable="false">api.themoviedb.org/3</string>
-    <string name="TMDB_HOMEPAGE_URL" translatable="false">http://themoviedb.org</string>
+     <string name="TMDB_HOMEPAGE_URL" translatable="false">http://themoviedb.org</string>
     <string name="TMDB_IMAGE_URL" translatable="false">image.tmdb.org/t/p</string>
-    <string name="results_for" translatable="true">Results for</string>
+    <string name="IMDB_TITLE_URL" translatable="false">http://www.imdb.com/title/</string>
 
+    <string name="results_for" translatable="true">Results for</string>
     <string name="develoers">Developers:</string>
     <string name="dev1" translatable="false">\u2022 David Duarte</string>
     <string name="dev2" translatable="false">\u2022 João Duarte</string>

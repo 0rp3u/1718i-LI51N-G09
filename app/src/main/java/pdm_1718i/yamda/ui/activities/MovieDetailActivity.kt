@@ -1,6 +1,9 @@
 package pdm_1718i.yamda.ui.activities
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.coroutines.experimental.Deferred
@@ -26,6 +29,7 @@ class MovieDetailActivity : BaseActivity() {
     private val overviewTextView        by lazy { findViewById<TextView>(R.id.overview) }
     private val moviePoster             by lazy { findViewById<ImageView>(R.id.movie_poster) }
     private val followIcon              by lazy { findViewById<ImageView>(R.id.follow_icon) }
+    private val imdbIcon                by lazy { findViewById<ImageView>(R.id.imdb_button) }
 //    private val NOTIFICATION_OFF_ICON   by lazy { getDrawable(R.drawable.ic_notifications_none_black_24dp) }
 //    private val NOTIFICATION_ON_ICON    by lazy{ getDrawable(R.drawable.ic_notifications_active_black_24dp) }
 
@@ -72,6 +76,10 @@ class MovieDetailActivity : BaseActivity() {
                     false
                 }
                 registerEvents(movieDetail)
+            }
+
+            if(movieDetail.imdbId.isNotEmpty()){
+                imdbIcon.setOnClickListener { startActivity(Intent (Intent.ACTION_VIEW, Uri.parse(getString(R.string.IMDB_TITLE_URL).plus(movieDetail.imdbId)))) }
             }
         }
     }

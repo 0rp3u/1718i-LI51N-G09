@@ -16,7 +16,8 @@ data class MovieDetail(
         val budget: Int,
         val genres: List<Genre>,
         val overview: String?,
-        val isFollowing: Boolean = false
+        val isFollowing: Boolean = false,
+        val imdbId: String
 ){
     fun toContentValues() = ContentValues().apply {
         put(MovieContract.MovieDetails._ID, id)
@@ -28,6 +29,7 @@ data class MovieDetail(
         put(MovieContract.MovieDetails.RELEASE_DATE, getDateFromCalendar(release_date))
         put(MovieContract.MovieDetails.OVERVIEW, overview)
         put(MovieContract.MovieDetails.ORIGINAL_TITLE, title)
+        put(MovieContract.MovieDetails.IMDB_ID, imdbId)
         put(MovieContract.MovieDetails.GENRES, genres.joinToString(", ") { it.name })
     }
 }

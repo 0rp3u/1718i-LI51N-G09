@@ -19,6 +19,7 @@ object DbSchema {
         val BUDGET =            MovieContract.MovieDetails.BUDGET
         val GENRES =            MovieContract.MovieDetails.GENRES
         val IS_FOLLOWING =      MovieContract.MovieDetails.IS_FOLLOWING
+        val IMDB_ID =           MovieContract.MovieDetails.IMDB_ID
 
         val STRUCTURE = "$RELEASE_DATE TEXT , " +
                 "$BACKDROP_PATH TEXT , " +
@@ -30,7 +31,8 @@ object DbSchema {
                 "$ADULT BOOLEAN , " +
                 "$BUDGET INTEGER , " +
                 "$VOTE_AVERAGE DOUBLE , " +
-                "$IS_FOLLOWING BOOLEAN "
+                "$IS_FOLLOWING BOOLEAN , " +
+                "$IMDB_ID TEXT"
 
 
         val TBL_NAME = "MovieDetails"

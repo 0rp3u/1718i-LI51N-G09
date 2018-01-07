@@ -1,12 +1,14 @@
 package pdm_1718i.yamda.ui.activities
 
 import android.content.Intent
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -95,14 +97,16 @@ class MainActivity : BaseActivity(navigation = false) {
         }
     }
 /*
-        private fun generateRecyclerViewTask(res: Int, providerHandler: (page:Int) -> List<Movie>) {
+        private fun generateRecyclerViewTask2(res: Int, providerHandler: (page:Int) -> List<Movie>) {
 
-            (object: AsyncTask<String, Unit, List<Movie>>() {
+            object: AsyncTask<String, Unit, List<Movie>>() {
             override fun doInBackground(vararg p0: String?): List<Movie> {
                 Log.d("reciclerViewTask", "doInBackground in ${Thread.currentThread().id}")
                 return  providerHandler(DEFAULT_PAGINATION)
 
             }
+
+
             override fun onPostExecute(result: List<Movie>) {
                 val resView = findViewById<RecyclerView>(res)
                 resView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false)
@@ -111,6 +115,6 @@ class MainActivity : BaseActivity(navigation = false) {
                 Log.d("reciclerViewTask", "onPostExecute in ${Thread.currentThread().id}")
 
             }
-        }).execute()
+        }.execute()
     }*/
 }
