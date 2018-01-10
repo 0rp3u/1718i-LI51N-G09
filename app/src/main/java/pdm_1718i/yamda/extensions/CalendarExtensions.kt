@@ -23,8 +23,9 @@ fun Calendar.getDate(): String = parser.format(time)
 fun getCalendar(date: String): Calendar?{
     return if(TextUtils.isEmpty(date))
         return null
+
     else
-        Calendar.getInstance().setDate(date)
+        try{Calendar.getInstance().setDate(date)}catch (e:Exception){ null }
 }
 
 fun getYearFromCalendar(calendar: Calendar?): String{
