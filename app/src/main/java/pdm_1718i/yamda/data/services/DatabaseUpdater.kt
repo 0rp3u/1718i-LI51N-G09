@@ -35,35 +35,38 @@ class DatabaseUpdater : JobService() {
 
     private fun fetchDataToUpdate(p0: JobParameters?) {
         async {
+            try {
+                val moviesOnDatabase: List<Movie> = moviesInDataBase()
+                val onDatabase: List<Int> = moviesOnDatabase.map { it.id }
 
-            val moviesOnDatabase: List<Movie> = moviesInDataBase()
-            val onDatabase: List<Int> = moviesOnDatabase.map{it.id}
+                val detailsToFetch: MutableSet<Int> = mutableSetOf() //concurrently updated with the movies that are already fetched
+                val upcomingJob = bg { fetchUpcoming(onDatabase, detailsToFetch) }
+                val nowPLayingJob = bg { fetchNowPlaying(onDatabase, detailsToFetch) }
+                val mostPopularJob = bg { fetchMostPopular(onDatabase, detailsToFetch) }
 
-            val detailsToFetch: MutableSet<Int> = mutableSetOf() //concurrently updated with the movies that are already fetched
-            val upcomingJob = bg { fetchUpcoming(onDatabase, detailsToFetch) }
-            val nowPLayingJob = bg { fetchNowPlaying(onDatabase, detailsToFetch) }
-            val mostPopularJob = bg { fetchMostPopular(onDatabase, detailsToFetch) }
+                updateStaledFollowing(moviesOnDatabase) //remove following from movies that where already notified
 
-            updateStaledFollowing(moviesOnDatabase) //remove following from movies that where already notified
-
-            updateDb(
-                    upcomingJob.await(),
-                    nowPLayingJob.await(),
-                    mostPopularJob.await(),
-                    moviesOnDatabase,
-                    detailsToFetch.map {
-                        bg { tmdbAPI.movieDetail(it) }
-                    }.map {
-                        try {
-                            it.await()
-                        } catch (e: Throwable) {
-                            Log.d(TAG, "${e.message}")
-                            null
-                        }
-                    }.toSet()
-            )
-            toast("DBSync finished")
-            jobFinished(p0, false)
+                updateDb(
+                        upcomingJob.await(),
+                        nowPLayingJob.await(),
+                        mostPopularJob.await(),
+                        moviesOnDatabase,
+                        detailsToFetch.map {
+                            bg { tmdbAPI.movieDetail(it) }
+                        }.map {
+                            try {
+                                it.await()
+                            } catch (e: Throwable) {
+                                Log.d(TAG, "${e.message}")
+                                null
+                            }
+                        }.toSet()
+                )
+            }catch(e : Exception){
+                  Log.e(TAG, "${e.message}")
+            }finally {
+                jobFinished(p0, false)
+            }
         }
     }
 
@@ -84,13 +87,12 @@ class DatabaseUpdater : JobService() {
         return (1..5).map { fetchListEntry(it, tmdbAPI::upcomingMovies, onDatabase, alreadyFetched) }.toSet()
     }
 
-    private fun fetchListEntry(page: Int, providerHandler: (page: Int) -> List<Movie>, onDatabase: List<Int>, alreadyFetched: MutableSet<Int>): MovieListEntry {
+    private fun fetchListEntry(page: Int, providerHandler: (page: Int) -> List<Movie>, onDatabase: List<Int>, toFetched: MutableSet<Int>): MovieListEntry {
         val entryIds: MutableSet<Int> = providerHandler(page).map { it.id }.toMutableSet()
-        synchronized(alreadyFetched,{
-            alreadyFetched.addAll( // remove all that are already on database, or on the list to fetch/fetched and add them to the list
+        synchronized(toFetched,{
+            toFetched.addAll( // remove all that are already on database
                     entryIds
-                    .filterNot { onDatabase.contains(it) }
-                    .filterNot { alreadyFetched.contains(it) }
+                        .filterNot { onDatabase.contains(it) }
            )
         })
         return MovieListEntry(page, entryIds.toSet())

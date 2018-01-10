@@ -18,26 +18,30 @@ object DBSyncJob{
     val JOB_ID = -1
 
     private fun newInstance(calendar: Calendar?): JobInfo {
-        val job_id = if(calendar != null) JOB_ID else JOB_ID_FORCE_UPDATE
+        if(calendar == null){
+            return JobInfo.Builder(
+                    JOB_ID_FORCE_UPDATE,
+                    ComponentName(App.instance.applicationContext, DatabaseUpdater::class.java)
+            ).run {
+                setOverrideDeadline(0) //it was meant to be run now, so no need to have constraints
+                build()
+            }
+        }
         return JobInfo.Builder(
                 JOB_ID,
                 ComponentName(App.instance.applicationContext, DatabaseUpdater::class.java)
         ).run {
+            setExtras(PersistableBundle().apply {
+                putInt(BUNDLE_ID_KEY, JOB_ID)
+            })
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 setRequiresBatteryNotLow(!UtilPreferences.getLowBatteryUpdate())
             }
-
             setRequiredNetworkType(this.getNetworkTypeFromPreferences())
-            setRequiresDeviceIdle(true)
             setPersisted(true)
-
-            if(calendar != null){
-                setPeriodic(calendar.FromPresentInMillis())
-            }
-
-            setExtras(PersistableBundle().apply {
-                putInt(BUNDLE_ID_KEY, job_id)
-            })
+            setPeriodic(calendar.FromPresentInMillis())
+            setRequiresDeviceIdle(true)
             build()
         }
     }
