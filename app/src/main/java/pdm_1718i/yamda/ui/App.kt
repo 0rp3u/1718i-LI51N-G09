@@ -1,6 +1,7 @@
 package pdm_1718i.yamda.ui
 
 import android.app.Application
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.ImageLoader
@@ -16,6 +17,7 @@ import pdm_1718i.yamda.data.utils.UtilPreferences.isFirstInstance
 import pdm_1718i.yamda.data.utils.UtilPreferences.updateIsFirstInstance
 import pdm_1718i.yamda.extensions.AddHoursToPresent
 import pdm_1718i.yamda.extensions.caseTrue
+import pdm_1718i.yamda.extensions.getDate
 import java.net.URL
 import java.util.*
 
@@ -50,8 +52,10 @@ class App : Application() {
         instance = this
         isFirstInstance().caseTrue {
             updateIsFirstInstance()
+            DBSyncJob.schedule() //schedule a non repeating update now so user has data on DB
             val hours = UtilPreferences.getPeriodicity()
             val calendar = Calendar.getInstance().AddHoursToPresent(hours)
+            Log.v(TAG, "${calendar.getDate()}")
             DBSyncJob.schedule(calendar)
         }
     }
