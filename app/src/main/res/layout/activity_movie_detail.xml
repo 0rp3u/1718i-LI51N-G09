@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout android:layout_width="match_parent"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context="pdm_1718i.yamda.ui.activities.MovieDetailActivity"
     style="@style/DefaultMargin"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:id="@+id/layout"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:id="@+id/follow_icon"
@@ -83,15 +83,14 @@
 
         <ImageView
             android:id="@+id/imdb_button"
-            style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="60dp"
             android:layout_height="40dp"
-            android:scaleType="fitCenter"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
             android:adjustViewBounds="true"
             android:background="@android:color/transparent"
             android:cropToPadding="false"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_imdb_logo" />
 
 
