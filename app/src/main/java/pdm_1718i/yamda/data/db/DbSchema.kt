@@ -2,7 +2,7 @@ package pdm_1718i.yamda.data.db
 
 object DbSchema {
     val DB_NAME = "moviedata.db"
-    val DB_VERSION = 2
+    val DB_VERSION = 3
 
 
     object MovieDetails {

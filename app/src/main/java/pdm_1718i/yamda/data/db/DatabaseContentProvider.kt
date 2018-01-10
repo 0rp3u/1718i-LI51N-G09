@@ -222,10 +222,10 @@ class DatabaseContentProvider : ContentProvider(){
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
         val db = dbHelper.writableDatabase
-        val table = resolveTableAndSelectionInfoFromUri(uri, null).first
+        val table = resolveTableAndSelectionInfoFromUri(uri, selection).first
 
 
-        val ndel = db.delete(table, null, null)
+        val ndel = db.delete(table, selection, selectionArgs)
         if (ndel > 0 && !inBatchMode.get()) {
             context.contentResolver.notifyChange(uri, null)
         }
