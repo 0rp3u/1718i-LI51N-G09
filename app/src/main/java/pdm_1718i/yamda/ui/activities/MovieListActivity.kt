@@ -29,16 +29,18 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
                 UPCOMING    to App.moviesProvider::upcomingMovies,
                 FOLLOWING   to App.moviesProvider::followingMovies
         )
-
-
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val curPage = savedInstanceState?.getInt(super.CURRENT_PAGE_KEY, 1) ?: 1
+        val curPos = savedInstanceState?.getInt(super.POSITION_KEY, 0)  ?: 0
+
         with(intent.getStringExtra(REQUEST_TYPE)) {
             title = this
             movieListProvider = dispatcher.getValue(this)
             movieListProvider.let {
-                async(UI) { super.createGUI(bg { it(DEFAULT_PAGINATION) }.await()) }
+                async(UI) { super.createGUI(bg { loadPages(1, curPage)}.await(), curPos) }
             }
         }
     }

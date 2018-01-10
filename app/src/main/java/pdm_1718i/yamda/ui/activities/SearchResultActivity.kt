@@ -16,23 +16,25 @@ class SearchResultActivity: BaseListActivity(listView_id = R.id.list, emptyEleme
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        handleIntent(intent)
+        val curPage = savedInstanceState?.getInt(super.CURRENT_PAGE_KEY, 1) ?: 1
+        val curPos = savedInstanceState?.getInt(super.POSITION_KEY, 0)  ?: 0
+        handleIntent(intent, curPage, curPos)
     }
 
     override fun onNewIntent(intent: Intent) {
         setIntent(intent)
-        handleIntent(intent)
+        handleIntent(intent, 1, 0)
     }
 
-    private fun handleIntent(intent: Intent) {
+    private fun handleIntent(intent: Intent, curPage : Int, curPos : Int) {
         val query = intent.getStringExtra(QUERY_KEY)
+
         title = "$RESULT_TITLE: $query"
         movieListProvider = { page :Int-> App.moviesProvider.searchMovies(query, page) }
         async(UI) {
             super.createGUI(
-                    try { bg { movieListProvider(DEFAULT_PAGINATION) }.await() }
-                    catch (e: Exception) { listOf<Movie>() }
-            )
+                    try { bg { loadPages(1, curPage) }.await() } catch (e: Exception) { listOf<Movie>() }
+            , curPos)
         }
     }
 

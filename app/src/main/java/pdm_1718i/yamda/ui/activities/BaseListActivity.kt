@@ -19,6 +19,8 @@ import pdm_1718i.yamda.ui.holders.EndlessListView
 open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyElement_id: Int) : BaseActivity(actionBar), EndlessListener{
 
     private val MOVIE_KEY = "movieId"
+    protected val POSITION_KEY = "listPosition"
+    protected val CURRENT_PAGE_KEY = "currentPage"
 
     private val listView: EndlessListView by lazy { findViewById<EndlessListView>(listView_id) }
     private val emptyView: TextView by lazy { findViewById<TextView>(emptyElement_id) }
@@ -32,8 +34,14 @@ open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyEl
         listView.setFooterView(R.layout.loading_layout)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        val index = listView.firstVisiblePosition
+        outState.putInt(CURRENT_PAGE_KEY, CURRENT_PAGE)
+        outState.putInt(POSITION_KEY, index)
+        super.onSaveInstanceState(outState)
+    }
 
-    protected fun createGUI(movies: List<Movie>) {
+    protected fun createGUI(movies: List<Movie>, lisPos: Int) {
         if (movies.isNotEmpty()) {
             listView.setAdapter(EndlessAdapter(this, movies))
             listView.setListener(this)
@@ -46,6 +54,7 @@ open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyEl
                     }
                 }
             }
+            listView.setSelection(lisPos)
         } else{
             emptyView.visibility = View.VISIBLE
             listView.emptyView = emptyView
@@ -63,7 +72,7 @@ open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyEl
                         }
                         updateGUI(result.await())
                     } catch (e: Exception) {
-                        Log.d("asynExecption", "${e.message}")
+                        Log.d("loadDataException", "${e.message}")
                         listView.setProblem("something went wrong! click to try again")
                     }
                 }
@@ -71,12 +80,20 @@ open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyEl
         }
     }
 
+    protected fun loadPages(fromPage:  Int, toPage : Int): List<Movie> = //synchronous, used for on restore, when we know that data is probably cached
+        (fromPage..toPage).fold(mutableListOf()) {
+            acc: MutableList<Movie>, next -> run {
+                acc.addAll(movieListProvider(next))
+            }
+            CURRENT_PAGE = toPage
+            acc
+        }
+
 
     private fun updateGUI(movies: List<Movie>) {
         if (movies.isNotEmpty()) {
             listView.addNewData(movies)
         } else {
-            CURRENT_PAGE = -1 //so user does not make calls for unavailable pages
             listView.setFull()
         }
     }
