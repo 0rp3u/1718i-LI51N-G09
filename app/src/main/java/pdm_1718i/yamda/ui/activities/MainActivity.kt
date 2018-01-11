@@ -1,14 +1,12 @@
 package pdm_1718i.yamda.ui.activities
 
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.Toast
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
@@ -24,23 +22,28 @@ import pdm_1718i.yamda.ui.activities.MovieListActivity.Companion.UPCOMING
 import pdm_1718i.yamda.ui.adapters.MainActAdapter
 
 class MainActivity : BaseActivity(navigation = false) {
+
+    private val nowPlayingView  by lazy { findViewById<RecyclerView>(R.id.recycler_view_nowplaying) }
+    private val upcomingView    by lazy { findViewById<RecyclerView>(R.id.recycler_view_upcoming)   }
+    private val popularView     by lazy { findViewById<RecyclerView>(R.id.recycler_view_popular)    }
+    private val followingView   by lazy { findViewById<RecyclerView>(R.id.recycler_view_following)  }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        generateRecyclerViewTask(R.id.recycler_view_nowplaying, App.moviesProvider::nowPlayingMovies)
-        generateRecyclerViewTask(R.id.recycler_view_upcoming,   App.moviesProvider::upcomingMovies)
-        generateRecyclerViewTask(R.id.recycler_view_popular,    App.moviesProvider::popularMovies)
-        generateRecyclerViewTask(R.id.recycler_view_following,  App.moviesProvider::followingMovies)
-
+        generateRecyclerView(nowPlayingView)
+        generateRecyclerView(upcomingView)
+        generateRecyclerView(popularView)
+        generateRecyclerView(followingView)
     }
 
     override fun onResume() {
         super.onResume()
-        updateRecyclerViewTask(R.id.recycler_view_nowplaying, App.moviesProvider::nowPlayingMovies)
-        updateRecyclerViewTask(R.id.recycler_view_upcoming,   App.moviesProvider::upcomingMovies)
-        updateRecyclerViewTask(R.id.recycler_view_popular,    App.moviesProvider::popularMovies)
-        updateRecyclerViewTask(R.id.recycler_view_following,  App.moviesProvider::followingMovies)
+        updateRecyclerViewTask(nowPlayingView, App.moviesProvider::nowPlayingMovies)
+        updateRecyclerViewTask(upcomingView,   App.moviesProvider::upcomingMovies)
+        updateRecyclerViewTask(popularView,    App.moviesProvider::popularMovies)
+        updateRecyclerViewTask(followingView,  App.moviesProvider::followingMovies)
     }
 
     fun onPopularMore(view: View){
@@ -72,15 +75,12 @@ class MainActivity : BaseActivity(navigation = false) {
     }
 
 
-    private fun generateRecyclerViewTask(res: Int, providerHandler: (page:Int) -> List<Movie>) {
-        val resView = findViewById<RecyclerView>(res)
+    private fun generateRecyclerView(resView : RecyclerView) {
         resView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false)
         resView.adapter = MainActAdapter(listOf())
-        updateRecyclerViewTask(res, providerHandler)
     }
 
-    private fun updateRecyclerViewTask(res: Int, providerHandler: (page:Int) -> List<Movie>) {
-        val resView = findViewById<RecyclerView>(res)
+    private fun updateRecyclerViewTask(resView : RecyclerView, providerHandler: (page:Int) -> List<Movie>) {
         val adapter = resView.adapter as MainActAdapter
         async(UI) {
             try{

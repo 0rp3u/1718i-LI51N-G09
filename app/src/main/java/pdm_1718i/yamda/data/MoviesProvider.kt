@@ -1,8 +1,10 @@
 package pdm_1718i.yamda.data
 
 import android.graphics.Bitmap
+import android.os.AsyncTask
 import android.util.Log
 import android.widget.ImageView
+import android.widget.Toast
 import pdm_1718i.yamda.data.db.MoviesDb
 import pdm_1718i.yamda.data.server.TMDBService
 import pdm_1718i.yamda.model.Movie
