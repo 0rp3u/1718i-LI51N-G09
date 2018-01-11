@@ -31,7 +31,7 @@ class MoviesDb(private val provider : MoviesDataSource) : MoviesDataSource{
     }
 
     fun followingMovies (page : Int): List<Movie>{
-        if(page > 1) return listOf() //TODO change this, because its just an hack since we dont have pages for following
+        if(page > 1) return listOf()
         val movieCursor = App.instance.contentResolver.query(MovieContract.MovieDetails.CONTENT_URI, MovieContract.MovieDetails.PROJECT_ALL, "${MovieContract.MovieDetails.IS_FOLLOWING} = ?", arrayOf("1"), null)
         Log.d("movieDB","returned ${movieCursor.count } items")
         return movieCursor.toMovieList() ?: listOf()

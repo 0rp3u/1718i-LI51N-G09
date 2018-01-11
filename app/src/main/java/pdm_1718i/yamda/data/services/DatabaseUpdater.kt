@@ -200,8 +200,4 @@ class DatabaseUpdater : JobService() {
             !(nowPlaying.find{ it.list.contains(id) } != null || mostPopular.find{ it.list.contains(id)} != null || upComing.find{ it.list.contains(id) } != null) //not on any of this lists
         }.map { it.id }
 
-    private fun handleError(error: VolleyError): Unit {
-        // TODO
-        Log.v(TAG, "KABBUMMM")
-    }
 }

@@ -9,6 +9,7 @@ import com.android.volley.toolbox.Volley
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.MoviesProvider
 import pdm_1718i.yamda.data.cache.bitmap.DiskLruImageCache
+import pdm_1718i.yamda.data.cache.bitmap.DiskLruImageCacheJakeHarton
 import pdm_1718i.yamda.data.server.ThrottlePolicy
 import pdm_1718i.yamda.data.server.ThrottledHttpStack
 import pdm_1718i.yamda.data.services.DBSyncJob
@@ -39,8 +40,8 @@ class App : Application() {
         }
 
         val imageLoader by lazy {
-            //val cache = DiskLruImageCacheJakeHarton(this.instance, "imageCache")
-            val cache = DiskLruImageCache(requestQueue.cache)
+            val cache = DiskLruImageCacheJakeHarton(this.instance, "imageCache")
+            //val cache = DiskLruImageCache(requestQueue.cache)
             ImageLoader(requestQueue,cache)
         }
 

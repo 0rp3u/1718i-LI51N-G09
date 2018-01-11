@@ -8,7 +8,7 @@ import android.util.Log
 import com.android.volley.toolbox.ImageLoader.ImageCache
 import com.jakewharton.disklrucache.DiskLruCache
 import pdm_1718i.yamda.extensions.memoize
-
+import java.security.MessageDigest
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.File
@@ -32,6 +32,7 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
         private val IO_BUFFER_SIZE = 8 * 1024
         private val APP_VERSION = 1
         private val VALUE_COUNT = 1
+        private var mesageDiget = MessageDigest.getInstance("SHA-1")
     }
 
     val cacheFolder: File
@@ -154,9 +155,9 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
 
 
     private fun createKey(unsafeKey : String) : String{
-
-        return unsafeKey.toLowerCase().substring(unsafeKey.lastIndexOf('/')+1, unsafeKey.lastIndexOf('.'))
-
+        val disg = mesageDiget.digest(unsafeKey.toByteArray())
+        return java.math.BigInteger(1, disg).toString(16)
+        //return unsafeKey.toLowerCase().substring(unsafeKey.lastIndexOf('/')+1, unsafeKey.lastIndexOf('.'))
     }
 
     fun clearCache() {

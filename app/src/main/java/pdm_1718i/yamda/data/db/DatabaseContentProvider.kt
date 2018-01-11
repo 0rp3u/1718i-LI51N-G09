@@ -33,7 +33,7 @@ class DatabaseContentProvider : ContentProvider(){
         val ITEM = 10
     }
 
-    object THEATERS{//todo change name to Now_Playing
+    object NOW_PLAYING{
         val LIST = 11
         val ITEM = 12
     }
@@ -78,11 +78,11 @@ class DatabaseContentProvider : ContentProvider(){
         /*****************************************************************************/
         uriMatcher.addURI(MovieContract.AUTHORITY,
                 MovieContract.NowPlayingMovies.RESOURCE,
-                THEATERS.LIST)
+                NOW_PLAYING.LIST)
 
         uriMatcher.addURI(MovieContract.AUTHORITY,
                 "${MovieContract.NowPlayingMovies.RESOURCE}/#",
-                THEATERS.ITEM)
+                NOW_PLAYING.ITEM)
 
         /*****************************************************************************/
         uriMatcher.addURI(MovieContract.AUTHORITY,
@@ -128,8 +128,8 @@ class DatabaseContentProvider : ContentProvider(){
             DETAILS.LIST  ->        MovieContract.MovieDetails.CONTENT_TYPE
             DETAILS.ITEM  ->        MovieContract.MovieDetails.CONTENT_ITEM_TYPE
 
-            THEATERS.LIST ->        MovieContract.NowPlayingMovies.CONTENT_TYPE
-            THEATERS.ITEM ->        MovieContract.NowPlayingMovies.CONTENT_ITEM_TYPE
+            NOW_PLAYING.LIST ->        MovieContract.NowPlayingMovies.CONTENT_TYPE
+            NOW_PLAYING.ITEM ->        MovieContract.NowPlayingMovies.CONTENT_ITEM_TYPE
 
             UPCOMING.LIST ->        MovieContract.UpcomingMovies.CONTENT_TYPE
             UPCOMING.ITEM ->        MovieContract.UpcomingMovies.CONTENT_ITEM_TYPE
@@ -161,7 +161,7 @@ class DatabaseContentProvider : ContentProvider(){
     private fun resolveTableInfoFromUri(uri: Uri): String = when (uriMatcher.match(uri)) {
         DETAILS.LIST  ->     DbSchema.MovieDetails.TBL_NAME
         UPCOMING.LIST ->     DbSchema.UpcomingMovies.VIEW_NAME
-        THEATERS.LIST ->     DbSchema.NowPlayingMovies.VIEW_NAME
+        NOW_PLAYING.LIST ->     DbSchema.NowPlayingMovies.VIEW_NAME
         POPULAR.LIST  ->     DbSchema.MostPopularMovies.VIEW_NAME
         UPCOMING_IDS.LIST -> DbSchema.UpcomingIds.TBL_NAME
         THEATERS_IDS.LIST -> DbSchema.NowPlayingIds.TBL_NAME
@@ -182,7 +182,7 @@ class DatabaseContentProvider : ContentProvider(){
         return when (uriMatcher.match(uri)) {
             DETAILS.ITEM  ->     Pair(DbSchema.MovieDetails.TBL_NAME, itemSelection)
             UPCOMING.ITEM ->     Pair(DbSchema.UpcomingMovies.VIEW_NAME, itemSelection)
-            THEATERS.ITEM ->     Pair(DbSchema.NowPlayingMovies.VIEW_NAME, itemSelection)
+            NOW_PLAYING.ITEM ->     Pair(DbSchema.NowPlayingMovies.VIEW_NAME, itemSelection)
             POPULAR.ITEM  ->     Pair(DbSchema.MostPopularMovies.VIEW_NAME, itemSelection)
             UPCOMING_IDS.ITEM -> Pair(DbSchema.UpcomingIds.TBL_NAME, itemSelection)
             THEATERS_IDS.ITEM -> Pair(DbSchema.NowPlayingIds.TBL_NAME, itemSelection)
