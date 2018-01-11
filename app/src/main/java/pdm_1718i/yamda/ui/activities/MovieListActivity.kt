@@ -23,7 +23,7 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
         val PLAYING = "Now Playing"
         val UPCOMING = "Upcoming"
         val FOLLOWING = "Following"
-        @JvmStatic val dispatcher = mapOf<String, (Int) -> List<Movie>>(
+        val dispatcher = mapOf<String, (Int) -> List<Movie>>(
                 POPULAR     to App.moviesProvider::popularMovies,
                 PLAYING     to App.moviesProvider::nowPlayingMovies,
                 UPCOMING    to App.moviesProvider::upcomingMovies,
@@ -39,8 +39,7 @@ class MovieListActivity : BaseListActivity(listView_id = R.id.list, emptyElement
         with(intent.getStringExtra(REQUEST_TYPE)) {
             title = this
             movieListProvider = dispatcher.getValue(this)
-            movieListProvider.let {
-                async(UI) { super.createGUI(bg { loadPages(1, curPage)}.await(), curPos) }
+                async(UI) { super.createGUI(bg { loadPages(1, curPage)}.await(), curPos)
             }
         }
     }

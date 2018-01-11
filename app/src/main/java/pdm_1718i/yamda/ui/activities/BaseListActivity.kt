@@ -54,7 +54,8 @@ open class BaseListActivity(actionBar: Boolean = true, listView_id: Int, emptyEl
                     }
                 }
             }
-            listView.setSelection(lisPos)
+
+            listView. setSelectionFromTop(lisPos, 0)
         } else{
             emptyView.visibility = View.VISIBLE
             listView.emptyView = emptyView
