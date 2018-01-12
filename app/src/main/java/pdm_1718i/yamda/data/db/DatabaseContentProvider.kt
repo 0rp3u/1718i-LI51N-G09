@@ -43,6 +43,11 @@ class DatabaseContentProvider : ContentProvider(){
         val ITEM = 14
     }
 
+    object IMAGE{
+        val LIST = 15
+        val ITEM = 16
+    }
+
     private val uriMatcher: UriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
     init {
@@ -112,6 +117,15 @@ class DatabaseContentProvider : ContentProvider(){
                 DETAILS.ITEM)
 
         /*****************************************************************************/
+        uriMatcher.addURI(MovieContract.AUTHORITY,
+                MovieContract.Image.RESOURCE,
+                IMAGE.LIST)
+
+        uriMatcher.addURI(MovieContract.AUTHORITY,
+                "${MovieContract.Image.RESOURCE}/#",
+                IMAGE.ITEM)
+
+        /*****************************************************************************/
     }
 
     private lateinit var dbHelper: MoviesDbHelper
@@ -128,8 +142,11 @@ class DatabaseContentProvider : ContentProvider(){
             DETAILS.LIST  ->        MovieContract.MovieDetails.CONTENT_TYPE
             DETAILS.ITEM  ->        MovieContract.MovieDetails.CONTENT_ITEM_TYPE
 
-            NOW_PLAYING.LIST ->        MovieContract.NowPlayingMovies.CONTENT_TYPE
-            NOW_PLAYING.ITEM ->        MovieContract.NowPlayingMovies.CONTENT_ITEM_TYPE
+            IMAGE.LIST  ->          MovieContract.Image.CONTENT_TYPE
+            IMAGE.ITEM  ->          MovieContract.Image.CONTENT_ITEM_TYPE
+
+            NOW_PLAYING.LIST ->     MovieContract.NowPlayingMovies.CONTENT_TYPE
+            NOW_PLAYING.ITEM ->     MovieContract.NowPlayingMovies.CONTENT_ITEM_TYPE
 
             UPCOMING.LIST ->        MovieContract.UpcomingMovies.CONTENT_TYPE
             UPCOMING.ITEM ->        MovieContract.UpcomingMovies.CONTENT_ITEM_TYPE
@@ -160,8 +177,9 @@ class DatabaseContentProvider : ContentProvider(){
 
     private fun resolveTableInfoFromUri(uri: Uri): String = when (uriMatcher.match(uri)) {
         DETAILS.LIST  ->     DbSchema.MovieDetails.TBL_NAME
+        IMAGE.LIST  ->       DbSchema.Image.TBL_NAME
         UPCOMING.LIST ->     DbSchema.UpcomingMovies.VIEW_NAME
-        NOW_PLAYING.LIST ->     DbSchema.NowPlayingMovies.VIEW_NAME
+        NOW_PLAYING.LIST ->  DbSchema.NowPlayingMovies.VIEW_NAME
         POPULAR.LIST  ->     DbSchema.MostPopularMovies.VIEW_NAME
         UPCOMING_IDS.LIST -> DbSchema.UpcomingIds.TBL_NAME
         THEATERS_IDS.LIST -> DbSchema.NowPlayingIds.TBL_NAME
@@ -181,8 +199,9 @@ class DatabaseContentProvider : ContentProvider(){
         val itemSelection = "${BaseColumns._ID} = ${uri.lastPathSegment}"
         return when (uriMatcher.match(uri)) {
             DETAILS.ITEM  ->     Pair(DbSchema.MovieDetails.TBL_NAME, itemSelection)
+            IMAGE.ITEM  ->       Pair(DbSchema.Image.TBL_NAME, itemSelection)
             UPCOMING.ITEM ->     Pair(DbSchema.UpcomingMovies.VIEW_NAME, itemSelection)
-            NOW_PLAYING.ITEM ->     Pair(DbSchema.NowPlayingMovies.VIEW_NAME, itemSelection)
+            NOW_PLAYING.ITEM ->  Pair(DbSchema.NowPlayingMovies.VIEW_NAME, itemSelection)
             POPULAR.ITEM  ->     Pair(DbSchema.MostPopularMovies.VIEW_NAME, itemSelection)
             UPCOMING_IDS.ITEM -> Pair(DbSchema.UpcomingIds.TBL_NAME, itemSelection)
             THEATERS_IDS.ITEM -> Pair(DbSchema.NowPlayingIds.TBL_NAME, itemSelection)

@@ -26,7 +26,7 @@ class ThrottledDispatcher(private val policy: ThrottlePolicy, private val httpSt
         Log.d("dispatcher_Thread ${Thread.currentThread().id}", "Dispatcher initialized")
         while (true) {
             val work = requestQueue.poll(60*10, TimeUnit.SECONDS)
-            if(execededTimeframe(policy.maxRequestsInTimeFrame)) {
+            if(exceededTimeframe(policy.maxRequestsInTimeFrame)) {
                 val waitTime = policy.timeFrame - (System.currentTimeMillis() - requestsTimeStamps.last())
                 Log.d("dispatcher_Thread ${Thread.currentThread().id}", "reached API limit, going to wait for $waitTime milliseconds, next work is ${work.request?.url}")
 
@@ -61,7 +61,7 @@ class ThrottledDispatcher(private val policy: ThrottlePolicy, private val httpSt
 
 
     //removes all timeStamps that are older than 10 seconds, verify if there are more than max request still inside
-    private fun execededTimeframe(maxRequests: Int): Boolean {
+    private fun exceededTimeframe(maxRequests: Int): Boolean {
         val currentTimestamp = System.currentTimeMillis()
         val older = requestsTimeStamps.filter { ((currentTimestamp - it) >= policy.timeFrame) }
         requestsTimeStamps.removeAll(older)//remove all older than time Frame

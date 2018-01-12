@@ -50,7 +50,6 @@ class FollowNotificationService: JobService(){
                     }else{
                         setVibrate(LongArray(2, {1000}))
                     }
-                    this
                 }
             }.apply {
                 setContentTitle("New movie released")
@@ -63,7 +62,7 @@ class FollowNotificationService: JobService(){
                     PendingIntent.getActivity(App.instance, movie_id, it, PendingIntent.FLAG_CANCEL_CURRENT)
                 }.let{ setContentIntent(it)}
 
-                movieJob?.await()?.run {
+                movieJob.await()?.run {
                     setContentText(this.title)
                 }
 

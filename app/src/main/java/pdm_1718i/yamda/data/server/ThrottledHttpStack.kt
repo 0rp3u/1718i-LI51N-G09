@@ -7,7 +7,6 @@ import com.android.volley.Request
 import com.android.volley.toolbox.HttpClientStack
 import com.android.volley.toolbox.HttpStack
 import com.android.volley.toolbox.HurlStack
-import org.apache.http.conn.ConnectTimeoutException
 import java.net.URL
 import java.util.concurrent.ConcurrentHashMap
 

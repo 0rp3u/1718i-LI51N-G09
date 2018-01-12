@@ -123,7 +123,7 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
             }
         return bitmap
     }
-    
+
     fun containsKey(key: String): Boolean {
         var contained = false
         val key = createKey(key)
