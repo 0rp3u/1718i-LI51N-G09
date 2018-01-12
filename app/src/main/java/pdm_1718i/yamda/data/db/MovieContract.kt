@@ -62,6 +62,31 @@ object MovieContract : ContractInterface {
         val DEFAULT_SORT_ORDER = String()
     }
 
+    object Image : BaseColumns {
+        val RESOURCE = "Images"
+
+        val CONTENT_URI = Uri.withAppendedPath(
+                BASE_CONTENT_URI,
+                RESOURCE
+        )
+
+        val CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
+
+        val CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + MEDIA_BASE_SUBTYPE + RESOURCE
+
+        val _ID = BaseColumns._ID
+        val BITMAP_DATA = "bitmap_data"
+
+
+        val PROJECT_ALL = arrayOf(
+                _ID,
+                BITMAP_DATA
+        )
+        val DEFAULT_SORT_ORDER = String()
+    }
+
     object NowPlayingIds : BaseColumns{
         val RESOURCE = "NowPlayingIds"
 

@@ -1,8 +1,10 @@
 package pdm_1718i.yamda.data.db
 
+import android.telecom.Call
+
 object DbSchema {
     val DB_NAME = "moviedata.db"
-    val DB_VERSION = 3
+    val DB_VERSION = 5
 
 
     object MovieDetails {
@@ -44,6 +46,33 @@ object DbSchema {
                         ")"
 
         val DDL_DROP_TABLE = "DROP TABLE IF EXISTS " + TBL_NAME
+    }
+
+    object Image {
+
+        val COL_ID =            MovieContract.Image._ID
+        val BITMAP_DATA =            MovieContract.Image.BITMAP_DATA
+        val TBL_NAME = MovieContract.Image.RESOURCE
+        val TRG_NAME = "delete_image_on_details_delete"
+
+        val DDL_CREATE_TABLE =
+                "CREATE TABLE $TBL_NAME ( " +
+                        "$COL_ID TEXT PRIMARY KEY, " +
+                        "$BITMAP_DATA BLOB  " +
+                        ")"
+
+        val DDL_CREATE_TRIGGER =
+                "CREATE TRIGGER $TRG_NAME " +
+                    " BEFORE DELETE " +
+                    " ON ${MovieDetails.TBL_NAME} " +
+                    " BEGIN " +
+                        " DELETE FROM $TBL_NAME" +
+                                " WHERE $COL_ID = OLD.${MovieDetails.POSTER_PATH}; " +
+                    " END "
+
+
+        val DDL_DROP_TABLE =   "DROP TABLE IF EXISTS " + TBL_NAME
+        val DDL_DROP_TRIGGER = "DROP TRIGGER IF EXISTS " + TRG_NAME
     }
 
     object UpcomingIds {

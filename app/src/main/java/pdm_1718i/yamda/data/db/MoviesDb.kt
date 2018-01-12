@@ -1,10 +1,15 @@
 package pdm_1718i.yamda.data.db
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.ImageView
 import pdm_1718i.yamda.data.MoviesDataSource
+import pdm_1718i.yamda.data.server.Options
+import pdm_1718i.yamda.data.server.Options.BIG
+import pdm_1718i.yamda.data.server.Options.SMALL
 import pdm_1718i.yamda.extensions.toDetailedMovieItem
+import pdm_1718i.yamda.extensions.toImage
 import pdm_1718i.yamda.extensions.toMovieList
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.model.MovieDetail
@@ -55,13 +60,27 @@ class MoviesDb(private val provider : MoviesDataSource) : MoviesDataSource{
     }
 
     override fun movieImage(image_id: String, imageView: ImageView, image_size: String){
-        provider.movieImage(image_id,imageView,image_size) //database does not deal with images
+        when(image_size){
+            Options.poster_sizes[SMALL]-> {
+                val imageCursor = App.instance.contentResolver.query(MovieContract.Image.CONTENT_URI, MovieContract.Image.PROJECT_ALL, "${MovieContract.Image._ID} = ?", arrayOf(image_id), null)
+                val bitmap = imageCursor.toImage()
+                if (bitmap != null) imageView.setImageBitmap(bitmap)
+                else provider.movieImage(image_id, imageView, image_size) //database does not deal with images
+            }
+            else -> provider.movieImage(image_id,imageView,image_size)
+        }
     }
 
     override fun movieImage(image_id: String, image_size: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit){
-        provider.movieImage(image_id, image_size, bitmapCompletionHandler) //database does not deal with images
-
-
+        when(image_size){
+            Options.poster_sizes[SMALL]-> {
+                val imageCursor = App.instance.contentResolver.query(MovieContract.Image.CONTENT_URI, MovieContract.Image.PROJECT_ALL, "${MovieContract.Image._ID} = ?", arrayOf(image_id), null)
+                val bitmap = imageCursor.toImage()
+                if (bitmap != null) bitmapCompletionHandler(bitmap)
+                else provider.movieImage(image_id, image_size, bitmapCompletionHandler) //database does not deal with images
+            }
+            else -> provider.movieImage(image_id,image_size, bitmapCompletionHandler)
+        }
     }
 
 }
