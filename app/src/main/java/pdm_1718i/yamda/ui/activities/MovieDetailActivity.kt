@@ -14,10 +14,7 @@ import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.db.Util
 import pdm_1718i.yamda.data.server.Options
 import pdm_1718i.yamda.data.server.Options.BIG
-import pdm_1718i.yamda.extensions.getDateFromCalendar
-import pdm_1718i.yamda.extensions.getYearFromCalendar
-import pdm_1718i.yamda.extensions.isFuture
-import pdm_1718i.yamda.extensions.toast
+import pdm_1718i.yamda.extensions.*
 import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.ui.App
 
@@ -56,7 +53,7 @@ class MovieDetailActivity : BaseActivity() {
             this@MovieDetailActivity.title = title
             this@MovieDetailActivity.supportActionBar?.subtitle = getYearFromCalendar(release_date)
             this@MovieDetailActivity.releaseDateView.text = getDateFromCalendar(release_date)
-            ratingTextView.text = vote_average.toString()
+            ratingTextView.text = vote_average.asRounded()
             val genres = genres.joinToString(separator = ", ") {it.name}
             genreTextView.text = genres
             overviewTextView.text = overview
