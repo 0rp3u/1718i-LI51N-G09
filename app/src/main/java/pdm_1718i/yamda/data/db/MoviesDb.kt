@@ -60,8 +60,10 @@ class MoviesDb(private val provider : MoviesDataSource) : MoviesDataSource{
 
     override fun movieImage(image_id: String, image_size: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit){
         provider.movieImage(image_id, image_size, bitmapCompletionHandler) //database does not deal with images
+    }
 
-
+    override fun movieImageSync(image_id: String, image_size: String): Bitmap {
+        return provider.movieImageSync(image_id, image_size)
     }
 
 }

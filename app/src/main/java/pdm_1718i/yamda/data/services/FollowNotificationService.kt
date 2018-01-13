@@ -10,8 +10,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.R
+import pdm_1718i.yamda.data.server.Options
 import pdm_1718i.yamda.data.utils.UtilPreferences
 import pdm_1718i.yamda.ui.App
 import pdm_1718i.yamda.ui.activities.MovieDetailActivity
@@ -30,7 +32,7 @@ class FollowNotificationService: JobService(){
         if(!UtilPreferences.getNotification()) return false
         val movie_id: Int = jobParameters?.extras?.getInt(MovieNotification.BUNDLE_ID_KEY) ?: return false
 
-        async{
+        launch{
             val movieJob = bg {
                 try {
                     App.moviesProvider.movieDetail(movie_id)
@@ -63,8 +65,10 @@ class FollowNotificationService: JobService(){
                     PendingIntent.getActivity(App.instance, movie_id, it, PendingIntent.FLAG_CANCEL_CURRENT)
                 }.let{ setContentIntent(it)}
 
-                movieJob?.await()?.run {
-                    setContentText(this.title)
+                movieJob?.await()?.let {
+                    setContentText(it.title)
+                    val image = it.poster_path?.run {  async{ App.moviesProvider.image(it.poster_path, Options.poster_sizes[Options.BIG]!!) }  }?.await() ?: null
+                    image?.let { setLargeIcon(it) }
                 }
 
                 val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

@@ -6,11 +6,15 @@ import android.util.Log
 import android.widget.ImageView
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.RequestFuture
 import com.example.pdm_1718i.yamda.data.server.MovieDetailResult
 import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
 import com.google.gson.Gson
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
 import org.json.JSONObject
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.MoviesDataSource
@@ -159,5 +163,39 @@ class TMDBService : MoviesDataSource {
                 .toString()
         App.imageLoader
                 .get(uri, getImageListener(bitmapCompletionHandler))
+    }
+
+    override fun movieImageSync(image_id: String, image_size: String): Bitmap{
+
+        val future: RequestFuture<Bitmap> = RequestFuture.newFuture()
+
+
+        val uri = Uri.Builder()
+                .appendEncodedPath(image_size)
+                .appendEncodedPath(image_id)
+                .scheme("https")
+                .encodedAuthority(IMAGE_PATH)
+                .toString()
+
+
+        val listener = object : ImageLoader.ImageListener {
+            override fun onErrorResponse(error: VolleyError) {
+                //bitmapCompletionHandler(null)
+                future.onErrorResponse(error)
+            }
+
+            override fun onResponse(response: ImageLoader.ImageContainer, isImmediate: Boolean) {
+                future.onResponse(response.bitmap)
+            }
+        }
+
+
+        //hack
+        async(UI) {
+            App.imageLoader.get(uri, listener)
+        }
+
+
+        return future.get()
     }
 }
