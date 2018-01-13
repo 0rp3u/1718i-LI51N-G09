@@ -5,78 +5,78 @@ import android.app.job.JobService
 import android.content.ContentProviderOperation
 import android.content.ContentValues
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.util.Log
-import com.android.volley.VolleyError
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.data.MoviesProvider.Companion.tmdbAPI
 import pdm_1718i.yamda.data.db.MovieContract
-import pdm_1718i.yamda.data.server.Options
+import pdm_1718i.yamda.data.server.ImageOption
 import pdm_1718i.yamda.extensions.isFuture
 import pdm_1718i.yamda.extensions.toMovieList
 import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.model.MovieDetail
-import android.graphics.Bitmap
-import kotlinx.coroutines.experimental.Deferred
-import pdm_1718i.yamda.data.server.Options.poster_sizes
 import java.io.ByteArrayOutputStream
 
 
 class DatabaseUpdater : JobService() {
     val TAG = this.javaClass.simpleName
+    private lateinit var fetchDataToUpdateJob : Job
 
     override fun onStopJob(p0: JobParameters?): Boolean {
-        //DBSync was somehow cancelled
         toast("Sync cancelled")
-        return true //re-schedule service
+        fetchDataToUpdateJob.cancel(/*Throwable("OnStopJob: Scheduling requirements are no longer being met.")*/)
+        return true
     }
 
     override fun onStartJob(p0: JobParameters?): Boolean {
         toast("DBSync started")
-        fetchDataToUpdate(p0)
+        fetchDataToUpdateJob = fetchDataToUpdate(p0)
         return true
     }
 
-    private fun fetchDataToUpdate(p0: JobParameters?) {
-        async {
-            try {
-                val moviesOnDatabase: List<Movie> = moviesInDataBase()
-                val onDatabase: List<Int> = moviesOnDatabase.map { it.id }
+    private fun fetchDataToUpdate(p0: JobParameters?) = launch {
+        try {
+            val moviesOnDatabase: List<Movie> = moviesInDataBase()
+            val onDatabase: List<Int> = moviesOnDatabase.map { it.id }
 
-                val detailsToFetch: MutableSet<Int> = mutableSetOf() //concurrently updated with the movies that are already fetched
-                val upcomingJob = bg { fetchUpcoming(onDatabase, detailsToFetch) }
-                val nowPLayingJob = bg { fetchNowPlaying(onDatabase, detailsToFetch) }
-                val mostPopularJob = bg { fetchMostPopular(onDatabase, detailsToFetch) }
-                val imageFetchJobs :MutableList<Pair<Deferred<Bitmap>, String>> = mutableListOf()
+            val detailsToFetch: MutableSet<Int> = mutableSetOf() //concurrently updated with the movies that are already fetched
+            val upcomingJob = bg { fetchUpcoming(onDatabase, detailsToFetch) }
+            val nowPLayingJob = bg { fetchNowPlaying(onDatabase, detailsToFetch) }
+            val mostPopularJob = bg { fetchMostPopular(onDatabase, detailsToFetch) }
+            val imageFetchJobs: MutableList<Pair<Deferred<Bitmap>, String>> = mutableListOf()
 
-                updateStaledFollowing(moviesOnDatabase) //remove following from movies that where already notified
+            updateStaledFollowing(moviesOnDatabase) //remove following from movies that where already notified
 
-                updateDb(
-                        upcomingJob.await(),
-                        nowPLayingJob.await(),
-                        mostPopularJob.await(),
-                        moviesOnDatabase,
-                        detailsToFetch.map {
-                            bg { tmdbAPI.movieDetail(it) }
-                        }.mapNotNull {
-                            try {
-                                val movie = it.await()
-                                if(movie.poster_path.isNotEmpty())imageFetchJobs.add(Pair(bg {tmdbAPI.movieImage(movie.poster_path, poster_sizes[Options.SMALL]!!) }, movie.poster_path))
-                                movie
-                            } catch (e: Throwable) {
-                                Log.d(TAG, "${e.message}")
-                                null
+            updateDb(
+                    upcomingJob.await(),
+                    nowPLayingJob.await(),
+                    mostPopularJob.await(),
+                    moviesOnDatabase,
+                    detailsToFetch.map {
+                        bg { tmdbAPI.movieDetail(it) }
+                    }.mapNotNull {
+                        try {
+                            val movie = it.await()
+                            if(movie.poster_path.isNotEmpty()) {
+                                imageFetchJobs.add(Pair(bg { tmdbAPI.movieImageSync(movie.poster_path, ImageOption.SMALL) }, movie.poster_path))
                             }
-                        }.toSet(),
-                        imageFetchJobs.mapNotNull { try {Pair(it.first.await(),it.second) }catch (e:Exception){null}}
+                            movie
+                        } catch (e: Throwable) {
+                            Log.d(TAG, "${e.message}")
+                            null
+                        }
+                    }.toSet(),
+                    imageFetchJobs.mapNotNull { try {Pair(it.first.await(),it.second) }catch (e:Exception){null}}
 
-                )
-            }catch(e : Exception){
-                  Log.e(TAG, "${e.message}")
-            }finally {
-                jobFinished(p0, false)
-            }
+            )
+        }catch(e : Exception){
+              Log.e(TAG, "${e.message}")
+        }finally {
+            jobFinished(p0, false)
         }
     }
 

@@ -6,7 +6,8 @@ import pdm_1718i.yamda.ui.App
 
 
 object ConnectivityManager{
-    val manager by lazy { App.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
+    private val manager by lazy { App.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
+
 
     fun isConnected(): Boolean{
         val networkInfo = manager.activeNetworkInfo
