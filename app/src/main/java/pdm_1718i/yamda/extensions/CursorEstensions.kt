@@ -1,6 +1,8 @@
 package pdm_1718i.yamda.extensions
 
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.support.annotation.IdRes
 import pdm_1718i.yamda.data.db.MovieContract
 import pdm_1718i.yamda.model.Genre
@@ -45,6 +47,11 @@ private fun Cursor.constructDetailedMovieItem() = MovieDetail(
             genres = listOf(Genre(getFromColumn(MovieContract.MovieDetails.GENRES))), //small hack, because we dont deal with genres as a list on database
             imdbId = getFromColumn(MovieContract.MovieDetails.IMDB_ID)
 )
+
+private fun Cursor.constructImage() : Bitmap{
+    val imageBytes = getFromColumn(MovieContract.Image.BITMAP_DATA) as ByteArray
+    return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+}
 
 /**
  * Function that builds a [Movie] instance from the given [Cursor]
@@ -169,6 +176,20 @@ fun Cursor.toDetailedMovieItem(): MovieDetail? {
         } else null
     }
 }
+
+/**
+ * Function that verifies if a [cursor] has an item and builds an [Bitmap] instance from it
+ * @return The newly created [Bitmap]
+ */
+fun Cursor.toImage(): Bitmap? {
+    use {
+        return if (count > 0) {
+            moveToFirst()
+            return constructImage()
+        } else null
+    }
+}
+
 
 /**
  * Extension function that builds a list of [Movie] from the given [Cursor]

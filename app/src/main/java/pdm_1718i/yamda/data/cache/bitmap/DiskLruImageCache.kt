@@ -37,16 +37,17 @@ class DiskLruImageCache(private val mDiskCache : Cache) : ImageCache {
 
 
     //TODO this is temporary, we sould do a soft get on the disk cache so the headers are in order with bitmap access
-    override fun getBitmap(key: String): Bitmap? = memoize<String, Bitmap?>({
+    override fun getBitmap(key: String): Bitmap? {
 
             var bitmap: Bitmap? = null
             var entry : Cache.Entry?
             try {
                 entry =  mDiskCache.get(key)
 
+
                 if (entry == null) {
                     //Log.d("cache_test_DISK_", "$key was not on disk (snapshot) ")
-                    return@memoize null
+                    return null
                 }
                 bitmap = BitmapFactory.decodeByteArray(entry.data, 0, entry.data.size)
 
@@ -56,8 +57,8 @@ class DiskLruImageCache(private val mDiskCache : Cache) : ImageCache {
 
                 //Log.d("cache_test_DISK_", if (bitmap == null) "" else "image read from disk " + key)
 
-        return@memoize bitmap
-    }).invoke(key)
+        return bitmap
+    }
 
     fun containsKey(key: String): Boolean {
         val contained =  mDiskCache[key]  != null

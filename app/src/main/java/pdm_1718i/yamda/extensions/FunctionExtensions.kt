@@ -12,6 +12,6 @@ fun <K, R> memoize(fn: (K)->R?): (K)->R? {
         if (res != null)
             map.put(key, res)
         res
-    }
+        }
     }
 }

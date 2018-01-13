@@ -23,7 +23,7 @@ object DBSyncJob{
                     JOB_ID_FORCE_UPDATE,
                     ComponentName(App.instance.applicationContext, DatabaseUpdater::class.java)
             ).run {
-                setOverrideDeadline(0) //it was meant to be run now, so no need to have constraints
+                setRequiredNetworkType(this.getNetworkTypeFromPreferences())
                 build()
             }
         }

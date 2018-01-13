@@ -8,7 +8,7 @@ import android.util.Log
 import com.android.volley.toolbox.ImageLoader.ImageCache
 import com.jakewharton.disklrucache.DiskLruCache
 import pdm_1718i.yamda.extensions.memoize
-
+import java.security.MessageDigest
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.File
@@ -32,6 +32,7 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
         private val IO_BUFFER_SIZE = 8 * 1024
         private val APP_VERSION = 1
         private val VALUE_COUNT = 1
+        private var mesageDiget = MessageDigest.getInstance("MD5")
     }
 
     val cacheFolder: File
@@ -98,24 +99,21 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
             }
     }
 
-    //TODO this is temporary, we sould do a soft get on the disk cache so the headers are in order with bitmap access
-    override fun getBitmap(key: String): Bitmap? = memoize<String, Bitmap?>({
+    override fun getBitmap(key: String): Bitmap?{
             var bitmap: Bitmap? = null
-            var snapshot: DiskLruCache.Snapshot? = null
-            var key = createKey(key)
+            var key2 = createKey(key)
+            var snapshot : DiskLruCache.Snapshot? = null
             try {
+                snapshot = mDiskCache.get(key2) ?: return null
 
-                snapshot = mDiskCache.get(key)
-                if (snapshot == null) {
-                    //Log.d("cache_test_DISK_", "$key was not on disk (snapshot) ")
-
-                    return@memoize null
-                }
                 val inBuf = snapshot.getInputStream(0)
                 if (inBuf != null) {
                     val buffIn = BufferedInputStream(inBuf, IO_BUFFER_SIZE)
                     bitmap = BitmapFactory.decodeStream(buffIn)
+                    buffIn.close()
                 }
+
+
             } catch (e: IOException) {
                 e.printStackTrace()
             } finally {
@@ -123,9 +121,8 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
                     snapshot.close()
                 }
             }
-               // Log.d("cache_test_DISK_", if (bitmap == null) "" else "image read from disk " + key)
-        return@memoize bitmap
-    }).invoke(key)
+        return bitmap
+    }
 
     fun containsKey(key: String): Boolean {
         var contained = false
@@ -154,9 +151,9 @@ class DiskLruImageCacheJakeHarton(context: Context, uniqueName: String, diskCach
 
 
     private fun createKey(unsafeKey : String) : String{
-
-        return unsafeKey.toLowerCase().substring(unsafeKey.lastIndexOf('/')+1, unsafeKey.lastIndexOf('.'))
-
+        val disg = mesageDiget.digest(unsafeKey.toByteArray())
+        return java.math.BigInteger(1, disg).toString(16)
+        //return unsafeKey.toLowerCase().substring(unsafeKey.lastIndexOf('/')+1, unsafeKey.lastIndexOf('.'))
     }
 
     fun clearCache() {

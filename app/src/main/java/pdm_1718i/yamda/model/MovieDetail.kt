@@ -7,7 +7,7 @@ import java.util.*
 
 
 data class MovieDetail(
-        val poster_path: String?,
+        val poster_path: String,
         val backdrop_path: String?,
         val release_date: Calendar?,
         val id: Int,

@@ -19,18 +19,22 @@ class MoviesDbHelper(context: Context?) : SQLiteOpenHelper(context, DbSchema.DB_
 
     private fun createDb(db: SQLiteDatabase?) {
         db?.execSQL(DbSchema.MovieDetails.DDL_CREATE_TABLE)
+        db?.execSQL(DbSchema.Image.DDL_CREATE_TABLE)
         db?.execSQL(DbSchema.NowPlayingIds.DDL_CREATE_TABLE)
         db?.execSQL(DbSchema.UpcomingIds.DDL_CREATE_TABLE)
         db?.execSQL(DbSchema.MostPopularIds.DDL_CREATE_TABLE)
         createViews(db)
+        createTriggers(db)
     }
 
     private fun deleteDb(db: SQLiteDatabase?) {
         db?.execSQL(DbSchema.MovieDetails.DDL_DROP_TABLE)
+        db?.execSQL(DbSchema.Image.DDL_DROP_TABLE)
         db?.execSQL(DbSchema.NowPlayingIds.DDL_DROP_TABLE)
         db?.execSQL(DbSchema.UpcomingIds.DDL_DROP_TABLE)
         db?.execSQL(DbSchema.MostPopularIds.DDL_DROP_TABLE)
         deleteViews(db)
+        dropTriggers(db)
     }
 
     private fun createViews(db: SQLiteDatabase?){
@@ -43,6 +47,14 @@ class MoviesDbHelper(context: Context?) : SQLiteOpenHelper(context, DbSchema.DB_
         db?.execSQL(DbSchema.NowPlayingMovies.DDL_DROP_VIEW)
         db?.execSQL(DbSchema.UpcomingMovies.DDL_DROP_VIEW)
         db?.execSQL(DbSchema.MostPopularMovies.DDL_DROP_VIEW)
+    }
+
+    private fun createTriggers(db: SQLiteDatabase?){
+        db?.execSQL(DbSchema.Image.DDL_CREATE_TRIGGER)
+    }
+
+    private fun dropTriggers(db: SQLiteDatabase?){
+        db?.execSQL(DbSchema.Image.DDL_DROP_TRIGGER)
     }
 
 }

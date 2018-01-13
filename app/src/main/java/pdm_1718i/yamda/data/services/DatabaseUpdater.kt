@@ -11,11 +11,16 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.data.MoviesProvider.Companion.tmdbAPI
 import pdm_1718i.yamda.data.db.MovieContract
+import pdm_1718i.yamda.data.server.Options
 import pdm_1718i.yamda.extensions.isFuture
 import pdm_1718i.yamda.extensions.toMovieList
 import pdm_1718i.yamda.extensions.toast
 import pdm_1718i.yamda.model.Movie
 import pdm_1718i.yamda.model.MovieDetail
+import android.graphics.Bitmap
+import kotlinx.coroutines.experimental.Deferred
+import pdm_1718i.yamda.data.server.Options.poster_sizes
+import java.io.ByteArrayOutputStream
 
 
 class DatabaseUpdater : JobService() {
@@ -43,6 +48,7 @@ class DatabaseUpdater : JobService() {
                 val upcomingJob = bg { fetchUpcoming(onDatabase, detailsToFetch) }
                 val nowPLayingJob = bg { fetchNowPlaying(onDatabase, detailsToFetch) }
                 val mostPopularJob = bg { fetchMostPopular(onDatabase, detailsToFetch) }
+                val imageFetchJobs :MutableList<Pair<Deferred<Bitmap>, String>> = mutableListOf()
 
                 updateStaledFollowing(moviesOnDatabase) //remove following from movies that where already notified
 
@@ -53,14 +59,18 @@ class DatabaseUpdater : JobService() {
                         moviesOnDatabase,
                         detailsToFetch.map {
                             bg { tmdbAPI.movieDetail(it) }
-                        }.map {
+                        }.mapNotNull {
                             try {
-                                it.await()
+                                val movie = it.await()
+                                if(movie.poster_path.isNotEmpty())imageFetchJobs.add(Pair(bg {tmdbAPI.movieImage(movie.poster_path, poster_sizes[Options.SMALL]!!) }, movie.poster_path))
+                                movie
                             } catch (e: Throwable) {
                                 Log.d(TAG, "${e.message}")
                                 null
                             }
-                        }.toSet()
+                        }.toSet(),
+                        imageFetchJobs.mapNotNull { try {Pair(it.first.await(),it.second) }catch (e:Exception){null}}
+
                 )
             }catch(e : Exception){
                   Log.e(TAG, "${e.message}")
@@ -110,10 +120,11 @@ class DatabaseUpdater : JobService() {
             nowPlaying: Set<MovieListEntry>,
             mostPopular: Set<MovieListEntry>,
             onDatabase: List<Movie>,
-            movieDetails: Set<MovieDetail?>
+            movieDetails: Set<MovieDetail>,
+            posters: List<Pair<Bitmap, String>>
     ) {
 
-       val staled = staledMovies(onDatabase, nowPlaying, mostPopular, upComing)
+        val staled = staledMovies(onDatabase, nowPlaying, mostPopular, upComing)
 
         val deleteOps = ArrayList<ContentProviderOperation>()
 
@@ -123,15 +134,15 @@ class DatabaseUpdater : JobService() {
         deleteOps.addAll(
                 staled.map {
                     ContentProviderOperation.newDelete(MovieContract.MovieDetails.CONTENT_URI)
-                            .withSelection("${MovieContract.MovieDetails._ID} = ?", arrayOf("$it"))
+                            .withSelection("${MovieContract.MovieDetails._ID} = ?", arrayOf("${it.id}"))
                             .build()
                 }
         )
-        val deleted = contentResolver.applyBatch(MovieContract.AUTHORITY,  deleteOps).size
+        val deleted = contentResolver.applyBatch(MovieContract.AUTHORITY, deleteOps).size
         Log.d(TAG, "applied ${deleteOps.size} delete opperaions, deleted $deleted")
 
-        val moviesContentValue: Array<ContentValues> =  movieDetails.mapNotNull {
-            it?.toContentValues()
+        val moviesContentValue: Array<ContentValues> = movieDetails.map {
+            it.toContentValues()
         }.toTypedArray()
 
         val upcomingContentValue: Array<ContentValues> = upComing.toContentValues()
@@ -151,6 +162,22 @@ class DatabaseUpdater : JobService() {
 
         val count = contentResolver.bulkInsert(MovieContract.MovieDetails.CONTENT_URI, moviesContentValue)
         Log.d(TAG, "updated $count movie details to the database")
+
+       val postersContentValues = posters.map {
+                    val bitmap = it.first
+                    val stream = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                    val byteArray = stream.toByteArray()
+                    stream.close()
+                    ContentValues().apply {
+                        put(MovieContract.Image._ID, it.second)
+                        put(MovieContract.Image.BITMAP_DATA, byteArray)
+                    }
+            }.toTypedArray()
+
+        val imgCount = contentResolver.bulkInsert(MovieContract.Image.CONTENT_URI, postersContentValues )
+        Log.d(TAG, "updated $imgCount images to the database")
+
     }
 
     private fun Set<MovieListEntry>.toContentValues() =
@@ -198,10 +225,6 @@ class DatabaseUpdater : JobService() {
             val id = it.id
             it.isFollowing
             !(nowPlaying.find{ it.list.contains(id) } != null || mostPopular.find{ it.list.contains(id)} != null || upComing.find{ it.list.contains(id) } != null) //not on any of this lists
-        }.map { it.id }
+        }
 
-    private fun handleError(error: VolleyError): Unit {
-        // TODO
-        Log.v(TAG, "KABBUMMM")
-    }
 }
