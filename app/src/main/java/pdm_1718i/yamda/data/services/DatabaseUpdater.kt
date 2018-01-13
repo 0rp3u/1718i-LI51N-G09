@@ -29,6 +29,7 @@ class DatabaseUpdater : JobService() {
     override fun onStopJob(p0: JobParameters?): Boolean {
         //DBSync was somehow cancelled
         toast("Sync cancelled")
+
         return true //re-schedule service
     }
 
