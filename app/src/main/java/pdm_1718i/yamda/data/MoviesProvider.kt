@@ -1,10 +1,7 @@
 package pdm_1718i.yamda.data
 
 import android.graphics.Bitmap
-import android.os.AsyncTask
-import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
 import pdm_1718i.yamda.data.db.MoviesDb
 import pdm_1718i.yamda.data.server.TMDBService
 import pdm_1718i.yamda.model.Movie
@@ -55,6 +52,10 @@ class MoviesProvider {
 
     fun image(image_id: String, imageOption: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit){
         SOURCE.movieImage(image_id, imageOption, bitmapCompletionHandler)
+    }
+
+    fun image(image_id: String, imageOption: String): Bitmap{
+        return SOURCE.movieImageSync(image_id, imageOption)
     }
 
 }

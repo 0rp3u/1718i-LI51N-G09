@@ -14,4 +14,5 @@ interface MoviesDataSource {
     fun movieDetail(id: Int) : MovieDetail
     fun movieImage(image_id: String, imageView: ImageView, image_size: String)
     fun movieImage(image_id: String, image_size: String, bitmapCompletionHandler: (bitmap: Bitmap)-> Unit) : Any?
+    fun movieImageSync(image_id: String, image_size: String): Bitmap
 }

@@ -2,7 +2,6 @@ package pdm_1718i.yamda.data.server
 
 import android.net.http.AndroidHttpClient
 import android.os.Build
-import android.util.Log
 import com.android.volley.Request
 import com.android.volley.toolbox.HttpClientStack
 import com.android.volley.toolbox.HttpStack
@@ -35,7 +34,9 @@ class ThrottledHttpStack(policies :List<ThrottlePolicy>) : HttpStack{
         val authority : String = URL(request?.url).authority
 
         return if(dispatchers.containsKey(authority)){
-            try { dispatchers[authority]?.put(DispatchRequest(request,additionalHeaders))?.get()!! } catch (e: Exception){ Log.e("ThrottledHttpStack", e.message); throw e}
+            try { dispatchers[authority]?.put(DispatchRequest(request,additionalHeaders))?.get()!! } catch (e: Exception){
+//                Log.e("ThrottledHttpStack", e.message);
+                throw e}
 
         }else{
             httpStack.performRequest(request, additionalHeaders)

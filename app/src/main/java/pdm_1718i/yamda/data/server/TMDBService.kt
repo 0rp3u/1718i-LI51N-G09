@@ -6,16 +6,19 @@ import android.util.Log
 import android.widget.ImageView
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
-import com.android.volley.toolbox.ImageRequest
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.RequestFuture
 import com.example.pdm_1718i.yamda.data.server.MovieDetailResult
 import com.example.pdm_1718i.yamda.data.server.MovieSearchResult
 import com.google.gson.Gson
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
 import org.json.JSONObject
 import pdm_1718i.yamda.R
+import pdm_1718i.yamda.data.ConnectivityManager
 import pdm_1718i.yamda.data.MoviesDataSource
-import pdm_1718i.yamda.data.server.Options.SMALL
 import pdm_1718i.yamda.extensions.getDate
 import pdm_1718i.yamda.extensions.getImageListener
 import pdm_1718i.yamda.model.Movie
@@ -66,7 +69,9 @@ class TMDBService : MoviesDataSource {
 
     //syncronous volley get/
     fun get(uriBuilder: Uri.Builder): JSONObject {
-
+        if(!ConnectivityManager.isConnected()){
+            return JSONObject()
+        }
         val future: RequestFuture<JSONObject> = RequestFuture.newFuture()
         val jsonObjReq = object : JsonObjectRequest(Method.GET,
                 uriBuilder
@@ -86,7 +91,11 @@ class TMDBService : MoviesDataSource {
                     future.onErrorResponse(error)
                 }) {}
         App.instance.addToRequestQueue(jsonObjReq, TAG)
-        return future.get() //todo exception handling
+        return try {
+            future.get()
+        }catch (error: Throwable){
+            JSONObject()
+        }
     }
 
 
@@ -151,8 +160,8 @@ class TMDBService : MoviesDataSource {
                 .toString()
         imageView.tag = uri
         when(image_size){
-           Options.poster_sizes[SMALL] -> App.imageLoader.get(uri, getImageListener(imageView, R.drawable.ic_loading, R.drawable.ic_movie_thumbnail,null,  uri))
-            else -> App.imageLoader.get(uri, getImageListener(imageView, R.drawable.ic_loading,0, {App.moviesProvider.image(image_id, imageView, Options.poster_sizes[SMALL]!!)}, uri))
+            ImageOption.SMALL -> App.imageLoader.get(uri, getImageListener(imageView, R.drawable.ic_loading, R.drawable.ic_movie_thumbnail,null,  uri))
+            else -> App.imageLoader.get(uri, getImageListener(imageView, R.drawable.ic_loading,0, {App.moviesProvider.image(image_id, imageView, ImageOption.SMALL)}, uri))
         }
     }
 
@@ -165,34 +174,41 @@ class TMDBService : MoviesDataSource {
                 .toString()
 
         when(image_size){
-            Options.poster_sizes[SMALL] -> App.imageLoader.get(uri, getImageListener(bitmapCompletionHandler))
-            else -> App.imageLoader.get(uri, getImageListener(bitmapCompletionHandler, {App.moviesProvider.image(image_id,Options.poster_sizes[SMALL]!!, bitmapCompletionHandler)}))
+            ImageOption.SMALL -> App.imageLoader.get(uri, getImageListener(bitmapCompletionHandler))
+            else -> App.imageLoader.get(uri, getImageListener(bitmapCompletionHandler, {App.moviesProvider.image(image_id, ImageOption.SMALL, bitmapCompletionHandler)}))
         }
     }
 
-    //syncronous!
-    fun movieImage(image_id: String, image_size: String):Bitmap{
+    override fun movieImageSync(image_id: String, image_size: String): Bitmap{
+
         val future: RequestFuture<Bitmap> = RequestFuture.newFuture()
-        val imgReq = object : ImageRequest(
-                Uri.Builder()
-                .scheme("https")
-                .encodedAuthority(IMAGE_PATH)
+
+
+        val uri = Uri.Builder()
                 .appendEncodedPath(image_size)
                 .appendEncodedPath(image_id)
-                .toString(),
-                Response.Listener<Bitmap> { response ->
-                    future.onResponse(response)
-                },
-                1000,
-                1000,
-                Bitmap.Config.RGB_565,
-                Response.ErrorListener { error ->
-                    Log.d(TAG, "/get request fail! Error: ${error.message}")
-                    future.onErrorResponse(error)
-                }) {}
-        App.instance.addToRequestQueue(imgReq, TAG)
+                .scheme("https")
+                .encodedAuthority(IMAGE_PATH)
+                .toString()
+
+
+        val listener = object : ImageLoader.ImageListener {
+            override fun onErrorResponse(error: VolleyError) {
+                future.onErrorResponse(error)
+            }
+
+            override fun onResponse(response: ImageLoader.ImageContainer, isImmediate: Boolean) {
+                future.onResponse(response.bitmap)
+            }
+        }
+
+
+        //hack
+        async(UI) {
+            App.imageLoader.get(uri, listener)
+        }
+
 
         return future.get()
-
     }
 }

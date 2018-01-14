@@ -4,12 +4,11 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import pdm_1718i.yamda.R
-import pdm_1718i.yamda.data.server.Options
+import pdm_1718i.yamda.data.server.ImageOption
 import pdm_1718i.yamda.extensions.asRounded
 import pdm_1718i.yamda.extensions.getDateFromCalendar
 import pdm_1718i.yamda.model.Movie
@@ -42,7 +41,7 @@ class SimpleMovieAdapter(private val context : Activity, private val searchedMov
         movieViewHolder.score.text= movie.vote_average.asRounded()
 
         if(movie.poster_path.isNotEmpty()){
-            App.moviesProvider.image(movie.poster_path,  movieViewHolder.image, Options.poster_sizes["SMALL"]!!)
+            App.moviesProvider.image(movie.poster_path,  movieViewHolder.image, ImageOption.SMALL)
         }else{
             movieViewHolder.image.setImageResource(R.drawable.ic_movie_thumbnail)
         }

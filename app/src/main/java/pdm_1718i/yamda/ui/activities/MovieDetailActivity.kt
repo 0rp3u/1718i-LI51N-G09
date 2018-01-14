@@ -3,7 +3,6 @@ package pdm_1718i.yamda.ui.activities
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.coroutines.experimental.Deferred
@@ -12,8 +11,7 @@ import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import pdm_1718i.yamda.R
 import pdm_1718i.yamda.data.db.Util
-import pdm_1718i.yamda.data.server.Options
-import pdm_1718i.yamda.data.server.Options.BIG
+import pdm_1718i.yamda.data.server.ImageOption
 import pdm_1718i.yamda.extensions.*
 import pdm_1718i.yamda.model.MovieDetail
 import pdm_1718i.yamda.ui.App
@@ -58,7 +56,7 @@ class MovieDetailActivity : BaseActivity() {
             genreTextView.text = genres
             overviewTextView.text = overview
             if (poster_path != null && poster_path.isNotEmpty()) {
-                 App.moviesProvider.image(poster_path, moviePoster, Options.poster_sizes[BIG]!!)
+                 App.moviesProvider.image(poster_path, moviePoster, ImageOption.BIG)
             }else{
                 moviePoster.setImageResource(R.drawable.ic_movie_thumbnail)
             }
