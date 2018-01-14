@@ -14,7 +14,7 @@ class MoviesProvider {
             TMDBService()
         }
 
-        val moviesDatabase  by lazy {
+        val moviesDatabase by lazy {
             MoviesDb(tmdbAPI)
         }
 

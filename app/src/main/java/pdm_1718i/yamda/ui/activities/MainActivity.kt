@@ -84,37 +84,11 @@ class MainActivity : BaseActivity(navigation = false) {
         val adapter = resView.adapter as MainActAdapter
         async(UI) {
             try{
-                val results = bg{
-                    Log.d("reciclerViewTask", "trow new background thread: ${Thread.currentThread().id} to fetch data")
-                    providerHandler(DEFAULT_PAGINATION)
-                }
-                val movies = results.await()
-                Log.d("reciclerViewTask", "After Await:${Thread.currentThread().id} | Fetched ${movies.size} movies")
-                adapter.setData(movies)
+                val results = bg{ providerHandler(DEFAULT_PAGINATION) }
+                adapter.setData(results.await())
             }catch (e: Exception){
                 Log.d("Exeption", "${e.message}")
             }
         }
     }
-/*
-        private fun generateRecyclerViewTask2(res: Int, providerHandler: (page:Int) -> List<Movie>) {
-
-            object: AsyncTask<String, Unit, List<Movie>>() {
-            override fun doInBackground(vararg p0: String?): List<Movie> {
-                Log.d("reciclerViewTask", "doInBackground in ${Thread.currentThread().id}")
-                return  providerHandler(DEFAULT_PAGINATION)
-
-            }
-
-
-            override fun onPostExecute(result: List<Movie>) {
-                val resView = findViewById<RecyclerView>(res)
-                resView.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayout.HORIZONTAL, false)
-                    val adapterEndless = MainActAdapter(result)
-                    resView.adapterEndless = adapterEndless
-                Log.d("reciclerViewTask", "onPostExecute in ${Thread.currentThread().id}")
-
-            }
-        }.execute()
-    }*/
 }

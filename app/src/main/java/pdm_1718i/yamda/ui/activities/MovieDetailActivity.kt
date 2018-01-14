@@ -25,8 +25,6 @@ class MovieDetailActivity : BaseActivity() {
     private val moviePoster             by lazy { findViewById<ImageView>(R.id.movie_poster) }
     private val followIcon              by lazy { findViewById<ImageView>(R.id.follow_icon) }
     private val imdbIcon                by lazy { findViewById<ImageView>(R.id.imdb_button) }
-//    private val NOTIFICATION_OFF_ICON   by lazy { getDrawable(R.drawable.ic_notifications_none_black_24dp) }
-//    private val NOTIFICATION_ON_ICON    by lazy{ getDrawable(R.drawable.ic_notifications_active_black_24dp) }
 
     companion object {
         val BUNDLE_ID_KEY = "movieId"
@@ -45,7 +43,6 @@ class MovieDetailActivity : BaseActivity() {
         async(UI) {updateUI( bg{App.moviesProvider.movieDetail(movieId)}.await()) }
     }
 
-    //@RequiresApi(api = 21)//getDrawable
     private fun updateUI(movieDetail: MovieDetail) {
         with(movieDetail){
             this@MovieDetailActivity.title = title
@@ -55,18 +52,16 @@ class MovieDetailActivity : BaseActivity() {
             val genres = genres.joinToString(separator = ", ") {it.name}
             genreTextView.text = genres
             overviewTextView.text = overview
-            if (poster_path != null && poster_path.isNotEmpty()) {
-                 App.moviesProvider.image(poster_path, moviePoster, ImageOption.BIG)
-            }else{
+            if (poster_path.isNotEmpty())
+                App.moviesProvider.image(poster_path, moviePoster, ImageOption.BIG)
+            else
                 moviePoster.setImageResource(R.drawable.ic_movie_thumbnail)
-            }
+
             if(movieDetail.release_date != null && movieDetail.release_date.isFuture()){
                 followIconState = if(movieDetail.isFollowing){
-                    //toast("Thread:${Thread.currentThread()} ON")
                     followIcon.setImageResource(NOTIFICATION_ON_ICON)
                     true
                 }else{
-                    //toast("Thread:${Thread.currentThread()} OFF")
                     followIcon.setImageResource(NOTIFICATION_OFF_ICON)
                     false
                 }

@@ -24,6 +24,7 @@ import java.io.ByteArrayOutputStream
 
 class DatabaseUpdater : JobService() {
     val TAG = this.javaClass.simpleName
+
     private lateinit var fetchDataToUpdateJob : Job
 
     override fun onStopJob(p0: JobParameters?): Boolean {
