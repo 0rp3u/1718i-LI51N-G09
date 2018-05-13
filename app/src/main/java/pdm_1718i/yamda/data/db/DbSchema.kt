@@ -1,7 +1,5 @@
 package pdm_1718i.yamda.data.db
 
-import android.telecom.Call
-
 object DbSchema {
     val DB_NAME = "moviedata.db"
     val DB_VERSION = 5
