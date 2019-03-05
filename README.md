@@ -2,7 +2,7 @@
 
 This was my first experience with Android development. This application was developed in a group project for the class of Programing for Mobile Devices at [ISEL].
 
-The application consist of a movie database that lets it's users:
+The application consists of a movie database that lets it's users:
 * Search movies my name;
 * Visualize movies currently airing in theaters;
 * Visualize upcoming movies;
@@ -13,16 +13,16 @@ The application consist of a movie database that lets it's users:
 * Use funcionalities in offline mode.
 
 ### Sources of data
-The source of data choosen for this project was [The Movie Database], since it's free and provides up-to-date information trough a REST API:
+The source of data chosen for this project was [The Movie Database], since it's free and provides up-to-date information trough a REST API:
 [API Documentation].
 
 ### Technologies
-Principal technologies used for the developtment of this project.
+Principal technologies used for the development of this project.
 
-| Techonology | README |
+| Technology | README |
 | ------ | ------ |
 | [Kotlin] | Concise programming language that fully supports Android development |
-| [Corroutines] | Powerfull library for asynchronous programing |
+| [Corroutines] | Powerful library for asynchronous programing |
 | [Volley] | HTTP library for API requests |
 | [Picasso] | Library for image loading and caching |
 | [JobScheduler] | Android API for background service scheduling |
