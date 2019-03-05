@@ -22,7 +22,7 @@ Principal technologies used for the development of this project.
 | Technology | README |
 | ------ | ------ |
 | [Kotlin] | Concise programming language that fully supports Android development |
-| [Corroutines] | Powerful library for asynchronous programing |
+| [Coroutines] | Powerful library for asynchronous programing |
 | [Volley] | HTTP library for API requests |
 | [Picasso] | Library for image loading and caching |
 | [JobScheduler] | Android API for background service scheduling |
@@ -37,7 +37,7 @@ Principal technologies used for the development of this project.
 [The Movie Database]: <https://www.themoviedb.org/>
 [API Documentation]: <https://developers.themoviedb.org/3/getting-started/introduction>
 [Kotlin]: <https://kotlinlang.org/>
-[Corroutines]: <https://kotlinlang.org/docs/reference/coroutines-overview.html/>
+[Coroutines]: <https://kotlinlang.org/docs/reference/coroutines-overview.html/>
 [Volley]: <https://developer.android.com/training/volley/>
 [Picasso]: <http://square.github.io/picasso/>
 [JobScheduler]: <https://developer.android.com/reference/android/app/job/JobScheduler/>
