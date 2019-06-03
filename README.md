@@ -2,6 +2,24 @@
 
 This was my first experience with Android development. This application was developed in a group project for the class of Programing for Mobile Devices at [ISEL].
 
+<a href="https://raw.githubusercontent.com/0rp3u/1718i-LI51N-G09/master/screenshots/Screenshot_2019-06-03-14-21-44.png">
+<img src="https://raw.githubusercontent.com/0rp3u/1718i-LI51N-G09/master/screenshots/Screenshot_2019-06-03-14-21-44.png" width="150" height="270">
+</a>
+<a href="https://raw.githubusercontent.com/0rp3u/1718i-LI51N-G09/master/screenshots/Screenshot_2019-06-03-14-22-27.png">
+<img src="https://raw.githubusercontent.com/0rp3u/1718i-LI51N-G09/master/screenshots/Screenshot_2019-06-03-14-22-27.png" width="150" height="270">
+</a>
+<a href="https://raw.githubusercontent.com/0rp3u/1718i-LI51N-G09/master/screenshots/Screenshot_2019-06-03-14-22-42.png">
+<img src="https://raw.githubusercontent.com/0rp3u/1718i-LI51N-G09/master/screenshots/Screenshot_2019-06-03-14-22-42.png" width="150" height="270">
+</a>
+<a href="https://raw.githubusercontent.com/0rp3u/1718i-LI51N-G09/master/screenshots/Screenshot_2019-06-03-14-22-56.png">
+<img src="https://raw.githubusercontent.com/0rp3u/1718i-LI51N-G09/master/screenshots/Screenshot_2019-06-03-14-22-56.png" width="150" height="270">
+</a>
+<a href="https://raw.githubusercontent.com/0rp3u/1718i-LI51N-G09/master/screenshots/Screenshot_2019-06-03-14-23-32.png">
+<img src="https://raw.githubusercontent.com/0rp3u/1718i-LI51N-G09/master/screenshots/Screenshot_2019-06-03-14-23-32.png" width="150" height="270">
+</a>
+
+
+
 The application consists of a movie database that lets it's users:
 * Search movies my name;
 * Visualize movies currently airing in theaters;
